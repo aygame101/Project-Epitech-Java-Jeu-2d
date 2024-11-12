@@ -1,8 +1,8 @@
 package com.badlogic.drop;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com. badlogic. gdx. graphics. Color;
+import java.awt.*;
 
 public class Platform {
     private int x, y, width, height;
@@ -14,9 +14,9 @@ public class Platform {
         this.height = height;
     }
 
-    public void draw(Graphics g) {
+    public void draw(SpriteBatch g) {
         g.setColor(Color.GREEN); // Set color for the platform
-        g.fillRect(x, y, width, height); // Draw the platform
+        g.flush(); // Draw the platform
     }
 
     public Rectangle getBounds() {
@@ -26,4 +26,18 @@ public class Platform {
     public int getY() {
         return y; // Return the y position of the platform
     }
+
+    public float getX() {
+        return 0;
+    }
+
+    public float getWidth() {
+        return 0;
+    }
+
+    public float getHeight() {
+        return 0;
+    }
 }
+
+

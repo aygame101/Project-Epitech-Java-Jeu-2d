@@ -1,8 +1,8 @@
 package com.badlogic.drop;
+import com. badlogic. gdx. graphics. Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 class Enemy {
     private int x, y, dx;
@@ -13,7 +13,13 @@ class Enemy {
         this.y = y;
         this.dx = (Math.random() < 0.5) ? 2 : -2; // Randomly set the direction
     }
+    public int getEY() {
+        return y; // Return the y position of the platform
+    }
 
+    public float getEX() {
+        return x;
+    }
     public void update() {
         x += dx;
         if (x < 0 || x > 800 - WIDTH) {
@@ -21,12 +27,14 @@ class Enemy {
         }
     }
 
-    public void draw(Graphics g) {
+    public void draw(SpriteBatch g) {
         g.setColor(Color.RED);
-        g.fillRect(x, y, WIDTH, HEIGHT);
+        g.flush();
     }
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
+
 }
+

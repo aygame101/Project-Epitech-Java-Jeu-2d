@@ -1,8 +1,8 @@
 package com.badlogic.drop;
+import com. badlogic. gdx. graphics. Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 class Bullet {
     private int x, y;
@@ -18,9 +18,9 @@ class Bullet {
         y += SPEED;
     }
 
-    public void draw(Graphics g) {
+    public void draw(SpriteBatch g) {
         g.setColor(Color.RED);
-        g.fillRect(x, y, WIDTH, HEIGHT);
+        g.flush();
     }
 
     public Rectangle getBounds() {

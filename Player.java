@@ -1,8 +1,9 @@
 package com.badlogic.drop;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import com. badlogic. gdx. graphics. Color;
+import java.awt.*;
 import java.util.ArrayList;
 
 class Player {
@@ -36,9 +37,9 @@ class Player {
         this.dx = dx;
     }
 
-    public void draw(Graphics g) {
+    public void draw(SpriteBatch g) {
         g.setColor(Color.BLUE); // Set color to blue for the player
-        g.fillRect(x, y, WIDTH, HEIGHT); // Draw the player as a  rectangle
+        g.flush(); // Draw the player as a  rectangle
     }
 
     public void update(ArrayList<Platform> platforms) {
@@ -71,5 +72,8 @@ class Player {
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, WIDTH, HEIGHT);
+    }
+
+    public void shoot() {
     }
 }
