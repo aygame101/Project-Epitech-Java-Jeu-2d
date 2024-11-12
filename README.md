@@ -1,1 +1,1 @@
-# epitech-java-jeu-2d
+# test-java-jeu-epitech
