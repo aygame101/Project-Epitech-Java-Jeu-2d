@@ -4,10 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class Mario extends Game {
+public class Main extends Game {
     // Le SpriteBatch et le BitmapFont sont ici pour être partagés entre les écrans
     public SpriteBatch batch;
     public BitmapFont font;
