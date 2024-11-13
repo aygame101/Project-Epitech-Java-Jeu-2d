@@ -1,4 +1,4 @@
-package com.mario;
+package com.badlogic.drop;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
