@@ -1,8 +1,7 @@
 package com.badlogic.drop;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import com. badlogic. gdx. graphics. Color;
+import com.badlogic.gdx.graphics.Color;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -16,6 +15,7 @@ class Player {
         this.y = y;
         this.onGround = true;
         this.dy = 0;
+        this.dx = 0;
     }
 
     public void jump() {
@@ -39,15 +39,17 @@ class Player {
 
     public void draw(SpriteBatch g) {
         g.setColor(Color.BLUE); // Set color to blue for the player
-        g.flush(); // Draw the player as a  rectangle
+        g.flush(); // Draw the player as a rectangle
+
     }
 
     public void update(ArrayList<Platform> platforms) {
+        // Update the player's position based on the current horizontal velocity
         x += dx;
 
         // Gravity
         if (!onGround) {
-            dy += 1; //  gravity
+            dy += 1; // Apply gravity
         }
 
         y += dy;
@@ -74,6 +76,19 @@ class Player {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
-    public void shoot() {
+    public Bullet shoot() {
+        return new Bullet(x + WIDTH / 2, y + HEIGHT / 2); // Example of shooting from the player's position
+    }
+
+    public void moveLeft() {
+        dx = -5; // Set horizontal movement speed to -5 pixels for moving left
+    }
+
+    public void moveRight() {
+        dx = 5; // Set horizontal movement speed to 5 pixels for moving right
+    }
+
+    public boolean isOnGround() {
+        return onGround; // Return the current state of onGround
     }
 }

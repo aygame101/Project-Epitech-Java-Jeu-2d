@@ -2,6 +2,7 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +20,7 @@ public class Main extends ApplicationAdapter {
     private ArrayList<Bullet> bullets;
     private ArrayList<Platform> platforms;
 
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -28,7 +30,7 @@ public class Main extends ApplicationAdapter {
         enemyTexture = new Texture(Gdx.files.internal("enemy.png"));
         platformTexture = new Texture(Gdx.files.internal("platform.png"));
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
-        
+
         player = new Player(50, 50);
         enemies = new ArrayList<>();
         bullets = new ArrayList<>();
@@ -52,6 +54,8 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1); // Set clear color to black
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear the color buffer
 
+        handleInput();
+
         // Update game logic
         player.update(platforms); // Update player, passing platforms for collision detection
         for (Enemy enemy : enemies) {
@@ -73,6 +77,7 @@ public class Main extends ApplicationAdapter {
                 }
             }
         }
+
         // Draw game elements
         batch.begin(); // Begin the batch
 
@@ -99,8 +104,37 @@ public class Main extends ApplicationAdapter {
 
         batch.end(); // End the batch
     }
+
+    private void handleInput() {
+        // Move left
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            player.moveLeft();
+        }
+        // Move right
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            player.moveRight();
+        }
+        // Jump
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && player.isOnGround()) {
+            player.jump();
+        }
+        // Shoot
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            bullets.add(player.shoot());
+        }
+    }
+
     @Override
     public void dispose() {
-        ;
+        batch.dispose();
+        playerTexture.dispose();
+        enemyTexture.dispose();
+        platformTexture.dispose();
+        backgroundTexture.dispose();
+
+        for (Bullet bullet : bullets) {
+            bullet.dispose();
+        }
     }
 }
+

@@ -1,7 +1,7 @@
 package com.badlogic.drop;
+
 import com. badlogic. gdx. graphics. Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.awt.*;
 
 class Bullet {
@@ -19,11 +19,14 @@ class Bullet {
     }
 
     public void draw(SpriteBatch g) {
-        g.setColor(Color.RED);
+        g.setColor(Color.PINK);
         g.flush();
     }
 
     public Rectangle getBounds() {
         return new Rectangle(x, y, WIDTH, HEIGHT);
+    }
+
+    public void dispose() {
     }
 }
