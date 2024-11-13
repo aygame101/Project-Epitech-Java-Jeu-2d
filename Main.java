@@ -1,5 +1,6 @@
 package com.badlogic.drop;
 
+import com.badlogic.drop.Screen.GameScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -49,12 +50,12 @@ public class Main extends Game {
             case GAME:
                 this.setScreen(new GameScreen(this));
                 break;
-            case MENU:
+            /*case MENU:
                 this.setScreen(new MenuScreen(this));
                 break;
             case GAME_OVER:
                 this.setScreen(new GameOverScreen(this));
-                break;
+                break;*/
         }
     }
 
