@@ -5,9 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
 public class GameScreen implements Screen {
-    private final Mario game;
+    private final Main game;
 
-    public GameScreen(Mario game) {
+    public GameScreen(Main game) {
         this.game = game;
         // Initialiser la logique du jeu, charger la carte, créer le joueur, etc.
     }
