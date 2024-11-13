@@ -20,7 +20,7 @@ class Player {
 
     public void jump() {
         if (onGround) { // Only allow jumping if the player is on the ground
-            dy = -15; // Set a negative velocity for jumping
+            dy = -15;
             onGround = false; // Player is no longer on the ground
         }
     }
@@ -90,5 +90,9 @@ class Player {
 
     public boolean isOnGround() {
         return onGround; // Return the current state of onGround
+    }
+
+    public void stopMoving() {
+        dx = 0; // Stop horizontal movement
     }
 }

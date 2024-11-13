@@ -56,13 +56,29 @@ public class Main extends ApplicationAdapter {
 
         handleInput();
 
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            player.moveLeft();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            player.moveRight();
+        } else {
+            player.stopMoving(); // Stop moving when no key is pressed
+        }
+
+        // Update player
+        player.update(platforms);
+
         // Update game logic
-        player.update(platforms); // Update player, passing platforms for collision detection
         for (Enemy enemy : enemies) {
             enemy.update(); // Update each enemy
         }
-        for (Bullet bullet : bullets) {
-            bullet.update(); // Update each bullet
+
+        // Update bullets and check for off-screen bullets
+        for (int i = bullets.size() - 1; i >= 0; i--) {
+            Bullet bullet = bullets.get(i);
+            bullet.update(); // Update bullet position
+            if (bullet.isOffScreen()) {
+                bullets.remove(i); // Remove bullet if it's off-screen
+            }
         }
 
         // Check for bullet collisions with enemies
