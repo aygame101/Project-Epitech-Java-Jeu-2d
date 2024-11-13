@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="80" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" name="Dungeon Tile Set" tilewidth="16" tileheight="16" tilecount="270" columns="15">
-  <image source="../TileSet/Dungeon Tile Set.png" width="240" height="288"/>
+  <image source="Tiled_asset/Dungeon Tile Set.png" width="240" height="288"/>
  </tileset>
  <layer id="1" name="Calque de Tuiles 1" width="80" height="45">
   <data encoding="csv">
