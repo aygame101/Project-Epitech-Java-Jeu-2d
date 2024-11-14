@@ -18,7 +18,7 @@ public class Main extends Game {
         font = new BitmapFont(); // Police de base, à personnaliser si besoin
 
         // Charger la première scène (écran de jeu)
-        this.setScreen(new GameScreen(this));
+        this.setScreen(new MenuScreen(this));
     }
 
     @Override
@@ -49,10 +49,10 @@ public class Main extends Game {
             case GAME:
                 this.setScreen(new GameScreen(this));
                 break;
-            /*case MENU:
+            case MENU:
                 this.setScreen(new MenuScreen(this));
                 break;
-            case GAME_OVER:
+            /*case GAME_OVER:
                 this.setScreen(new GameOverScreen(this));
                 break;*/
         }
