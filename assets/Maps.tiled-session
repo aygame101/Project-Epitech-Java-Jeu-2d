@@ -8,22 +8,49 @@
     ],
     "fileStates": {
         "": {
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "Test_Base_map.tmx": {
             "scale": 0.7230555555555555,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 639.6465616596236,
-                "y": 878.9089512101423
+                "x": 647.2531694199001,
+                "y": 764.8098348059932
             }
         },
         "Test_Base_map.tmx#Dungeon Tile Set": {
             "dynamicWrapping": false,
             "scaleInDock": 1
+        },
+        "Tiled_asset/Start (Idle) pixel adv.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Start (Idle) px adv.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Start (Idle).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Tiles paper adv.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/tilemap cochon.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
-    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Tiled_asset",
+    "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Tiled_asset",
+    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/Pixel adventure/Items/Checkpoints/Start",
+    "map.fixedSize": false,
     "map.height": 45,
     "map.tileHeight": 16,
     "map.tileWidth": 16,
@@ -32,10 +59,17 @@
     ],
     "project": "Maps.tiled-project",
     "recentFiles": [
-        "Test_Base_map.tmx"
+        "Tiled_asset/Start (Idle) px adv.tsx",
+        "Tiled_asset/Start (Idle).tsx",
+        "Tiled_asset/Start (Idle) pixel adv.tsx",
+        "Tiled_asset/tilemap cochon.tsx",
+        "Test_Base_map.tmx",
+        "Tiled_asset/Tiles paper adv.tsx",
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx"
     ],
+    "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 32,
+        "width": 32
     }
 }
