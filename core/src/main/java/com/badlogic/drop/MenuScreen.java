@@ -25,7 +25,7 @@ public class MenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
 
         // Charge une skin pour les boutons (par exemple, "uiskin.json" dans les assets)
-        skin = new Skin(Gdx.files.internal("MenuSkin.json"));
+        skin = new Skin(Gdx.files.internal(""));
 
         // Ajoute les boutons au menu
         createMenu();

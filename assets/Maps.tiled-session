@@ -11,6 +11,20 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Game_Map_complete.tmx": {
+            "expandedGroupLayers": [
+                10
+            ],
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": -142.33333333333331,
+                "y": 139.33333333333331
+            }
+        },
+        "Game_Map_complete.tmx#Terrain (pixel_adv) (16x16)": {
+            "scaleInDock": 1
+        },
         "Test_Base_map.tmx": {
             "scale": 0.7230555555555555,
             "selectedLayer": 0,
@@ -22,6 +36,10 @@
         "Test_Base_map.tmx#Dungeon Tile Set": {
             "dynamicWrapping": false,
             "scaleInDock": 1
+        },
+        "Tiled_asset/Blue.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Tiled_asset/Start (Idle) pixel adv.tsx": {
             "scaleInDock": 1,
@@ -49,16 +67,20 @@
         }
     },
     "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Tiled_asset",
-    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/Pixel adventure/Items/Checkpoints/Start",
+    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/Pixel adventure/Traps/Spikes",
     "map.fixedSize": false,
     "map.height": 45,
+    "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 80,
     "openFiles": [
     ],
     "project": "Maps.tiled-project",
+    "property.type": "int",
     "recentFiles": [
+        "Game_Map_complete.tmx",
+        "Tiled_asset/Blue.tsx",
         "Tiled_asset/Start (Idle) px adv.tsx",
         "Tiled_asset/Start (Idle).tsx",
         "Tiled_asset/Start (Idle) pixel adv.tsx",
@@ -69,7 +91,7 @@
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 16,
+        "width": 16
     }
 }

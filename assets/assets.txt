@@ -1,13 +1,15 @@
 .gitkeep
+Game_Map_complete.tmx
 Maps.tiled-project
 Maps.tiled-session
-MenuSkin.json
 Test_Base_map.tmx
+Tiled_asset/Blue.tsx
 Tiled_asset/Dungeon Tile Set.png
 Tiled_asset/Terrain (pixel_adv) (16x16).tsx
 Tiled_asset/Tiles paper adv.tsx
 Tiled_asset/background cochon.tsx
 Tiled_asset/morning_adventures_tileset_16x16.tsx
+Tiled_asset/spike (pixel adv).tsx
 Tiled_asset/tilemap cochon.tsx
 Vrac/Berie's_Adventure_Seaside_Asset_Pack_Free/Aseprite/background.aseprite
 Vrac/Berie's_Adventure_Seaside_Asset_Pack_Free/Aseprite/character_berie.aseprite
