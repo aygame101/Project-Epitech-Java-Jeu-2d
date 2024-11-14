@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
 
         // Initialisation de la caméra
         camera = new OrthographicCamera();
-        viewport = new FitViewport(16, 9, camera);  // Dimensions ajustées pour une résolution de 16:9
+        viewport = new FitViewport(40F, 22.5F, camera);  // Dimensions ajustées pour une résolution de 16:9
         camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0); // Centrer la caméra
     }
 
