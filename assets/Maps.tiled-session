@@ -3,8 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "The_Complete_Map.tmx",
+    "automapping.whileDrawing": false,
     "expandedProjectPaths": [
+        "Tiled_asset",
+        "."
     ],
     "fileStates": {
         "": {
@@ -13,33 +16,54 @@
         },
         "Game_Map_complete.tmx": {
             "expandedGroupLayers": [
-                10
+                4
             ],
-            "scale": 1.5,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.125,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": -142.33333333333331,
-                "y": 139.33333333333331
+                "x": 876,
+                "y": 12596
             }
         },
         "Game_Map_complete.tmx#Terrain (pixel_adv) (16x16)": {
             "scaleInDock": 1
         },
         "Test_Base_map.tmx": {
-            "scale": 0.7230555555555555,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.33,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 647.2531694199001,
-                "y": 764.8098348059932
+                "x": 498.4848484848484,
+                "y": 519.6969696969696
             }
         },
         "Test_Base_map.tmx#Dungeon Tile Set": {
             "dynamicWrapping": false,
             "scaleInDock": 1
         },
+        "The_Complete_Map.tmx": {
+            "expandedGroupLayers": [
+                4
+            ],
+            "scale": 2,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 199.75,
+                "y": 15873.25
+            }
+        },
         "Tiled_asset/Blue.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "Tiled_asset/Game_Map_complete.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 0.015625
         },
         "Tiled_asset/Start (Idle) pixel adv.tsx": {
             "scaleInDock": 1,
@@ -61,34 +85,57 @@
             "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
+        "Tiled_asset/background cochon.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/spike (pixel adv).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Tiled_asset/tilemap cochon.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         }
     },
     "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Tiled_asset",
-    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/Pixel adventure/Traps/Spikes",
-    "map.fixedSize": false,
-    "map.height": 45,
+    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets",
+    "map.fixedSize": true,
+    "map.height": 1000,
     "map.lastUsedFormat": "tmx",
+    "map.renderOrder": "2",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 80,
+    "map.width": 1000,
     "openFiles": [
+        "The_Complete_Map.tmx",
+        "Tiled_asset/background cochon.tsx",
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
+        "Tiled_asset/spike (pixel adv).tsx",
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
+        "Tiled_asset/tilemap cochon.tsx"
     ],
     "project": "Maps.tiled-project",
     "property.type": "int",
     "recentFiles": [
-        "Game_Map_complete.tmx",
-        "Tiled_asset/Blue.tsx",
-        "Tiled_asset/Start (Idle) px adv.tsx",
-        "Tiled_asset/Start (Idle).tsx",
-        "Tiled_asset/Start (Idle) pixel adv.tsx",
         "Tiled_asset/tilemap cochon.tsx",
-        "Test_Base_map.tmx",
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
+        "Tiled_asset/spike (pixel adv).tsx",
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
+        "Tiled_asset/background cochon.tsx",
+        "The_Complete_Map.tmx",
         "Tiled_asset/Tiles paper adv.tsx",
-        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx"
+        "Tiled_asset/Blue.tsx",
+        "Game_Map_complete.tmx",
+        "Tiled_asset/Game_Map_complete.tsx",
+        "Test_Base_map.tmx",
+        "Tiled_asset/Start (Idle) px adv.tsx"
     ],
+    "resizeMap.removeObjects": true,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
         "height": 16,
