@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -23,6 +25,10 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer mapRenderer;
     private OrthographicCamera camera;
     private Viewport viewport;
+
+    private SpriteBatch batch;
+    private Player player;
+    private Texture playerTexture;
 
     // Variables pour la gestion des salles
     private MapLayer roomsLayer;
@@ -59,11 +65,17 @@ public class GameScreen implements Screen {
     public GameScreen(Game game) {
         this.game = game;
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(800, 600, camera);
+        this.viewport = new FitViewport(80, 60, camera);
         this.map = new TmxMapLoader().load("The_complete_Map.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(map);
 
         roomsLayer = map.getLayers().get("Rooms"); // Assurez-vous que votre couche de salles s'appelle "Rooms"
+
+        player = new Player();
+        Gdx.input.setInputProcessor(player);
+
+        playerTexture = new Texture(Gdx.files.internal("Player.png"));
+        batch = new SpriteBatch();
     }
 
     private void moveToRoom(int roomX, int roomY) {
@@ -101,6 +113,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        updatePlayerPosition(delta);
+
         // Efface l'écran avant de dessiner chaque nouvelle image
         Gdx.gl.glClearColor(0, 0, 0, 1); // Couleur de fond (noir)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -109,8 +124,29 @@ public class GameScreen implements Screen {
         mapRenderer.setView(camera);
         mapRenderer.render();
 
-        // Code pour rendre d'autres éléments, gérer les inputs, etc.
-        handleInput();
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(playerTexture, Player.getX(), Player.getY(), 1, 1);  // Dessiner le joueur
+
+        for (Projectiles p : player.getProjectiles()) {
+            p.render(batch);
+        }
+        batch.end();
+
+    }
+
+    private void updatePlayerPosition(float delta) {
+        if (player.isLeftMove()) {
+            player.setX(player.getX() - 5 * delta);  // Déplacer vers la gauche
+        }
+        if (player.isRightMove()) {
+            player.setX(player.getX() + 5 * delta);  // Déplacer vers la droite
+        }
+        if (player.isJumpMove()) {
+            player.setY(player.getY() + 10 * delta);  // Simuler un saut
+        }
+        //Gravité et dash
+        player.update(delta);
     }
 
     private void handleInput() {

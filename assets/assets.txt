@@ -1,6 +1,7 @@
 .gitkeep
 Maps.tiled-project
 Maps.tiled-session
+Player.png
 Test_Base_map.tmx
 The_Complete_Map.tmx
 Tiled_asset/Blue.tsx
