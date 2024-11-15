@@ -34,6 +34,7 @@ public class Player extends InputAdapter {
         return new Vector2(x, y);
     }
 
+
     public static float getX() {
         return x;
     }

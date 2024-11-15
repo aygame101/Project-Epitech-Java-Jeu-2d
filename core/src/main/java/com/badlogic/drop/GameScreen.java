@@ -20,142 +20,93 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen implements Screen {
 
-    private Game game;
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer mapRenderer;
-    private OrthographicCamera camera;
-    private Viewport viewport;
+    private final TiledMap map;
+    private final OrthogonalTiledMapRenderer mapRenderer;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
 
-    private SpriteBatch batch;
-    private Player player;
-    private Texture playerTexture;
+    private final SpriteBatch batch;
+    private final Player player;
+    private final Texture playerTexture;
 
-    // Variables pour la gestion des salles
-    private MapLayer roomsLayer;
-    private Vector2 currentRoomCenter;
-
-    // La classe interne pour encapsuler les informations de la salle
-    public class RoomInfo {
-        private String name;
-        private Rectangle rectangle;
-        private float width;
-        private float height;
-
-        public RoomInfo(String name, Rectangle rectangle) {
-            this.name = name;
-            this.rectangle = rectangle;
-            this.width = rectangle.getWidth();
-            this.height = rectangle.getHeight();
-        }
-
-        public String getName() {
-            return name;
-        }
-        public Rectangle getRectangle() {
-            return rectangle;
-        }
-        public float getWidth()  {
-            return width;
-        }
-        public float getHeight() {
-            return height;
-        }
-    }
+    private final MapLayer roomsLayer;
 
     public GameScreen(Game game) {
-        this.game = game;
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(80, 60, camera);
-        this.map = new TmxMapLoader().load("The_complete_Map.tmx");
-        this.mapRenderer = new OrthogonalTiledMapRenderer(map);
+        this.viewport = new FitViewport(16, 9, camera);
 
-        roomsLayer = map.getLayers().get("Rooms"); // Assurez-vous que votre couche de salles s'appelle "Rooms"
+        this.map = new TmxMapLoader().load("The_Complete_Map.tmx");
+        this.mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / 16f);
 
-        player = new Player(5,5);
+        roomsLayer = map.getLayers().get("Rooms");
+
+        MapObject startObject = getMapObjectByName(map, "Start");
+        Vector2 startCoordinates = getObjectPosition(startObject);
+
+        player = new Player(startCoordinates.x, startCoordinates.y);
         Gdx.input.setInputProcessor(player);
 
         playerTexture = new Texture(Gdx.files.internal("Player.png"));
         batch = new SpriteBatch();
     }
 
-    private void moveToRoom(int roomX, int roomY) {
-        String roomName = getRoomNameByCoordinates(roomX, roomY);
-        RoomInfo room = getRoomBounds(roomName);
-
-        currentRoomCenter.set(room.getRectangle().x + room.getWidth() / 2, room.getRectangle().y + room.getHeight() / 2);
-
-        // Déplacer la caméra vers la salle active
-        camera.position.set(currentRoomCenter, 0);
-        camera.update();
-    }
-
-    private String getRoomNameByCoordinates(int x, int y) {
-        for (MapObject object : roomsLayer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                RectangleMapObject rectangleObject = (RectangleMapObject) object;
-                Rectangle rect = rectangleObject.getRectangle();
-                if (rect.contains(x, y)) {
-                    return object.getName();
-                }
-            }
-        }
-        return null; // ou lever une exception ou gérer le cas où aucune room n'est trouvée à ces coordonnées
-    }
-
-    private RoomInfo getRoomBounds(String roomName) {
-        for (MapObject object : roomsLayer.getObjects()) {
-            if (object.getName().equals(roomName) && object instanceof RectangleMapObject) {
-                RectangleMapObject rectangleObject = (RectangleMapObject) object;
-                Rectangle rectangle = rectangleObject.getRectangle();
-                return new RoomInfo(roomName, rectangle);
-            }
-        }
-        return null; // ou lever une exception ou gérer le cas où l'objet n'est pas trouvé
-    }
-
     @Override
-    public void show() {
-        // Implementation omitted for shortness
-    }
+    public void show() {}
 
     @Override
     public void render(float delta) {
-        // Effacer l'écran
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Mettre à jour la position du joueur
         updatePlayerPosition(delta);
 
-        // Centrer la caméra sur le joueur
         camera.position.set(player.getPosition().x, player.getPosition().y, 0);
         camera.update();
 
-        // Rendu de la carte et des éléments
         mapRenderer.setView(camera);
         mapRenderer.render();
 
         batch.begin();
         batch.draw(playerTexture, player.getPosition().x, player.getPosition().y);
         batch.end();
+
+        checkRoomChange();
     }
 
     private void updatePlayerPosition(float delta) {
         if (player.isLeftMove()) {
-            player.setX(player.getX() - 5 * delta);  // Déplacer vers la gauche
+            player.setX(player.getX() - 5 * delta);
         }
         if (player.isRightMove()) {
-            player.setX(player.getX() + 5 * delta);  // Déplacer vers la droite
+            player.setX(player.getX() + 5 * delta);
         }
         if (player.isJumpMove()) {
-            player.setY(player.getY() + 10 * delta);  // Simuler un saut
+            player.setY(player.getY() + 10 * delta);
         }
-        //Gravité et dash
+
         player.update(delta);
     }
 
-    private void handleInput() {
-        // Code pour la gestion des entrées utilisateur
+    private void handleInput() {}
+
+    private MapObject getMapObjectByName(TiledMap map, String name) {
+        for (MapLayer layer : map.getLayers()) {
+            for (MapObject object : layer.getObjects()) {
+                if (name.equals(object.getName())) {
+                    return object;
+                }
+            }
+        }
+        return null;
+    }
+
+    private Vector2 getObjectPosition(MapObject object) {
+        if (object instanceof RectangleMapObject) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            return new Vector2(rect.x, rect.y);
+        }
+        // Gérez d'autres types d'objets si nécessaire
+        return new Vector2(0, 0);
     }
 
     @Override
@@ -176,5 +127,23 @@ public class GameScreen implements Screen {
     public void dispose() {
         map.dispose();
         mapRenderer.dispose();
+    }
+
+    private void checkRoomChange() {
+        for (MapObject object : roomsLayer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                Rectangle roomRect = ((RectangleMapObject) object).getRectangle();
+                if (roomRect.contains(player.getPosition().x, player.getPosition().y)) {
+                    loadRoom(roomRect);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void loadRoom(Rectangle roomRect) {
+        // Logique pour charger la salle correspondant au rectangle
+        // Vous pouvez ajuster cette méthode selon vos besoins
+        System.out.println("Loading room at: " + roomRect);
     }
 }
