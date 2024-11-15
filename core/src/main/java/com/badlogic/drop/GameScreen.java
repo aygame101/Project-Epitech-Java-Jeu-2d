@@ -71,7 +71,7 @@ public class GameScreen implements Screen {
 
         roomsLayer = map.getLayers().get("Rooms"); // Assurez-vous que votre couche de salles s'appelle "Rooms"
 
-        player = new Player();
+        player = new Player(5,5);
         Gdx.input.setInputProcessor(player);
 
         playerTexture = new Texture(Gdx.files.internal("Player.png"));
@@ -79,7 +79,14 @@ public class GameScreen implements Screen {
     }
 
     private void moveToRoom(int roomX, int roomY) {
-        // Implementation omitted for shortness
+        String roomName = getRoomNameByCoordinates(roomX, roomY);
+        RoomInfo room = getRoomBounds(roomName);
+
+        currentRoomCenter.set(room.getRectangle().x + room.getWidth() / 2, room.getRectangle().y + room.getHeight() / 2);
+
+        // Déplacer la caméra vers la salle active
+        camera.position.set(currentRoomCenter, 0);
+        camera.update();
     }
 
     private String getRoomNameByCoordinates(int x, int y) {
@@ -113,26 +120,24 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
-        updatePlayerPosition(delta);
-
-        // Efface l'écran avant de dessiner chaque nouvelle image
-        Gdx.gl.glClearColor(0, 0, 0, 1); // Couleur de fond (noir)
+        // Effacer l'écran
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Render the map
+        // Mettre à jour la position du joueur
+        updatePlayerPosition(delta);
+
+        // Centrer la caméra sur le joueur
+        camera.position.set(player.getPosition().x, player.getPosition().y, 0);
+        camera.update();
+
+        // Rendu de la carte et des éléments
         mapRenderer.setView(camera);
         mapRenderer.render();
 
-        batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(playerTexture, Player.getX(), Player.getY(), 1, 1);  // Dessiner le joueur
-
-        for (Projectiles p : player.getProjectiles()) {
-            p.render(batch);
-        }
+        batch.draw(playerTexture, player.getPosition().x, player.getPosition().y);
         batch.end();
-
     }
 
     private void updatePlayerPosition(float delta) {

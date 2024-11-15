@@ -2,12 +2,13 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class Player extends InputAdapter {
 
-    private static float x = 5;  // Position initiale en X
-    private static float y = 5;  // Position initiale en Y
+    private static float x;  // Position initiale en X
+    private static float y;  // Position initiale en Y
     private float velocityY = 0;  // Vitesse verticale du joueur
     private float gravity = -0.5f;  // Force de gravité, ajustez selon vos besoins
     private boolean onGround = true;  // Indicateur si le joueur est au sol
@@ -23,8 +24,14 @@ public class Player extends InputAdapter {
 
     private Array<Projectiles> projectiles;
 
-    public Player() {
+    public Player(float x, float y) {
+        this.x = x;
+        this.y = y;
         projectiles = new Array<Projectiles>();
+    }
+
+    public Vector2 getPosition() {
+        return new Vector2(x, y);
     }
 
     public static float getX() {
