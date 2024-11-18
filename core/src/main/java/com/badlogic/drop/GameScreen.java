@@ -31,23 +31,22 @@ public class GameScreen implements Screen {
     private Rectangle currentRoomRect;
 
     public GameScreen(Game game) {
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(400,250, camera);
-        playerTexture = new Texture(Gdx.files.internal("player.png"));
-        player = new Player(0, 0); // Position initiale du joueur
-
-        // Charger la carte
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 16/16f);
-        roomsLayer = map.getLayers().get("Rooms"); // Nom de la couche contenant les rooms
+        mapRenderer = new OrthogonalTiledMapRenderer(map);
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(800, 600, camera);
+        batch = new SpriteBatch();
+        player = new Player(100, 100, 32, 32); // Position et taille initiale du joueur
+        playerTexture = new Texture("player.png");
+        roomsLayer = map.getLayers().get("Rooms");
 
-        // Charger la première salle (room0)
-        initializeRoom0();
+        // Initialiser la salle avec `Room0`
+        currentRoomRect = getRoomRectangle(map, "Room0");
+        if (currentRoomRect != null) {
+            loadRoom(currentRoomRect);
+        }
 
-        // Positionner le joueur sur l'objet "Start" lors de l'initialisation
         positionPlayerAtStart();
-
         camera.update();
     }
 
@@ -56,66 +55,95 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // Efface l'écran
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Appelle des méthodes de mise à jour
         updatePlayerPosition(delta);
         handleInput();
         checkRoomChange();
 
-        // Met à jour le rendu de la carte et de la caméra
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render();
 
-        // Autres dessinateurs (par exemple, SpriteBatch)
         batch.setProjectionMatrix(camera.combined);
-
-        // Dessiner le joueur
         batch.begin();
-        batch.draw(playerTexture, player.getX(), player.getY());
+        batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
         batch.end();
-
-        // Mettre à jour la caméra pour suivre le joueur
-        camera.update();
     }
 
     private void updatePlayerPosition(float delta) {
         player.update(delta);
-        checkRoomChange();
     }
 
     private void handleInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player.setLeftMove(true);
-        } else {
-            player.setLeftMove(false);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            player.setX(player.getX() - 200 * Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            player.setX(player.getX() + 200 * Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            player.setY(player.getY() + 200 * Gdx.graphics.getDeltaTime());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            player.setY(player.getY() - 200 * Gdx.graphics.getDeltaTime());
+        }
+    }
+
+    private void checkRoomChange() {
+        Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+
+        for (MapObject object : roomsLayer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                RectangleMapObject rectObject = (RectangleMapObject) object;
+                Rectangle roomRect = rectObject.getRectangle();
+
+                if (playerRect.overlaps(roomRect) && !roomRect.equals(currentRoomRect)) {
+                    loadRoom(roomRect);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void loadRoom(Rectangle roomRect) {
+        if (currentRoomRect != null && currentRoomRect.equals(roomRect)) {
+            return;
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player.setRightMove(true);
-        } else {
-            player.setRightMove(false);
-        }
+        float roomWidth = roomRect.getWidth();
+        float roomHeight = roomRect.getHeight();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.isOnGround()) {
-            player.setJumpMove(true);
-        } else {
-            player.setJumpMove(false);
-        }
+        camera.viewportWidth = roomWidth;
+        camera.viewportHeight = roomHeight;
+        camera.position.set(roomRect.x + roomWidth / 2, roomRect.y + roomHeight / 2, 0);
+        camera.update();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            player.setDashMove(true);
-        } else {
-            player.setDashMove(false);
-        }
+        currentRoomRect = roomRect;
+    }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            player.setShoot(true);
+    private void positionPlayerAtStart() {
+        MapObject startObject = getMapObjectByName(map, "Start1");
+        if (startObject != null) {
+            Vector2 startPosition = getObjectPosition(startObject);
+            player.setX(startPosition.x);
+            player.setY(startPosition.y);
         } else {
-            player.setShoot(false);
+            player.setX(100);
+            player.setY(100);
         }
+    }
+
+    private Rectangle getRoomRectangle(TiledMap map, String roomName) {
+        for (MapObject object : roomsLayer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                RectangleMapObject rectObject = (RectangleMapObject) object;
+                if (rectObject.getName() != null && rectObject.getName().equals(roomName)) {
+                    return rectObject.getRectangle();
+                }
+            }
+        }
+        return null;
     }
 
     private MapObject getMapObjectByName(TiledMap map, String name) {
@@ -134,13 +162,13 @@ public class GameScreen implements Screen {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             return new Vector2(rect.x, rect.y);
         }
-        return null;
+        return new Vector2();
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
     }
 
     @Override
@@ -159,66 +187,6 @@ public class GameScreen implements Screen {
         batch.dispose();
         playerTexture.dispose();
     }
-
-    private void checkRoomChange() {
-        for (MapObject object : roomsLayer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                Rectangle roomRect = ((RectangleMapObject) object).getRectangle();
-                if (roomRect.contains(player.getPosition().x, player.getPosition().y)) {
-                    loadRoom(roomRect);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void loadRoom(Rectangle roomRect) {
-        currentRoomRect = roomRect;
-        // Met à jour la caméra pour correspondre aux dimensions de la salle actuelle
-        float roomWidth = roomRect.getWidth();
-        float roomHeight = roomRect.getHeight();
-
-        camera.viewportWidth = roomWidth;
-        camera.viewportHeight = roomHeight;
-        camera.position.set(roomRect.x + roomWidth / 2, roomRect.y + roomHeight / 2, 0);
-        camera.update();
-
-        // Positionner le joueur sur l'objet "Start" lors du chargement de la salle
-        positionPlayerAtStart();
-
-        // Réinitialiser les objets de la salle, si nécessaire
-        for (MapObject object : roomsLayer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                Rectangle objectRect = ((RectangleMapObject) object).getRectangle();
-                // Initialiser ou réinitialiser les objets dans la nouvelle salle
-                if (roomRect.overlaps(objectRect)) {
-                    System.out.println("Initializing object in room at: " + objectRect);
-                }
-            }
-        }
-        System.out.println("Loading room at: " + roomRect);
-    }
-
-    private void initializeRoom0() {
-        MapObject roomObject = getMapObjectByName(map, "room0");
-
-        if (roomObject instanceof RectangleMapObject) {
-            currentRoomRect = ((RectangleMapObject) roomObject).getRectangle();
-            loadRoom(currentRoomRect);
-        }
-    }
-
-    private void positionPlayerAtStart() {
-        MapObject startObject = getMapObjectByName(map, "Start1");
-        if (startObject != null) {
-            Vector2 startPosition = getObjectPosition(startObject);
-            player.setX(startPosition.x);
-            player.setY(startPosition.y);
-        } else {
-            // Valeurs par défaut si l'objet de départ n'est pas trouvé
-            player.setX(100);
-            player.setY(100);
-            System.out.println("No start position found in room.");
-        }
-    }
 }
+
+
