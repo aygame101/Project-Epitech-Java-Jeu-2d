@@ -18,7 +18,7 @@ public class Player extends InputAdapter {
     private static  int coins = 0;
 
     private float velocityY = 0;   // Vitesse verticale
-    private float gravity = -0.5f; // Force de gravité
+    private float gravity = -2f; // Force de gravité
     private boolean onGround = true; // Indicateur si le joueur est au sol
 
     private Array<Projectile> projectiles; // Liste des projectiles tirés par le joueur

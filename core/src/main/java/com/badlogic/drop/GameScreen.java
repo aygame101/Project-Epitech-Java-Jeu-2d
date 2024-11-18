@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -28,7 +29,7 @@ public class GameScreen implements Screen {
     private final Player player;
     private final Texture playerTexture;
     private final MapLayer roomsLayer;
-    private final MapLayer platformsLayer;  // Calque pour les plateformes
+    private final TiledMapTileLayer platformsLayer;  // Calque pour les plateformes
     private Rectangle currentRoomRect;
 
     public GameScreen(Game game) {
@@ -40,7 +41,14 @@ public class GameScreen implements Screen {
         player = new Player(100, 100, 16, 16); // Position et taille initiale du joueur
         playerTexture = new Texture("player.png");
         roomsLayer = map.getLayers().get("Rooms");
-        platformsLayer = map.getLayers().get("Platformes");  // Initialiser le calque des plateformes
+
+        // Initialise le calque des plateformes en vérifiant son type
+        MapLayer layer = map.getLayers().get("Platformes");
+        if (layer instanceof TiledMapTileLayer) {
+            platformsLayer = (TiledMapTileLayer)layer;
+        } else {
+            throw new IllegalStateException("Le calque 'Platformes' n'existe pas ou n'est pas un TiledMapTileLayer !");
+        }
 
         // Initialiser la salle avec `Room0`
         currentRoomRect = getRoomRectangle(map, "Room0");
@@ -175,17 +183,18 @@ public class GameScreen implements Screen {
     private void checkCollisions() {
         player.setOnGround(false); // Réinitialiser l'état "au sol"
 
-        // Vérifier uniquement les collisions avec le calque "Platformes"
-        for (MapObject object : platformsLayer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                Rectangle platformRect = ((RectangleMapObject) object).getRectangle();
-                Rectangle playerRect = player.getBoundingBox();
+        // Obtient les coordonnées en tuiles du joueur
+        int playerTileX = (int) (player.getX() / platformsLayer.getTileWidth());
+        int playerTileY = (int) (player.getY() / platformsLayer.getTileHeight());
 
-                // Vérifier la collision avec la plateforme
-                if (playerRect.overlaps(platformRect)) {
+        // Vérifie les collisions
+        for (int x = playerTileX; x < playerTileX + player.getWidth() / platformsLayer.getTileWidth(); x++) {
+            for (int y = playerTileY; y < playerTileY + player.getHeight() / platformsLayer.getTileHeight(); y++) {
+                if (platformsLayer.getCell(x, y) != null) {
                     // Ajuster la position du joueur pour "atterrir" sur la plateforme
-                    player.setY(platformRect.y + platformRect.height);
+                    player.setY(y * platformsLayer.getTileHeight() + platformsLayer.getTileHeight());
                     player.setOnGround(true);
+                    return;
                 }
             }
         }

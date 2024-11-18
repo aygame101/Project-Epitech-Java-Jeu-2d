@@ -22,26 +22,29 @@ public class Main extends Game {
     public void create() {
         // Initialise les ressources partagées
         batch = new SpriteBatch();
+        /*
         assetManager = new AssetManager();
         assetManager.load("assets/skins/uiskin.json", Skin.class);
         assetManager.load("assets/skins/default.fnt", BitmapFont.class);
         assetManager.load("assets/skins/uiskin.atlas", TextureAtlas.class);
-        assetManager.finishLoading();
+        assetManager.finishLoading();*/
 
         font = new BitmapFont(); // Police de base, à personnaliser si besoin
 
+        this.setScreen(new GameScreen(this));
+        /*
         try {
             skin = assetManager.get("assets/skins/uiskin.json", Skin.class);
         } catch (Exception e) {
             Gdx.app.error("Main", "Error loading skin", e);
         }
         // Charger la première scène (écran de jeu)
-        this.setScreen(new GameScreen(this));
+
 
         MenuScreen = new MenuScreen(this);
         com.badlogic.drop.OptionsScreen optionsScreen = new OptionsScreen(this);
 
-        setScreen(MenuScreen);
+        setScreen(MenuScreen);*/
     }
 
     @Override
