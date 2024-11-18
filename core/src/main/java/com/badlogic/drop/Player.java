@@ -5,10 +5,13 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.ArrayList;
+
 public class Player extends InputAdapter {
 
     private static float x;  // Position initiale en X
     private static float y;  // Position initiale en Y
+    private static  int coins = 0;
     private float velocityY = 0;  // Vitesse verticale du joueur
     private float gravity = -0.5f;  // Force de gravité, ajustez selon vos besoins
     private boolean onGround = true;  // Indicateur si le joueur est au sol
@@ -24,10 +27,23 @@ public class Player extends InputAdapter {
 
     private Array<Projectiles> projectiles;
 
+    private static ArrayList<ItemShop> itemsPossedes;
+
     public Player(float x, float y) {
         this.x = x;
         this.y = y;
         projectiles = new Array<Projectiles>();
+        this.itemsPossedes = new ArrayList<>();
+    }
+
+    public static int getCoins() {
+        return coins;
+    }
+
+
+    public static void ajouterItem(ItemShop item) {
+        itemsPossedes.add(item);
+        System.out.println("You've gained : " + item.getName());
     }
 
     public Vector2 getPosition() {
@@ -198,5 +214,11 @@ public class Player extends InputAdapter {
         }
     }
 
+    public void afficherItemsPossedes() {
+        System.out.println("Items possédés :");
+        for (ItemShop item : itemsPossedes) {
+            System.out.println("- " + item.getName());
+        }
+    }
 }
 
