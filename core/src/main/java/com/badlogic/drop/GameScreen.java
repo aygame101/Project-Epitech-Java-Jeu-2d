@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
     private final Player player;
     private final Texture playerTexture;
     private final MapLayer roomsLayer;
+    private final MapLayer platformsLayer;  // Calque pour les plateformes
     private Rectangle currentRoomRect;
 
     public GameScreen(Game game) {
@@ -36,9 +37,10 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         viewport = new FitViewport(800, 600, camera);
         batch = new SpriteBatch();
-        player = new Player(100, 100, 32, 32); // Position et taille initiale du joueur
+        player = new Player(100, 100, 16, 16); // Position et taille initiale du joueur
         playerTexture = new Texture("player.png");
         roomsLayer = map.getLayers().get("Rooms");
+        platformsLayer = map.getLayers().get("Platformes");  // Initialiser le calque des plateformes
 
         // Initialiser la salle avec `Room0`
         currentRoomRect = getRoomRectangle(map, "Room0");
@@ -69,6 +71,11 @@ public class GameScreen implements Screen {
         batch.begin();
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
         batch.end();
+        // Mettre à jour la position du joueur
+        updatePlayerPosition(delta);
+
+        // Vérifier les collisions après la mise à jour de la position du joueur
+        checkCollisions();
     }
 
     private void updatePlayerPosition(float delta) {
@@ -123,7 +130,7 @@ public class GameScreen implements Screen {
     }
 
     private void positionPlayerAtStart() {
-        MapObject startObject = getMapObjectByName(map, "Start1");
+        MapObject startObject = getMapObjectByName(map, "Start0");
         if (startObject != null) {
             Vector2 startPosition = getObjectPosition(startObject);
             player.setX(startPosition.x);
@@ -165,6 +172,25 @@ public class GameScreen implements Screen {
         return new Vector2();
     }
 
+    private void checkCollisions() {
+        player.setOnGround(false); // Réinitialiser l'état "au sol"
+
+        // Vérifier uniquement les collisions avec le calque "Platformes"
+        for (MapObject object : platformsLayer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                Rectangle platformRect = ((RectangleMapObject) object).getRectangle();
+                Rectangle playerRect = player.getBoundingBox();
+
+                // Vérifier la collision avec la plateforme
+                if (playerRect.overlaps(platformRect)) {
+                    // Ajuster la position du joueur pour "atterrir" sur la plateforme
+                    player.setY(platformRect.y + platformRect.height);
+                    player.setOnGround(true);
+                }
+            }
+        }
+    }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -188,5 +214,3 @@ public class GameScreen implements Screen {
         playerTexture.dispose();
     }
 }
-
-

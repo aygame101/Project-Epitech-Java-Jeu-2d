@@ -3,6 +3,7 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -24,12 +25,15 @@ public class Player extends InputAdapter {
 
     private static ArrayList<ItemShop> itemsPossedes;
 
+    private Rectangle boundingBox;
+
     public Player(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.projectiles = new Array<>();
+        this.boundingBox = new Rectangle(x, y, width, height);  // Initialisation de boundingBox
     }
 
     // Getters et setters pour x, y, width, et height
@@ -39,6 +43,7 @@ public class Player extends InputAdapter {
 
     public void setX(float x) {
         this.x = x;
+        this.boundingBox.setX(x); // Mettre à jour boundingBox quand x est mis à jour
     }
 
     public float getY() {
@@ -47,6 +52,7 @@ public class Player extends InputAdapter {
 
     public void setY(float y) {
         this.y = y;
+        this.boundingBox.setY(y); // Mettre à jour boundingBox quand y est mis à jour
     }
 
     public float getWidth() {
@@ -69,31 +75,34 @@ public class Player extends InputAdapter {
         return onGround;
     }
 
-    public void setOnGround(boolean onGround) {
-        this.onGround = onGround;
-    }
 
     // Méthode mise à jour pour la logique du joueur
     public void update(float delta) {
-        // Applique la gravité si le joueur n'est pas au sol
+        // Appliquer la gravité
         if (!onGround) {
             velocityY += gravity;
-        } else {
-            velocityY = 0;
         }
 
-        // Met à jour la position Y en fonction de la vitesse verticale
-        y += velocityY * delta;
+        // Mettre à jour la position Y du joueur
+        y += velocityY;
 
-        // Logique pour empêcher le joueur de sortir des limites définies (exemple)
-        if (y < 0) {
-            y = 0;
-            onGround = true;
-        }
+        // Mettre à jour la boîte englobante
+        boundingBox.setPosition(x, y);
 
         // Logique de mise à jour pour les projectiles tirés
         for (Projectile projectile : projectiles) {
             projectile.update(delta);
+        }
+    }
+
+    public Rectangle getBoundingBox() {
+        return boundingBox;
+    }
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
+        if (onGround) {
+            velocityY = 0;
         }
     }
 
