@@ -40,6 +40,14 @@ public class Player extends InputAdapter {
         return coins;
     }
 
+    public boolean isOnGround() {
+        return onGround;
+    }
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
+    }
+
 
     public static void ajouterItem(ItemShop item) {
         itemsPossedes.add(item);
