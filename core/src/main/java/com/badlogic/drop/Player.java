@@ -2,6 +2,8 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -9,134 +11,98 @@ import java.util.ArrayList;
 
 public class Player extends InputAdapter {
 
-    private static float x;  // Position initiale en X
-    private static float y;  // Position initiale en Y
+    private float x;        // Position en X
+    private float y;        // Position en Y
+    private float width;    // Largeur du joueur
+    private float height;   // Hauteur du joueur
     private static  int coins = 0;
-    private float velocityY = 0;  // Vitesse verticale du joueur
-    private float gravity = -0.5f;  // Force de gravité, ajustez selon vos besoins
-    private boolean onGround = true;  // Indicateur si le joueur est au sol
 
-    private boolean leftMove = false;
-    private boolean rightMove = false;
-    private boolean jumpMove = false;
-    private static boolean dashMove = false;
-    private boolean shoot = false;
-    private static float dashDuration = 0.5f; // Durée du dash en secondes
-    private static float dashSpeed = 20f; // Vitesse du dash
-    private static float dashTimeLeft = 0f; // Temps restant du dash
+    private float velocityY = 0;   // Vitesse verticale
+    private float gravity = -0.5f; // Force de gravité
+    private boolean onGround = true; // Indicateur si le joueur est au sol
 
-    private Array<Projectiles> projectiles;
+    private Array<Projectile> projectiles; // Liste des projectiles tirés par le joueur
 
     private static ArrayList<ItemShop> itemsPossedes;
 
-    public Player(float x, float y) {
+    private Rectangle boundingBox;
+
+    public Player(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
-        projectiles = new Array<Projectiles>();
-        this.itemsPossedes = new ArrayList<>();
+        this.width = width;
+        this.height = height;
+        this.projectiles = new Array<>();
+        this.boundingBox = new Rectangle(x, y, width, height);  // Initialisation de boundingBox
     }
 
-    public static int getCoins() {
-        return coins;
-    }
-
-
-    public static void ajouterItem(ItemShop item) {
-        itemsPossedes.add(item);
-        System.out.println("You've gained : " + item.getName());
-    }
-
-    public Vector2 getPosition() {
-        return new Vector2(x, y);
-    }
-
-
-    public static float getX() {
+    // Getters et setters pour x, y, width, et height
+    public float getX() {
         return x;
     }
 
     public void setX(float x) {
-        Player.x = x;
+        this.x = x;
+        this.boundingBox.setX(x); // Mettre à jour boundingBox quand x est mis à jour
     }
 
-    public static float getY() {
+    public float getY() {
         return y;
     }
 
     public void setY(float y) {
-        Player.y = y;
+        this.y = y;
+        this.boundingBox.setY(y); // Mettre à jour boundingBox quand y est mis à jour
     }
 
-    public boolean isLeftMove() {
-        return leftMove;
+    public float getWidth() {
+        return width;
     }
 
-    public void setLeftMove(boolean leftMove) {
-        this.leftMove = leftMove;
+    public void setWidth(float width) {
+        this.width = width;
     }
 
-    public boolean isRightMove() {
-        return rightMove;
+    public float getHeight() {
+        return height;
     }
 
-    public void setRightMove(boolean rightMove) {
-        this.rightMove = rightMove;
+    public void setHeight(float height) {
+        this.height = height;
     }
 
-    public boolean isJumpMove() {
-        return jumpMove;
+    public boolean isOnGround() {
+        return onGround;
     }
 
-    public void setJumpMove(boolean jumpMove) {
-        this.jumpMove = jumpMove;
-    }
 
-    public static boolean isDashMove() {
-        return dashMove;
-    }
-
-    public static void setDashMove(boolean dashMove) {
-        Player.dashMove = dashMove;
-    }
-
-    public boolean isShoot() {
-        return shoot;
-    }
-
-    public void setShoot(boolean shoot) {
-        this.shoot = shoot;
-    }
-
-    public Array<Projectiles> getProjectiles() {
-        return projectiles;
-    }
-
+    // Méthode mise à jour pour la logique du joueur
     public void update(float delta) {
         // Appliquer la gravité
         if (!onGround) {
             velocityY += gravity;
         }
 
-        // Appliquer la vitesse verticale à la position Y
-        y += velocityY * delta;
+        // Mettre à jour la position Y du joueur
+        y += velocityY;
 
-        // Empêcher le joueur de descendre en dessous de la "terre"
-        if (y <= 5) {  // Remplacez "5" par la hauteur du sol appropriée
-            y = 5;
-            onGround = true;
+        // Mettre à jour la boîte englobante
+        boundingBox.setPosition(x, y);
+
+        // Logique de mise à jour pour les projectiles tirés
+        for (Projectile projectile : projectiles) {
+            projectile.update(delta);
+        }
+    }
+
+    public Rectangle getBoundingBox() {
+        return boundingBox;
+    }
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
+        if (onGround) {
             velocityY = 0;
-        }
-
-        // Gestion du mouvement latéral
-        if (leftMove) {
-            x -= 5 * delta;
-        }
-        if (rightMove) {
-            x += 5 * delta;
-        }
-        //Gestion des projectiles
-        for (Projectiles p : projectiles) {
-            p.update(delta);
         }
     }
 
@@ -144,81 +110,76 @@ public class Player extends InputAdapter {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.LEFT:
-                setLeftMove(true);
+                // Déplacement à gauche
+                setX(getX() - 10); // Ajuster la valeur de déplacement selon le besoin
                 break;
             case Input.Keys.RIGHT:
-                setRightMove(true);
+                // Déplacement à droite
+                setX(getX() + 10); // Ajuster la valeur de déplacement selon le besoin
                 break;
             case Input.Keys.UP:
-                // Autoriser le saut uniquement si le joueur est au sol
+                // Sauter
                 if (onGround) {
-                    setJumpMove(true);
-                    velocityY = 10;  // Force de saut, ajustez selon vos besoins
+                    velocityY = 10; // Ajuster la valeur de saut selon le besoin
                     onGround = false;
                 }
                 break;
             case Input.Keys.SPACE:
-                if (!isDashMove()) {
-                    setDashMove(true);  // Commencer le dash
-                    dashTimeLeft = dashDuration;  // Réinitialiser le temps du dash
-                }
-            case Input.Keys.DOWN:
-                setShoot(true);
+                // Tirer un projectile
+                shoot();
                 break;
-            default:
-                return false;
         }
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case Input.Keys.LEFT:
-                setLeftMove(false);
-                break;
-            case Input.Keys.RIGHT:
-                setRightMove(false);
-                break;
-            case Input.Keys.UP:
-                setJumpMove(false);
-                break;
-            case Input.Keys.SPACE:
-                setDashMove(false);
-                break;
-             case Input.Keys.DOWN:
-                 setShoot(false);
-                 break;
-            default:
-                return false;
-        }
-        return true;
+        // Aucune action spécifique pour keyUp dans cet exemple
+        return false;
     }
 
     private void shoot() {
-        // Créer un projectile et l'ajouter à la liste
-        float projectileSpeed = 10f;  // Vitesse du projectile
-        float projectileY = y + 0.5f;  // La position Y du projectile (juste devant le joueur)
+        // Crée un nouveau projectile et l'ajoute à la liste
+        Projectile projectile = new Projectile(x + width / 2, y + height);
+        projectiles.add(projectile);
+    }
 
-        // Si le joueur se déplace à droite
-        if (rightMove) {
-            projectiles.add(new Projectiles(x + 1, projectileY, projectileSpeed));
+    public Array<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    // Une classe interne pour représenter les projectiles
+    private static class Projectile {
+        private float x;
+        private float y;
+        private float speed; // Vitesse du projectile
+
+        public Projectile(float x, float y) {
+            this.x = x;
+            this.y = y;
+            this.speed = 300; // Ajuster la vitesse du projectile selon le besoin
         }
-        // Si le joueur se déplace à gauche
-        else if (leftMove) {
-            projectiles.add(new Projectiles(x - 1, projectileY, -projectileSpeed));
+
+        public void update(float delta) {
+            // Met à jour la position du projectile
+            y += speed * delta;
         }
-        // Si le joueur n'est pas en mouvement horizontal, tirer droit devant
-        else {
-            projectiles.add(new Projectiles(x, projectileY, projectileSpeed));
+
+        public float getX() {
+            return x;
+        }
+
+        public float getY() {
+            return y;
         }
     }
 
-    public void afficherItemsPossedes() {
-        System.out.println("Items possédés :");
-        for (ItemShop item : itemsPossedes) {
-            System.out.println("- " + item.getName());
-        }
+    public static int getCoins() {
+        return coins;
+    }
+
+    public static void ajouterItem(ItemShop item) {
+        itemsPossedes.add(item);
+        System.out.println("You've gained : " + item.getName());
     }
 }
-
