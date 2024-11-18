@@ -6,8 +6,8 @@
     "activeFile": "The_Complete_Map.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
-        "Tiled_asset",
-        "."
+        ".",
+        "Tiled_asset"
     ],
     "fileStates": {
         "": {
@@ -51,10 +51,10 @@
                 4
             ],
             "scale": 2,
-            "selectedLayer": 6,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 199.75,
-                "y": 15873.25
+                "x": 73.75,
+                "y": 15914.25
             }
         },
         "Tiled_asset/Blue.tsx": {
