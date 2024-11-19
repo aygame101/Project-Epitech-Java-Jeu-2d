@@ -23,8 +23,8 @@ public class OptionsScreen implements Screen {
 
     // Add an array of window sizes
     private final int[][] windowSizes = {
-        {640, 480},
-        {960, 540},
+        {1366 , 768},
+        {1600 , 900},
         {1920, 1080}
     };
     private int currentSizeIndex = 0;
