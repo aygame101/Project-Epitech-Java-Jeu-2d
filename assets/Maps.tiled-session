@@ -59,11 +59,14 @@
             "scaleInDock": 1
         },
         "The_Complete_Map.tmx": {
-            "scale": 2,
+            "expandedGroupLayers": [
+                4
+            ],
+            "scale": 1.5,
             "selectedLayer": 6,
             "viewCenter": {
-                "x": 142.75,
-                "y": 15914.25
+                "x": 345,
+                "y": 15339.666666666666
             }
         },
         "Tiled_asset/Blue.tsx": {
@@ -126,11 +129,13 @@
         "Tiled_asset/morning_adventures_tileset_16x16.tsx",
         "Tiled_asset/spike (pixel adv).tsx",
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
-        "Tiled_asset/tilemap cochon.tsx"
+        "Tiled_asset/tilemap cochon.tsx",
+        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx"
     ],
     "project": "Maps.tiled-project",
     "property.type": "int",
     "recentFiles": [
+        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Tiled_asset/tilemap cochon.tsx",
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
         "Tiled_asset/spike (pixel adv).tsx",
@@ -141,8 +146,7 @@
         "Tiled_asset/Blue.tsx",
         "Game_Map_complete.tmx",
         "Tiled_asset/Game_Map_complete.tsx",
-        "Test_Base_map.tmx",
-        "Tiled_asset/Start (Idle) px adv.tsx"
+        "Test_Base_map.tmx"
     ],
     "resizeMap.removeObjects": true,
     "tileset.lastUsedFormat": "tsx",

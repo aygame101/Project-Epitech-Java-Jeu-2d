@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
         };
 
         // Initialiser la salle avec `Room0`
-        currentRoomRect = getRoomRectangle(map, "Room0");
+        currentRoomRect = getRoomRectangle(map, "Room1");
         if (currentRoomRect != null) {
             loadRoom(currentRoomRect);
         }
@@ -182,7 +182,7 @@ public class GameScreen implements Screen {
     }
 
     private void positionPlayerAtStart() {
-        MapObject startObject = getMapObjectByName(map, "Start0");
+        MapObject startObject = getMapObjectByName(map, "Start1");
         if (startObject != null) {
             Vector2 startPosition = getObjectPosition(startObject);
             player.setX(startPosition.x);
@@ -190,6 +190,7 @@ public class GameScreen implements Screen {
         } else {
             player.setX(100);
             player.setY(100);
+            Gdx.app.log("GameScreen", "Start position 'Start0' not found. Player positioned at default start location.");
         }
     }
 
