@@ -1,4 +1,5 @@
 .gitkeep
+Caract/Idle (32x32).png
 Maps.tiled-project
 Maps.tiled-session
 Player.png

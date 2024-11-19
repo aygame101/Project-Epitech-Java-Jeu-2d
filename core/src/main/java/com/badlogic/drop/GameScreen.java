@@ -17,6 +17,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -31,6 +33,8 @@ public class GameScreen implements Screen {
     private final MapLayer roomsLayer;
     private final TiledMapTileLayer platformsLayer;  // Calque pour les plateformes
     private Rectangle currentRoomRect;
+
+    private final Pool<Rectangle> rectPool;
 
     public GameScreen(Game game) {
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
@@ -49,6 +53,13 @@ public class GameScreen implements Screen {
         } else {
             throw new IllegalStateException("Le calque 'Platformes' n'existe pas ou n'est pas un TiledMapTileLayer !");
         }
+
+        rectPool = new Pool<Rectangle>() {
+            @Override
+            protected Rectangle newObject() {
+                return new Rectangle();
+            }
+        };
 
         // Initialiser la salle avec `Room0`
         currentRoomRect = getRoomRectangle(map, "Room0");
@@ -116,6 +127,39 @@ public class GameScreen implements Screen {
                 if (playerRect.overlaps(roomRect) && !roomRect.equals(currentRoomRect)) {
                     loadRoom(roomRect);
                     break;
+                }
+            }
+        }
+    }
+    private void checkPlatformCollisions() {
+        Array<Rectangle> platformTiles = new Array<>();
+        int startX = (int) (player.getX() / platformsLayer.getTileWidth());
+        int startY = (int) (player.getY() / platformsLayer.getTileHeight());
+        int endX = (int) ((player.getX() + player.getWidth()) / platformsLayer.getTileWidth());
+        int endY = (int) ((player.getY() + player.getHeight()) / platformsLayer.getTileHeight());
+
+        getTiles(startX, startY, endX, endY, platformTiles);
+
+        for (Rectangle tile : platformTiles) {
+            if (player.getBoundingBox().overlaps(tile)) {
+                // gestion des collisions ici
+                player.setOnGround(true);
+                break;
+            }
+        }
+    }
+
+    private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
+        TiledMapTileLayer layer = platformsLayer; // Utilise le calque des plateformes
+        rectPool.freeAll(tiles);
+        tiles.clear();
+        for (int y = startY; y <= endY; y++) {
+            for (int x = startX; x <= endX; x++) {
+                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+                if (cell != null) {
+                    Rectangle rect = rectPool.obtain();
+                    rect.set(x, y, 1, 1);
+                    tiles.add(rect);
                 }
             }
         }
