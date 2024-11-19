@@ -31,7 +31,7 @@ public class MenuScreen implements Screen {
         stage.addActor(backgroundImage);
 
         // Create the title label
-        Label titleLabel = new Label("Kawai Desu", skin, "default");
+        Label titleLabel = new Label("Kwa-FEUR", skin, "default");
         titleLabel.setFontScale(2); // Optionally scale the font
 
         // Create buttons

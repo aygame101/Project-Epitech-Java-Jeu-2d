@@ -1,6 +1,5 @@
 package com.badlogic.drop;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -36,7 +35,7 @@ public class GameScreen implements Screen {
 
     private final Pool<Rectangle> rectPool;
 
-    public GameScreen(Game game) {
+    public GameScreen(Main game) {
         // initialisation des champs omis pour la brièveté
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
@@ -84,6 +83,9 @@ public class GameScreen implements Screen {
         batch.begin();
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
         batch.end();
+
+
+
         // Mettre à jour la position du joueur
         updatePlayerPosition(delta);
 
@@ -111,6 +113,7 @@ public class GameScreen implements Screen {
             player.setY(player.getY() - 200 * Gdx.graphics.getDeltaTime());
         }
     }
+
 
     private void checkRoomChange() {
         Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
