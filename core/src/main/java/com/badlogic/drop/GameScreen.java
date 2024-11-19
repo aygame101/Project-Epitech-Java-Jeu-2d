@@ -1,6 +1,5 @@
 package com.badlogic.drop;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -32,7 +31,7 @@ public class GameScreen implements Screen {
     private final TiledMapTileLayer platformsLayer;  // Calque pour les plateformes
     private Rectangle currentRoomRect;
 
-    public GameScreen(Game game) {
+    public GameScreen(Main main) {
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();

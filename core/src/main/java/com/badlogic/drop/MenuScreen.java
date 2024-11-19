@@ -3,7 +3,6 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -14,48 +13,53 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class MenuScreen implements Screen {
     private Stage stage;
     private Main game;
+    private Skin skin;
 
     public MenuScreen(Main game) {
-        this.game = game;
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-        Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
+        this.game = game;  // Ensure game is assigned to the local variable
+        skin = new Skin(Gdx.files.internal("uiskin.json")); // Ensure you have this skin file in your assets
 
+        // Initialize the stage
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage); // Set the input processor to the stage
+
+        // Create buttons
+        TextButton playButton = new TextButton("Play", skin);
+        TextButton optionsButton = new TextButton("Options", skin);
+        TextButton quitButton = new TextButton("Quit", skin);
+
+        // Add button listeners
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                game.startGame(); // Implement this method in your main game class
+            }
+        });
+
+        optionsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                game.showOptions(); // Implement this method in your main game class
+            }
+        });
+
+        quitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                Gdx.app.exit(); // Quit the application
+            }
+        });
+
+        // Create a table to organize buttons
         Table table = new Table();
         table.setFillParent(true);
-        stage.addActor(table);
-
-        TextButton playButton = new TextButton("Play", skin);
-        playButton.addListener(event -> {
-            game.setScreen(new GameScreen(game));
-            return true;
-        });
-
-        TextButton optionsButton = new TextButton("Options", skin);
-        optionsButton.addListener(event -> {
-            game.setScreen(new OptionsScreen(game));
-            return true;
-        });
-
-        TextButton controlsButton = new TextButton("Controls", skin);
-        controlsButton.addListener(event -> {
-            game.setScreen(new ControlsScreen(game));
-            return true;
-        });
-
-        TextButton quitButton = new TextButton("Quit", skin);
-        quitButton.addListener(event -> {
-            Gdx.app.exit();
-            return true;
-        });
-
         table.add(playButton).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
+        table.row().pad(10, 0, 10,0);
         table.add(optionsButton).fillX().uniformX();
         table.row();
-        table.add(controlsButton).fillX().uniformX();
-        table.row();
         table.add(quitButton).fillX().uniformX();
+
+        stage.addActor(table);
     }
 
     @Override
@@ -63,10 +67,10 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.1f, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1); // Clear the screen with black
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.act(delta);
         stage.draw();
     }
 
@@ -87,5 +91,6 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        skin.dispose();
     }
 }

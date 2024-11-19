@@ -19,7 +19,7 @@ public class ControlsScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
 
         Table table = new Table();
         table.setFillParent(true);
@@ -33,7 +33,7 @@ public class ControlsScreen implements Screen {
         // Back button
         TextButton backButton = new TextButton("Back", skin);
         backButton.addListener(event -> {
-            game.setScreen(new MenuScreen(game));
+            game.setScreen((Screen) new MenuScreen(this.game));
             return true;
         });
 

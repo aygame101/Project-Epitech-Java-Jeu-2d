@@ -2,6 +2,7 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,38 +14,37 @@ public class Main extends Game {
     // Le SpriteBatch et le BitmapFont sont ici pour être partagés entre les écrans
     public SpriteBatch batch;
     public BitmapFont font;
-    private MenuScreen MenuScreen;
-    private GameScreen GameScreen;
-    public Skin skin;
+    private MenuScreen menuScreen;
+    private GameScreen gameScreen;
+    private OptionsScreen optionsScreen;
+    Skin skin;
     private AssetManager assetManager;
 
     @Override
     public void create() {
         // Initialise les ressources partagées
         batch = new SpriteBatch();
-        /*
-        assetManager = new AssetManager();
-        assetManager.load("assets/skins/uiskin.json", Skin.class);
-        assetManager.load("assets/skins/default.fnt", BitmapFont.class);
-        assetManager.load("assets/skins/uiskin.atlas", TextureAtlas.class);
-        assetManager.finishLoading();*/
-
+        this.setScreen(new MenuScreen(this));
+       /* Skin skin = new Skin();
+        skin.addRegions(new TextureAtlas("uiskin.atlas"));
+        skin.add("default-font", new BitmapFont(Gdx.files.internal("default.fnt")));
+        skin.load(Gdx.files.internal("uiskin.json"));
         font = new BitmapFont(); // Police de base, à personnaliser si besoin
 
-        this.setScreen(new GameScreen(this));
-        /*
         try {
-            skin = assetManager.get("assets/skins/uiskin.json", Skin.class);
+            skin = assetManager.get("assets/uiskin.json", Skin.class);
         } catch (Exception e) {
             Gdx.app.error("Main", "Error loading skin", e);
         }
-        // Charger la première scène (écran de jeu)
 
+        // Initialise tous les écrans
+        menuScreen = new MenuScreen(this);
+        gameScreen = new GameScreen(this);
+        optionsScreen = new OptionsScreen(this);
 
-        MenuScreen = new MenuScreen(this);
-        com.badlogic.drop.OptionsScreen optionsScreen = new OptionsScreen(this);
-
-        setScreen(MenuScreen);*/
+        // Charger l'écran de menu par défaut
+        setScreen(menuScreen);
+    }*/
     }
 
     @Override
@@ -73,23 +73,31 @@ public class Main extends Game {
         }
     }
 
-    // Optionnel : méthode pour changer facilement d’écran
+    // Méthode pour changer d’écran
     public void changeScreen(ScreenType screenType) {
         switch (screenType) {
             case GAME:
-                this.setScreen(new GameScreen(this));
+                this.setScreen(gameScreen);
                 break;
-            /*case MENU:
-                this.setScreen(new MenuScreen(this));
+            case MENU:
+                this.setScreen(menuScreen);
                 break;
-            case GAME_OVER:
-                this.setScreen(new GameOverScreen(this));
-                break;*/
+            case OPTIONS:
+                this.setScreen(optionsScreen);
+                break;
+            // Ajouter d'autres types d'écran si nécessaire
         }
+    }
+
+    public void startGame() {
+        this.setScreen(new GameScreen(this));
+    }
+
+    public void showOptions() {
     }
 
     // Enum pour référencer les différents écrans du jeu
     public enum ScreenType {
-        GAME, MENU, OPTIONS, GAME_OVER
+        GAME, MENU, OPTIONS
     }
 }

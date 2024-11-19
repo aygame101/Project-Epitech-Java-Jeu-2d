@@ -633,7 +633,8 @@ Vrac/morning_adventures_tilemap/License.txt
 Vrac/morning_adventures_tilemap/example_scene.png
 Vrac/morning_adventures_tilemap/layout_help.png
 Vrac/morning_adventures_tilemap/morning_adventures_tileset_16x16.png
-skins/default.fnt
-skins/uiskin.atlas
-skins/uiskin.json
-skins/uiskin.png
+default.fnt
+default.png
+uiskin.atlas
+uiskin.json
+uiskin.png
