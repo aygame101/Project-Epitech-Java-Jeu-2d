@@ -37,23 +37,16 @@ public class GameScreen implements Screen {
     private final Pool<Rectangle> rectPool;
 
     public GameScreen(Game game) {
+        // initialisation des champs omis pour la brièveté
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(800, 600, camera);
         batch = new SpriteBatch();
-        player = new Player(100, 100, 16, 16); // Position et taille initiale du joueur
-        playerTexture = new Texture("player.png");
+        playerTexture = new Texture("Player.png");
+        player = new Player(100, 100, 16, 16);
         roomsLayer = map.getLayers().get("Rooms");
-
-        // Initialise le calque des plateformes en vérifiant son type
-        MapLayer layer = map.getLayers().get("Platformes");
-        if (layer instanceof TiledMapTileLayer) {
-            platformsLayer = (TiledMapTileLayer)layer;
-        } else {
-            throw new IllegalStateException("Le calque 'Platformes' n'existe pas ou n'est pas un TiledMapTileLayer !");
-        }
-
+        platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
         rectPool = new Pool<Rectangle>() {
             @Override
             protected Rectangle newObject() {
@@ -61,14 +54,15 @@ public class GameScreen implements Screen {
             }
         };
 
-        // Initialiser la salle avec `Room0`
-        currentRoomRect = getRoomRectangle(map, "Room0");
-        if (currentRoomRect != null) {
-            loadRoom(currentRoomRect);
+        // Charger la salle initiale
+        Rectangle initialRoom = getRoomRectangle(map, "InitialRoom");
+        if (initialRoom != null) {
+            loadRoom(initialRoom);
+        } else {
+            Gdx.app.log("GameScreen", "Initial room not found.");
         }
 
         positionPlayerAtStart();
-        camera.update();
     }
 
     @Override
