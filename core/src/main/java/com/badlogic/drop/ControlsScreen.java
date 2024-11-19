@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class ControlsScreen implements Screen {
     private Stage stage;
@@ -19,7 +21,7 @@ public class ControlsScreen implements Screen {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("assets/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         Table table = new Table();
         table.setFillParent(true);
@@ -32,9 +34,11 @@ public class ControlsScreen implements Screen {
 
         // Back button
         TextButton backButton = new TextButton("Back", skin);
-        backButton.addListener(event -> {
-            game.setScreen((Screen) new MenuScreen(this.game));
-            return true;
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new OptionsScreen(game));
+            }
         });
 
         table.add(controlsLabel).colspan(2).center();

@@ -1,3 +1,4 @@
+
 package com.badlogic.drop;
 
 import com.badlogic.gdx.Game;
@@ -24,6 +25,7 @@ public class Main extends Game {
     public void create() {
         // Initialise les ressources partagées
         batch = new SpriteBatch();
+        assetManager = new AssetManager();
         this.setScreen(new MenuScreen(this));
        /* Skin skin = new Skin();
         skin.addRegions(new TextureAtlas("uiskin.atlas"));
@@ -61,11 +63,14 @@ public class Main extends Game {
     public void dispose() {
         // Libération des ressources globales
         batch.dispose();
-        assetManager.dispose();
+        if (assetManager != null) {
+            assetManager.dispose();
+        }
         if (skin != null) {
             skin.dispose();
             font.dispose();
         }
+
 
         // Dispose l'écran actuel (appel automatique à screen.dispose())
         if (getScreen() != null) {
@@ -95,6 +100,16 @@ public class Main extends Game {
 
     public void showOptions() {
         this.setScreen(new OptionsScreen(this));
+    }
+
+    public float getVolume() {
+        return 50;
+    }
+
+    public void setVolume(float value) {
+    }
+
+    public void saveCommand(String command) {
     }
 
     // Enum pour référencer les différents écrans du jeu
