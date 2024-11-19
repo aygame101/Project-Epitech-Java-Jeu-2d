@@ -3,11 +3,9 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,12 +14,24 @@ public class ControlsScreen implements Screen {
     private Stage stage;
     private Main game;
     private Skin skin;
+    private Texture backgroundTexture;
+    private Image backgroundImage;
 
     public ControlsScreen(Main game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
+
+        // Load background texture
+        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
+        backgroundImage = new Image(backgroundTexture);
+        backgroundImage.setFillParent(true);
+        stage.addActor(backgroundImage);
+
+        // Create the title label
+        Label titleLabel = new Label("Options", skin, "default");
+        titleLabel.setFontScale(2); // Optionally scale the font
 
         Table table = new Table();
         table.setFillParent(true);
@@ -41,6 +51,8 @@ public class ControlsScreen implements Screen {
             }
         });
 
+        table.add(titleLabel).center().padBottom(20);
+        table.row();
         table.add(controlsLabel).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(moveLabel).colspan(2).center();
@@ -79,5 +91,7 @@ public class ControlsScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        skin.dispose();
+        backgroundTexture.dispose();
     }
 }

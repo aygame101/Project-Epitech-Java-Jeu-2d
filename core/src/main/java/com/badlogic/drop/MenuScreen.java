@@ -5,10 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -32,6 +29,11 @@ public class MenuScreen implements Screen {
         backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
+
+        // Create the title label
+        Label titleLabel = new Label("Kawai Desu", skin, "default");
+        titleLabel.setFontScale(2); // Optionally scale the font
+
         // Create buttons
         TextButton playButton = new TextButton("Play", skin);
         TextButton optionsButton = new TextButton("Options", skin);
@@ -62,6 +64,8 @@ public class MenuScreen implements Screen {
         // Create a table to organize buttons
         Table table = new Table();
         table.setFillParent(true);
+        table.add(titleLabel).center().padBottom(20);
+        table.row();
         table.add(playButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(optionsButton).fillX().uniformX();

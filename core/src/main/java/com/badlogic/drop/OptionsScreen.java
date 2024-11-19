@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -41,6 +41,10 @@ public class OptionsScreen implements Screen {
         backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
+
+        // Create the title label
+        Label titleLabel = new Label("Options", skin, "default");
+        titleLabel.setFontScale(2); // Optionally scale the font
 
         TextButton controlsButton = new TextButton("Controls", skin);
         controlsButton.addListener(new ClickListener() {
@@ -84,6 +88,8 @@ public class OptionsScreen implements Screen {
         table.setDebug(true); // Enable table debug lines (optional)
         stage.addActor(table);
 
+        table.add(titleLabel).center().padBottom(20);
+        table.row();
         table.add(controlsButton).center().padBottom(10);
         table.row();
         table.add(windowSizeButton).center().padBottom(10);
