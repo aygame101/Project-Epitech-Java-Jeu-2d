@@ -6,8 +6,7 @@
     "activeFile": "The_Complete_Map.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
-        ".",
-        "Tiled_asset"
+        "."
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
@@ -19,7 +18,7 @@
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 381.66666666666663,
+                "x": 381.33333333333326,
                 "y": 261.66666666666663
             }
         },
@@ -62,11 +61,11 @@
             "expandedGroupLayers": [
                 4
             ],
-            "scale": 1.5,
-            "selectedLayer": 6,
+            "scale": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 345,
-                "y": 15339.666666666666
+                "x": 217,
+                "y": 15913.75
             }
         },
         "Tiled_asset/Blue.tsx": {
@@ -129,19 +128,18 @@
         "Tiled_asset/morning_adventures_tileset_16x16.tsx",
         "Tiled_asset/spike (pixel adv).tsx",
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
-        "Tiled_asset/tilemap cochon.tsx",
-        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx"
+        "Tiled_asset/tilemap cochon.tsx"
     ],
     "project": "Maps.tiled-project",
     "property.type": "int",
     "recentFiles": [
-        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Tiled_asset/tilemap cochon.tsx",
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
         "Tiled_asset/spike (pixel adv).tsx",
         "Tiled_asset/morning_adventures_tileset_16x16.tsx",
         "Tiled_asset/background cochon.tsx",
         "The_Complete_Map.tmx",
+        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Tiled_asset/Tiles paper adv.tsx",
         "Tiled_asset/Blue.tsx",
         "Game_Map_complete.tmx",
