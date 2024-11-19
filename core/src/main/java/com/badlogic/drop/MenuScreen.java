@@ -3,7 +3,9 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -14,6 +16,8 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private Main game;
     private Skin skin;
+    private Texture backgroundTexture;
+    private Image backgroundImage;
 
     public MenuScreen(Main game) {
         this.game = game;  // Ensure game is assigned to the local variable
@@ -23,6 +27,11 @@ public class MenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage); // Set the input processor to the stage
 
+        // Load background texture
+        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
+        backgroundImage = new Image(backgroundTexture);
+        backgroundImage.setFillParent(true);
+        stage.addActor(backgroundImage);
         // Create buttons
         TextButton playButton = new TextButton("Play", skin);
         TextButton optionsButton = new TextButton("Options", skin);
@@ -92,5 +101,6 @@ public class MenuScreen implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        backgroundTexture.dispose();
     }
 }

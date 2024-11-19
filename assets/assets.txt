@@ -1,5 +1,6 @@
 .gitkeep
 Caract/Idle (32x32).png
+Fmap.tmx
 Maps.tiled-project
 Maps.tiled-session
 Player.png
@@ -634,6 +635,7 @@ Vrac/morning_adventures_tilemap/License.txt
 Vrac/morning_adventures_tilemap/example_scene.png
 Vrac/morning_adventures_tilemap/layout_help.png
 Vrac/morning_adventures_tilemap/morning_adventures_tileset_16x16.png
+background.png
 default.fnt
 default.png
 uiskin.atlas
