@@ -62,7 +62,7 @@ public class GameScreen implements Screen {
         };
 
         // Initialiser la salle avec `Room0`
-        currentRoomRect = getRoomRectangle(map, "Room1");
+        currentRoomRect = getRoomRectangle(map, "Room0");
         if (currentRoomRect != null) {
             loadRoom(currentRoomRect);
         }
@@ -182,7 +182,7 @@ public class GameScreen implements Screen {
     }
 
     private void positionPlayerAtStart() {
-        MapObject startObject = getMapObjectByName(map, "Start1");
+        MapObject startObject = getMapObjectByName(map, "Start0");
         if (startObject != null) {
             Vector2 startPosition = getObjectPosition(startObject);
             player.setX(startPosition.x);
