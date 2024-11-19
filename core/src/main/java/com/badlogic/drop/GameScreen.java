@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("Fmap.tmx");
+        map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
@@ -89,6 +89,8 @@ public class GameScreen implements Screen {
 
         // Vérifier les collisions après la mise à jour de la position du joueur
         checkCollisions();
+
+        checkTeleporterCollision();
     }
 
     private void updatePlayerPosition(float delta) {
@@ -216,7 +218,7 @@ public class GameScreen implements Screen {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             return new Vector2(rect.x, rect.y);
         }
-        return new Vector2();
+        return null;
     }
 
     private void checkCollisions() {
@@ -236,6 +238,46 @@ public class GameScreen implements Screen {
                     return;
                 }
             }
+        }
+    }
+
+    private void checkTeleporterCollision() {
+        MapLayer teleportLayer = map.getLayers().get("Teleporters");
+        if (teleportLayer != null) {
+            Array<RectangleMapObject> teleporters = new Array<>();
+            for (MapObject mapObject : teleportLayer.getObjects()) {
+                if (mapObject instanceof RectangleMapObject) {
+                    teleporters.add((RectangleMapObject) mapObject);
+                }
+            }
+
+            for (RectangleMapObject mapObject : teleporters) {
+                Rectangle rectangle = mapObject.getRectangle();
+                if (player.getBoundingBox().overlaps(rectangle)) {
+                    String destination = (String) mapObject.getProperties().get("destination");
+                    if (destination != null) {
+                        teleportPlayerTo(destination);
+                    }
+                }
+            }
+        }
+    }
+
+    private void teleportPlayerTo(String destination) {
+        MapObject destinationObject = getMapObjectByName(map, destination);
+        if (destinationObject != null) {
+            Vector2 destinationPosition = getObjectPosition(destinationObject);
+            player.setX(destinationPosition.x);
+            player.setY(destinationPosition.y);
+
+            Rectangle destinationRoom = getRoomRectangle(map, destination);
+            if (destinationRoom != null) {
+                loadRoom(destinationRoom);
+            } else {
+                Gdx.app.log("GameScreen", "Destination room not found for teleporter.");
+            }
+        } else {
+            Gdx.app.log("GameScreen", "Destination object not found for teleporter.");
         }
     }
 

@@ -26,11 +26,14 @@
             "scaleInDock": 1
         },
         "Fmap.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 5,
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.75,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 214.66666666666669,
-                "y": 15729.666666666666
+                "x": 734,
+                "y": 15604.666666666666
             }
         },
         "Game_Map_complete.tmx": {
@@ -69,11 +72,16 @@
             "expandedGroupLayers": [
                 4
             ],
+            "expandedObjectLayers": [
+                6,
+                13,
+                9
+            ],
             "scale": 2,
-            "selectedLayer": 4,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 8000,
-                "y": 8000.25
+                "x": 239.75,
+                "y": 15911.25
             }
         },
         "Tiled_asset/Blue.tsx": {
@@ -121,6 +129,7 @@
             "scaleInEditor": 1
         }
     },
+    "frame.defaultDuration": 100,
     "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Tiled_asset",
     "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets",
     "map.fixedSize": true,
@@ -140,15 +149,15 @@
         "Fmap.tmx"
     ],
     "project": "Maps.tiled-project",
-    "property.type": "int",
+    "property.type": "string",
     "recentFiles": [
+        "Fmap.tmx",
         "The_Complete_Map.tmx",
         "Tiled_asset/background cochon.tsx",
         "Tiled_asset/morning_adventures_tileset_16x16.tsx",
         "Tiled_asset/spike (pixel adv).tsx",
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
         "Tiled_asset/tilemap cochon.tsx",
-        "Fmap.tmx",
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Tiled_asset/Tiles paper adv.tsx",
         "Tiled_asset/Blue.tsx",
