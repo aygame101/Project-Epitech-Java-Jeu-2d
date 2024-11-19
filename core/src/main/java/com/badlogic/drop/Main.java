@@ -3,6 +3,7 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -57,6 +58,7 @@ public class Main extends Game {
 
         // Appel de la méthode render() de l'écran actuel
         super.render();
+        handleInput();
     }
 
     @Override
@@ -116,4 +118,11 @@ public class Main extends Game {
     public enum ScreenType {
         GAME, MENU, OPTIONS
     }
+
+    private void handleInput() {
+            if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+                this.setScreen(new MenuScreen(this));
+            }
+    }
 }
+
