@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "The_Complete_Map.tmx",
+    "activeFile": "Fmap.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
         "."
@@ -24,6 +24,14 @@
         },
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx#tileSet-hd": {
             "scaleInDock": 1
+        },
+        "Fmap.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 214.66666666666669,
+                "y": 15729.666666666666
+            }
         },
         "Game_Map_complete.tmx": {
             "expandedGroupLayers": [
@@ -65,7 +73,7 @@
             "selectedLayer": 4,
             "viewCenter": {
                 "x": 217,
-                "y": 15913.75
+                "y": 15435.25
             }
         },
         "Tiled_asset/Blue.tsx": {
@@ -128,23 +136,24 @@
         "Tiled_asset/morning_adventures_tileset_16x16.tsx",
         "Tiled_asset/spike (pixel adv).tsx",
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
-        "Tiled_asset/tilemap cochon.tsx"
+        "Tiled_asset/tilemap cochon.tsx",
+        "Fmap.tmx"
     ],
     "project": "Maps.tiled-project",
     "property.type": "int",
     "recentFiles": [
-        "Tiled_asset/tilemap cochon.tsx",
-        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
-        "Tiled_asset/spike (pixel adv).tsx",
-        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
-        "Tiled_asset/background cochon.tsx",
         "The_Complete_Map.tmx",
+        "Tiled_asset/background cochon.tsx",
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
+        "Tiled_asset/spike (pixel adv).tsx",
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
+        "Tiled_asset/tilemap cochon.tsx",
+        "Fmap.tmx",
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Tiled_asset/Tiles paper adv.tsx",
         "Tiled_asset/Blue.tsx",
         "Game_Map_complete.tmx",
-        "Tiled_asset/Game_Map_complete.tsx",
-        "Test_Base_map.tmx"
+        "Tiled_asset/Game_Map_complete.tsx"
     ],
     "resizeMap.removeObjects": true,
     "tileset.lastUsedFormat": "tsx",
