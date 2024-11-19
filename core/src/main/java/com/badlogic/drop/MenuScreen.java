@@ -54,7 +54,7 @@ public class MenuScreen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.add(playButton).fillX().uniformX();
-        table.row().pad(10, 0, 10,0);
+        table.row().pad(10, 0, 10, 0);
         table.add(optionsButton).fillX().uniformX();
         table.row();
         table.add(quitButton).fillX().uniformX();

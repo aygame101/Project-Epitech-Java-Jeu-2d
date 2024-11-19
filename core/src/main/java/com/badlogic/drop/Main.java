@@ -94,6 +94,7 @@ public class Main extends Game {
     }
 
     public void showOptions() {
+        this.setScreen(new OptionsScreen(this));
     }
 
     // Enum pour référencer les différents écrans du jeu
