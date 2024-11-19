@@ -1,5 +1,6 @@
 package com.badlogic.drop;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -31,32 +34,35 @@ public class GameScreen implements Screen {
     private final TiledMapTileLayer platformsLayer;  // Calque pour les plateformes
     private Rectangle currentRoomRect;
 
-    public GameScreen(Main main) {
+    private final Pool<Rectangle> rectPool;
+
+    public GameScreen(Game game) {
+        // initialisation des champs omis pour la brièveté
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(800, 600, camera);
         batch = new SpriteBatch();
-        player = new Player(100, 100, 16, 16); // Position et taille initiale du joueur
-        playerTexture = new Texture("player.png");
+        playerTexture = new Texture("Player.png");
+        player = new Player(100, 100, 16, 16);
         roomsLayer = map.getLayers().get("Rooms");
+        platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
+        rectPool = new Pool<Rectangle>() {
+            @Override
+            protected Rectangle newObject() {
+                return new Rectangle();
+            }
+        };
 
-        // Initialise le calque des plateformes en vérifiant son type
-        MapLayer layer = map.getLayers().get("Platformes");
-        if (layer instanceof TiledMapTileLayer) {
-            platformsLayer = (TiledMapTileLayer)layer;
+        // Charger la salle initiale
+        Rectangle initialRoom = getRoomRectangle(map, "InitialRoom");
+        if (initialRoom != null) {
+            loadRoom(initialRoom);
         } else {
-            throw new IllegalStateException("Le calque 'Platformes' n'existe pas ou n'est pas un TiledMapTileLayer !");
-        }
-
-        // Initialiser la salle avec `Room0`
-        currentRoomRect = getRoomRectangle(map, "Room0");
-        if (currentRoomRect != null) {
-            loadRoom(currentRoomRect);
+            Gdx.app.log("GameScreen", "Initial room not found.");
         }
 
         positionPlayerAtStart();
-        camera.update();
     }
 
     @Override
@@ -119,6 +125,39 @@ public class GameScreen implements Screen {
             }
         }
     }
+    private void checkPlatformCollisions() {
+        Array<Rectangle> platformTiles = new Array<>();
+        int startX = (int) (player.getX() / platformsLayer.getTileWidth());
+        int startY = (int) (player.getY() / platformsLayer.getTileHeight());
+        int endX = (int) ((player.getX() + player.getWidth()) / platformsLayer.getTileWidth());
+        int endY = (int) ((player.getY() + player.getHeight()) / platformsLayer.getTileHeight());
+
+        getTiles(startX, startY, endX, endY, platformTiles);
+
+        for (Rectangle tile : platformTiles) {
+            if (player.getBoundingBox().overlaps(tile)) {
+                // gestion des collisions ici
+                player.setOnGround(true);
+                break;
+            }
+        }
+    }
+
+    private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
+        TiledMapTileLayer layer = platformsLayer; // Utilise le calque des plateformes
+        rectPool.freeAll(tiles);
+        tiles.clear();
+        for (int y = startY; y <= endY; y++) {
+            for (int x = startX; x <= endX; x++) {
+                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+                if (cell != null) {
+                    Rectangle rect = rectPool.obtain();
+                    rect.set(x, y, 1, 1);
+                    tiles.add(rect);
+                }
+            }
+        }
+    }
 
     private void loadRoom(Rectangle roomRect) {
         if (currentRoomRect != null && currentRoomRect.equals(roomRect)) {
@@ -145,6 +184,7 @@ public class GameScreen implements Screen {
         } else {
             player.setX(100);
             player.setY(100);
+            Gdx.app.log("GameScreen", "Start position 'Start0' not found. Player positioned at default start location.");
         }
     }
 
