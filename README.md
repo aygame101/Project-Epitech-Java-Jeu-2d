@@ -1,4 +1,13 @@
-# EpiGame_git
+# Project-Epitech-Java-Jeu-2d
+## Gaspard, Ryan, Gino
+
+Developpement d'un jeu vidéo 2D en JAVA en 3 semaines
+Début : Lundi 4 nov 2024
+Fin : Dimanche 24 nov 2024 à 23h42
+
+
+
+## EpiGame_git
 
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
 
