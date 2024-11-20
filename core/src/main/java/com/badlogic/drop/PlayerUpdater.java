@@ -38,16 +38,16 @@ public class PlayerUpdater {
 
         // Check input and apply to velocity & state
         if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
-            player.getVelocity().y += 100; // JUMP_VELOCITY
+            player.getVelocity().y += 50; // JUMP_VELOCITY
             player.setOnGround(false);
         }
 
         if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
-            player.getVelocity().x = -100; // MAX_VELOCITY
+            player.getVelocity().x = -50; // MAX_VELOCITY
         }
 
         if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
-            player.getVelocity().x = 100; // MAX_VELOCITY
+            player.getVelocity().x = 50; // MAX_VELOCITY
         }
 
         if (Gdx.input.isKeyJustPressed(Keys.B)) {

@@ -55,8 +55,10 @@ public class GameScreen implements Screen {
         player = new Player(100, 100, 16, 16);
         //gere les room
         roomsLayer = map.getLayers().get("Rooms");
-        //gere les plateformes
+        //Platformes + murs
         platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
+
+        playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
 
         rectPool = new Pool<Rectangle>() {
             @Override
@@ -101,12 +103,13 @@ public class GameScreen implements Screen {
         updatePlayerPosition(delta);
         playerUpdater.updatePlayer(delta);
 
-        //
-        checkCollisions(delta);
+        //Tp
+        checkTeleporterCollision();
     }
 
     private void updatePlayerPosition(float delta) {
         player.update(delta);
+        playerUpdater.updatePlayer(delta);
     }
 
     private void handleInput() {
@@ -135,82 +138,6 @@ public class GameScreen implements Screen {
                 if (playerRect.overlaps(roomRect) && !roomRect.equals(currentRoomRect)) {
                     loadRoom(roomRect);
                     break;
-                }
-            }
-        }
-    }
-
-    private void checkCollisions(float delta) {
-        checkPlatformCollisions();
-        checkTeleporterCollision();
-        checkRoomChange();
-    }
-
-    private void checkPlatformCollisions() {
-        Array<Rectangle> tiles = new Array<>();
-
-        // Obtenir toutes les tuiles dans la salle actuelle
-        playerUpdater.getAllTilesInCurrentRoom(tiles);
-
-        Rectangle playerRect = player.getBoundingBox().toRectangle();
-        for (Rectangle tile : tiles) {
-            if (playerRect.overlaps(tile)) {
-                handleTileCollision(tile);
-            }
-        }
-    }
-
-    private void handleTileCollision(Rectangle tile) {
-        if (Math.abs(tile.width - tile.height) < 0.01) {
-            // Tuile carrée, traiter comme une collision générale
-            handleGeneralCollision(tile);
-        } else if (tile.width > tile.height) {
-            // Tuile horizontale, traiter une collision horizontale
-            handleHorizontalCollision(tile);
-        } else {
-            // Tuile verticale, traiter une collision verticale
-            handleVerticalCollision(tile);
-        }
-    }
-
-    private void handleGeneralCollision(Rectangle tile) {
-        // Traitement de base pour les collisions
-        // Peut inclure des rebonds ou des arrêts de mouvement
-    }
-
-    private void handleHorizontalCollision(Rectangle tile) {
-        // Traitement spécifique pour les collisions horizontales
-        if (player.getVelocity().x > 0) {
-            player.setX(tile.x - player.getWidth());
-        } else if (player.getVelocity().x < 0) {
-            player.setX(tile.x + tile.width);
-        }
-        player.getVelocity().x = 0;
-    }
-
-    private void handleVerticalCollision(Rectangle tile) {
-        // Traitement spécifique pour les collisions verticales
-        if (player.getVelocity().y > 0) {
-            player.setY(tile.y - player.getHeight());
-        } else if (player.getVelocity().y < 0) {
-            player.setY(tile.y + tile.height);
-            player.setOnGround(true);
-        }
-        player.getVelocity().y = 0;
-    }
-
-    private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
-        rectPool.freeAll(tiles);
-        tiles.clear();
-
-        for (int y = startY; y <= endY; y++) {
-            for (int x = startX; x <= endX; x++) {
-                TiledMapTileLayer.Cell cell = platformsLayer.getCell(x, y);
-                if (cell != null) {
-                    Rectangle rect = rectPool.obtain();
-                    rect.set(x * platformsLayer.getTileWidth(), y * platformsLayer.getTileHeight(),
-                        platformsLayer.getTileWidth(), platformsLayer.getTileHeight());
-                    tiles.add(rect);
                 }
             }
         }

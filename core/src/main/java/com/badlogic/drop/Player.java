@@ -16,6 +16,7 @@ public class Player extends InputAdapter {
     private float height;
     private static int coins = 0;
     private float velocityY = 0;
+    private float velocityX = 0;
     private float gravity = -2f;
     private boolean onGround = true;
     private Vector2 velocity;
@@ -81,6 +82,14 @@ public class Player extends InputAdapter {
 
     public void setVelocityY(float velocityY) {
         this.velocityY = velocityY;
+    }
+
+    public float getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(float velocityX) {
+        this.velocityX = velocityX;
     }
 
     public boolean isOnGround() {
