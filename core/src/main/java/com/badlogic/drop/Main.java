@@ -104,6 +104,10 @@ public class Main extends Game {
         this.setScreen(new OptionsScreen(this));
     }
 
+    public void showGameOver() {
+        this.setScreen(new GameOverScreen(this));
+    }
+
     public float getVolume() {
         return 50;
     }
@@ -122,6 +126,9 @@ public class Main extends Game {
     private void handleInput() {
             if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
                 this.setScreen(new PauseScreen(this));
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+                this.setScreen(new GameOverScreen(this));
             }
     }
 }
