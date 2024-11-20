@@ -30,6 +30,7 @@ public class PlayerUpdater {
         this.currentRoomRect = currentRoomRect;
     }
 
+
     public void updatePlayer(float deltaTime) {
         if (deltaTime == 0) return;
         if (deltaTime > 0.1f) deltaTime = 0.1f;
@@ -108,6 +109,7 @@ public class PlayerUpdater {
 
         // Apply damping to the velocity on the x-axis so we don't walk infinitely once a key was pressed
         player.getVelocity().x *= Player.DAMPING;
+        
     }
 
     private boolean isTouched(float startX, float endX) {

@@ -173,6 +173,22 @@ public class GameScreen implements Screen {
         }
     }
 
+    private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("Platformes");
+        rectPool.freeAll(tiles);
+        tiles.clear();
+        for (int y = Math.min(startY, endY); y <= Math.max(startY, endY); y++) {
+            for (int x = Math.min(startX, endX); x <= Math.max(startX, endX); x++) {
+                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+                if (cell != null && cell.getTile().getProperties().containsKey("Collidable")) {
+                    Rectangle rect = rectPool.obtain();
+                    rect.set(x, y, 1, 1);
+                    tiles.add(rect);
+                }
+            }
+        }
+    }
+
     private Rectangle getRoomRectangle(TiledMap map, String roomName) {
         for (MapObject object : roomsLayer.getObjects()) {
             if (object instanceof RectangleMapObject) {

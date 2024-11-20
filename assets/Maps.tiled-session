@@ -140,7 +140,7 @@
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx"
     ],
     "project": "Maps.tiled-project",
-    "property.type": "string",
+    "property.type": "bool",
     "recentFiles": [
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Fmap.tmx",
