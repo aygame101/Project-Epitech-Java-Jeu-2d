@@ -6,8 +6,8 @@
     "activeFile": "The_Complete_Map.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
-        "Tiled_asset",
-        "."
+        ".",
+        "Tiled_asset"
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
@@ -67,11 +67,11 @@
             "scaleInDock": 1
         },
         "The_Complete_Map.tmx": {
-            "scale": 5.5,
+            "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 8000,
-                "y": 8000.09090909091
+                "x": 108.33333333333331,
+                "y": 15904.333333333332
             }
         },
         "Tiled_asset/Blue.tsx": {
