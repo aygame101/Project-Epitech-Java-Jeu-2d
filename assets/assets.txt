@@ -638,6 +638,7 @@ Vrac/morning_adventures_tilemap/morning_adventures_tileset_16x16.png
 background.png
 default.fnt
 default.png
+enemy.png
 gameover.png
 uiskin.atlas
 uiskin.json

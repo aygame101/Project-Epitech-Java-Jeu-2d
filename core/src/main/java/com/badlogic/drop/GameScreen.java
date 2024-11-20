@@ -32,6 +32,8 @@ public class GameScreen implements Screen {
     private final MapLayer roomsLayer;
     private final TiledMapTileLayer platformsLayer;  // Calque pour les plateformes
     private Rectangle currentRoomRect;
+    private Array<Enemy> enemies;
+    private final Texture enemyTexture;
 
     private final Pool<Rectangle> rectPool;
 
@@ -53,6 +55,9 @@ public class GameScreen implements Screen {
             }
         };
 
+        enemyTexture = new Texture("enemy.png");
+        enemies = new Array<>();
+
         // Charger la salle initiale
         Rectangle initialRoom = getRoomRectangle(map, "InitialRoom");
         if (initialRoom != null) {
@@ -62,6 +67,13 @@ public class GameScreen implements Screen {
         }
 
         positionPlayerAtStart();
+        spawnEnemies();
+    }
+
+    private void spawnEnemies() {
+        enemies.add(new Enemy(300, 100, 16, 16, -50, "enemy.png"));
+        enemies.add(new Enemy(500, 150, 16, 16, -70, "enemy.png"));
+        // Ajoutez autant d'ennemis que nécessaire
     }
 
     @Override
@@ -82,9 +94,11 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+
+        for (Enemy enemy : enemies) {
+            enemy.render(batch);
+        }
         batch.end();
-
-
 
         // Mettre à jour la position du joueur
         updatePlayerPosition(delta);
@@ -99,6 +113,11 @@ public class GameScreen implements Screen {
         player.update(delta);
     }
 
+    private void updateEnemies(float delta) {
+        for (Enemy enemy : enemies) {
+            enemy.update(delta);
+        }
+    }
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             player.setX(player.getX() - 200 * Gdx.graphics.getDeltaTime());
@@ -242,7 +261,14 @@ public class GameScreen implements Screen {
                 }
             }
         }
+        for (Enemy enemy : enemies) {
+            if (player.getBoundingBox().overlaps(enemy.getBoundingBox())) {
+                player.setY(player.getY() - 5);
+            }
+        }
     }
+
+
 
     private void checkTeleporterCollision() {
         MapLayer teleportLayer = map.getLayers().get("Teleporters");
@@ -305,5 +331,10 @@ public class GameScreen implements Screen {
         mapRenderer.dispose();
         batch.dispose();
         playerTexture.dispose();
+
+        for (Enemy enemy : enemies) {
+            enemy.dispose();
+        }
+        enemyTexture.dispose();
     }
 }
