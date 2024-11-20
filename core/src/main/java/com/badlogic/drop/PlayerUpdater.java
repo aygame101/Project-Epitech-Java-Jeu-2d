@@ -38,16 +38,16 @@ public class PlayerUpdater {
 
         // Check input and apply to velocity & state
         if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
-            player.getVelocity().y += 600; // JUMP_VELOCITY
+            player.getVelocity().y += 100; // JUMP_VELOCITY
             player.setOnGround(false);
         }
 
         if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
-            player.getVelocity().x = -300; // MAX_VELOCITY
+            player.getVelocity().x = -100; // MAX_VELOCITY
         }
 
         if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
-            player.getVelocity().x = 300; // MAX_VELOCITY
+            player.getVelocity().x = 100; // MAX_VELOCITY
         }
 
         if (Gdx.input.isKeyJustPressed(Keys.B)) {
@@ -141,15 +141,11 @@ public class PlayerUpdater {
 
         for (int y = startY; y <= endY; y++) {
             for (int x = startX; x <= endX; x++) {
-                Gdx.app.log("PlayerUpdater", "Checking tile at (" + x + ", " + y + ")");
-
                 TiledMapTileLayer.Cell cell = platformsLayer.getCell(x, y);
                 if (cell != null) {
                     Rectangle rect = rectPool.obtain();
                     rect.set(x * platformsLayer.getTileWidth(), y * platformsLayer.getTileHeight(), platformsLayer.getTileWidth(), platformsLayer.getTileHeight());
                     tiles.add(rect);
-
-                    Gdx.app.log("PlayerUpdater", "Tile added with rect: " + rect);
                 }
             }
         }
