@@ -1,5 +1,6 @@
 package com.badlogic.drop;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -9,10 +10,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -27,25 +30,34 @@ public class GameScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final SpriteBatch batch;
+    //le perso
     private final Player player;
     private final Texture playerTexture;
+    //les rooms
     private final MapLayer roomsLayer;
-    private final TiledMapTileLayer platformsLayer;  // Calque pour les plateformes
     private Rectangle currentRoomRect;
+    //les platformes et les murs
+    private final TiledMapTileLayer platformsLayer;
+
+    private PlayerUpdater playerUpdater;
 
     private final Pool<Rectangle> rectPool;
 
-    public GameScreen(Main game) {
+    public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
         batch = new SpriteBatch();
+        //gere le perso
         playerTexture = new Texture("Player.png");
         player = new Player(100, 100, 16, 16);
+        //gere les room
         roomsLayer = map.getLayers().get("Rooms");
+        //gere les plateformes
         platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
+
         rectPool = new Pool<Rectangle>() {
             @Override
             protected Rectangle newObject() {
@@ -62,6 +74,8 @@ public class GameScreen implements Screen {
         }
 
         positionPlayerAtStart();
+
+        playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
     }
 
     @Override
@@ -71,7 +85,6 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        updatePlayerPosition(delta);
         handleInput();
         checkRoomChange();
 
@@ -84,15 +97,12 @@ public class GameScreen implements Screen {
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
         batch.end();
 
-
-
         // Mettre à jour la position du joueur
         updatePlayerPosition(delta);
+        playerUpdater.updatePlayer(delta);
 
-        // Vérifier les collisions après la mise à jour de la position du joueur
-        checkCollisions();
-
-        checkTeleporterCollision();
+        //
+        checkCollisions(delta);
     }
 
     private void updatePlayerPosition(float delta) {
@@ -114,7 +124,6 @@ public class GameScreen implements Screen {
         }
     }
 
-
     private void checkRoomChange() {
         Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
 
@@ -130,34 +139,77 @@ public class GameScreen implements Screen {
             }
         }
     }
+
+    private void checkCollisions(float delta) {
+        checkPlatformCollisions();
+        checkTeleporterCollision();
+        checkRoomChange();
+    }
+
     private void checkPlatformCollisions() {
-        Array<Rectangle> platformTiles = new Array<>();
-        int startX = (int) (player.getX() / platformsLayer.getTileWidth());
-        int startY = (int) (player.getY() / platformsLayer.getTileHeight());
-        int endX = (int) ((player.getX() + player.getWidth()) / platformsLayer.getTileWidth());
-        int endY = (int) ((player.getY() + player.getHeight()) / platformsLayer.getTileHeight());
+        Array<Rectangle> tiles = new Array<>();
 
-        getTiles(startX, startY, endX, endY, platformTiles);
+        // Obtenir toutes les tuiles dans la salle actuelle
+        playerUpdater.getAllTilesInCurrentRoom(tiles);
 
-        for (Rectangle tile : platformTiles) {
-            if (player.getBoundingBox().overlaps(tile)) {
-                // gestion des collisions ici
-                player.setOnGround(true);
-                break;
+        Rectangle playerRect = player.getBoundingBox().toRectangle();
+        for (Rectangle tile : tiles) {
+            if (playerRect.overlaps(tile)) {
+                handleTileCollision(tile);
             }
         }
     }
 
+    private void handleTileCollision(Rectangle tile) {
+        if (Math.abs(tile.width - tile.height) < 0.01) {
+            // Tuile carrée, traiter comme une collision générale
+            handleGeneralCollision(tile);
+        } else if (tile.width > tile.height) {
+            // Tuile horizontale, traiter une collision horizontale
+            handleHorizontalCollision(tile);
+        } else {
+            // Tuile verticale, traiter une collision verticale
+            handleVerticalCollision(tile);
+        }
+    }
+
+    private void handleGeneralCollision(Rectangle tile) {
+        // Traitement de base pour les collisions
+        // Peut inclure des rebonds ou des arrêts de mouvement
+    }
+
+    private void handleHorizontalCollision(Rectangle tile) {
+        // Traitement spécifique pour les collisions horizontales
+        if (player.getVelocity().x > 0) {
+            player.setX(tile.x - player.getWidth());
+        } else if (player.getVelocity().x < 0) {
+            player.setX(tile.x + tile.width);
+        }
+        player.getVelocity().x = 0;
+    }
+
+    private void handleVerticalCollision(Rectangle tile) {
+        // Traitement spécifique pour les collisions verticales
+        if (player.getVelocity().y > 0) {
+            player.setY(tile.y - player.getHeight());
+        } else if (player.getVelocity().y < 0) {
+            player.setY(tile.y + tile.height);
+            player.setOnGround(true);
+        }
+        player.getVelocity().y = 0;
+    }
+
     private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
-        TiledMapTileLayer layer = platformsLayer; // Utilise le calque des plateformes
         rectPool.freeAll(tiles);
         tiles.clear();
+
         for (int y = startY; y <= endY; y++) {
             for (int x = startX; x <= endX; x++) {
-                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+                TiledMapTileLayer.Cell cell = platformsLayer.getCell(x, y);
                 if (cell != null) {
                     Rectangle rect = rectPool.obtain();
-                    rect.set(x, y, 1, 1);
+                    rect.set(x * platformsLayer.getTileWidth(), y * platformsLayer.getTileHeight(),
+                        platformsLayer.getTileWidth(), platformsLayer.getTileHeight());
                     tiles.add(rect);
                 }
             }
@@ -178,6 +230,7 @@ public class GameScreen implements Screen {
         camera.update();
 
         currentRoomRect = roomRect;
+        playerUpdater.setCurrentRoomRect(currentRoomRect); // Injecte la salle actuelle dans PlayerUpdater
     }
 
     private void positionPlayerAtStart() {
@@ -222,26 +275,6 @@ public class GameScreen implements Screen {
             return new Vector2(rect.x, rect.y);
         }
         return null;
-    }
-
-    private void checkCollisions() {
-        player.setOnGround(false); // Réinitialiser l'état "au sol"
-
-        // Obtient les coordonnées en tuiles du joueur
-        int playerTileX = (int) (player.getX() / platformsLayer.getTileWidth());
-        int playerTileY = (int) (player.getY() / platformsLayer.getTileHeight());
-
-        // Vérifie les collisions
-        for (int x = playerTileX; x < playerTileX + player.getWidth() / platformsLayer.getTileWidth(); x++) {
-            for (int y = playerTileY; y < playerTileY + player.getHeight() / platformsLayer.getTileHeight(); y++) {
-                if (platformsLayer.getCell(x, y) != null) {
-                    // Ajuster la position du joueur pour "atterrir" sur la plateforme
-                    player.setY(y * platformsLayer.getTileHeight() + platformsLayer.getTileHeight());
-                    player.setOnGround(true);
-                    return;
-                }
-            }
-        }
     }
 
     private void checkTeleporterCollision() {
