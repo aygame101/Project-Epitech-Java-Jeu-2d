@@ -30,11 +30,11 @@
             "expandedObjectLayers": [
                 8
             ],
-            "scale": 0.25,
-            "selectedLayer": 5,
+            "scale": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 2310,
-                "y": 15170
+                "x": 372.25,
+                "y": 15704.75
             }
         },
         "Game_Map_complete.tmx": {
