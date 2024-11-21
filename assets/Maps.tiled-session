@@ -27,11 +27,14 @@
             "scaleInDock": 1
         },
         "Fmap.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 3,
+            "expandedObjectLayers": [
+                8
+            ],
+            "scale": 1.5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 8000,
-                "y": 8001
+                "x": 3711,
+                "y": 15087
             }
         },
         "Game_Map_complete.tmx": {
@@ -67,11 +70,14 @@
             "scaleInDock": 1
         },
         "The_Complete_Map.tmx": {
+            "expandedObjectLayers": [
+                13
+            ],
             "scale": 2,
-            "selectedLayer": 8,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 8000,
-                "y": 8000.25
+                "x": 281.25,
+                "y": 15908.75
             }
         },
         "Tiled_asset/Blue.tsx": {
@@ -140,7 +146,7 @@
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx"
     ],
     "project": "Maps.tiled-project",
-    "property.type": "bool",
+    "property.type": "string",
     "recentFiles": [
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Fmap.tmx",
