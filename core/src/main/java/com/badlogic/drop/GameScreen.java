@@ -97,14 +97,13 @@ public class GameScreen implements Screen {
 
         for (Coin coin : coins) {
             if (!coin.isCollected() && playerRect.overlaps(coin.getBounds())) {
-                coin.collect();
-                hud.addCoin();
+                coin.collect(); // Marque la pièce comme collectée
+                hud.addCoin(); // Incrémente le compteur de pièces dans le HUD
                 Gdx.app.log("GameScreen", "Coin collected. Total coins: " + hud.getCoinCount());
             }
         }
     }
 
-    @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -118,23 +117,24 @@ public class GameScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
+        // Dessin du joueur
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+
+        // Dessin des pièces non collectées
         for (Coin coin : coins) {
-            if (!coin.isCollected()) {
+            if (!coin.isCollected() && isCoinVisible(coin)) {
                 batch.draw(coin.getTexture(), coin.getPosition().x, coin.getPosition().y);
             }
         }
 
-
         batch.end();
 
+        // Dessiner le HUD après tous les autres éléments
         hud.draw();
 
-        // Mettre à jour la position du joueur
         updatePlayerPosition(delta);
         playerUpdater.updatePlayer(delta);
-
-        //Tp
         checkTeleporterCollision();
     }
 
@@ -282,12 +282,25 @@ public class GameScreen implements Screen {
                     RectangleMapObject rectObject = (RectangleMapObject) object;
                     Rectangle rect = rectObject.getRectangle();
                     coins.add(new Coin(coinTexture, rect.x, rect.y));
+                    Gdx.app.log("GameScreen", "Coin loaded at: " + rect.x + ", " + rect.y);
                 }
             }
+        } else {
+            Gdx.app.log("GameScreen", "No Coins layer found in the map.");
         }
     }
 
-    @Override
+    private boolean isCoinVisible(Coin coin) {
+        float left = camera.position.x - (camera.viewportWidth / 2);
+        float right = camera.position.x + (camera.viewportWidth / 2);
+        float bottom = camera.position.y - (camera.viewportHeight / 2);
+        float top = camera.position.y + (camera.viewportHeight / 2);
+
+        Vector2 coinPos = coin.getPosition();
+
+        return coinPos.x > left && coinPos.x < right && coinPos.y > bottom && coinPos.y < top;
+    }
+            @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
         camera.update();
@@ -309,5 +322,6 @@ public class GameScreen implements Screen {
         batch.dispose();
         playerTexture.dispose();
         hud.dispose();
+        coinTexture.dispose();
     }
 }

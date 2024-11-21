@@ -56,6 +56,7 @@ public class HUD implements Disposable {
     public void addCoin() {
         coinCount++;
         coinLabel.setText(String.format("Coins: %d", coinCount));
+        Gdx.app.log("HUD", "Coin count increased to: " + coinCount);
     }
 
     public void draw() {
