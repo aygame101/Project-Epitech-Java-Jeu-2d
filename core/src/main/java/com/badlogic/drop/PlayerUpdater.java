@@ -96,9 +96,12 @@ public class PlayerUpdater {
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
                 if (player.getVelocity().y > 0) {
-                    player.setY(tile.y + tile.height);
+                    // Collision par le haut
+                    player.setY(tile.y - tile.height);
                 }
                 if (player.getVelocity().y <= 0) {
+                    // Collision par le bas
+                    // Ne pas déplacer le joueur au-dessus de la tuile
                     player.setY(tile.y + tile.height);
                     player.setOnGround(true);
                 }
