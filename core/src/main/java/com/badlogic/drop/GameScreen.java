@@ -107,7 +107,6 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        handleInput();
         checkRoomChange();
         checkCoinCollision();
 
@@ -140,21 +139,6 @@ public class GameScreen implements Screen {
 
     private void updatePlayerPosition(float delta) {
         playerUpdater.updatePlayer(delta);
-    }
-
-    private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player.setX(player.getX() - 200 * Gdx.graphics.getDeltaTime());
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player.setX(player.getX() + 200 * Gdx.graphics.getDeltaTime());
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            player.setY(player.getY() + 200 * Gdx.graphics.getDeltaTime());
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            player.setY(player.getY() - 200 * Gdx.graphics.getDeltaTime());
-        }
     }
 
     private void checkRoomChange() {
@@ -300,7 +284,7 @@ public class GameScreen implements Screen {
 
         return coinPos.x > left && coinPos.x < right && coinPos.y > bottom && coinPos.y < top;
     }
-            @Override
+    @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
         camera.update();

@@ -39,7 +39,7 @@ public class PlayerUpdater {
 
         // Check input and apply to velocity & state
         if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
-            player.getVelocity().y += 50; // JUMP_VELOCITY
+            player.getVelocity().y += 100; // JUMP_VELOCITY
             player.setOnGround(false);
         }
 
@@ -59,7 +59,7 @@ public class PlayerUpdater {
         player.getVelocity().add(0, GRAVITY);
 
         // Clamp the velocity to the maximum, x-axis only
-        player.getVelocity().x = MathUtils.clamp(player.getVelocity().x, -300, 300);
+        player.getVelocity().x = MathUtils.clamp(player.getVelocity().x, -50, 50);
 
         // If the velocity is < 1, set it to 0 and set state to Standing
         if (Math.abs(player.getVelocity().x) < 1) {
@@ -98,15 +98,14 @@ public class PlayerUpdater {
 
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
-                if (player.getVelocity().y > 0) {
-                    // Collision from the bottom of the tile (falling)
-                    player.setY(tile.y - player.getHeight());
-                    player.getVelocity().y = 0; // Reset vertical velocity
-                } else if (player.getVelocity().y < 0) {
-                    // Collision from the top of the tile (jumping)
+                if (player.getVelocity().y < 0) {
                     player.setY(tile.y + tile.height);
                     player.getVelocity().y = 0; // Reset vertical velocity
                     isOnGround = true; // Set ground state to true
+                }
+                else if (player.getVelocity().y > 0){
+                    player.setY(tile.y - tile.height);
+                    player.getVelocity().y = 0; // Reset vertical velocity
                 }
             }
         }
