@@ -98,11 +98,12 @@ public class PlayerUpdater {
 
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
-                if (player.getVelocity().y > 0) {
-                    // Collision from the bottom of the tile (falling)
-                    player.setY(tile.y - player.getHeight());
+                if (player.getVelocity().y >= 1) {
+                    // Collision from the bottom of the tile
+                    player.setY(tile.y - tile.height);
                     player.getVelocity().y = 0; // Reset vertical velocity
-                } else if (player.getVelocity().y < 0) {
+                }
+                if (player.getVelocity().y < 0) {
                     // Collision from the top of the tile (jumping)
                     player.setY(tile.y + tile.height);
                     player.getVelocity().y = 0; // Reset vertical velocity
