@@ -14,7 +14,7 @@ public class Player extends InputAdapter {
     private float y;
     private float width;
     private float height;
-    private static int coins = 0;
+    private int coinCount = 0;
     private float velocityY = 0;
     private float velocityX = 0;
     private float gravity = -2f;
@@ -104,9 +104,14 @@ public class Player extends InputAdapter {
         return projectiles;
     }
 
-    public static int getCoins() {
-        return coins;
+    public void addCoin() {
+        coinCount++;
     }
+
+    public int getCoinCount() {
+        return coinCount;
+    }
+
 
     public static void ajouterItem(ItemShop item) {
         itemsPossedes.add(item);

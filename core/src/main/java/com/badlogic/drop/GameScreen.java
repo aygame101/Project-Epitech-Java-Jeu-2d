@@ -43,9 +43,12 @@ public class GameScreen implements Screen {
 
     private final Pool<Rectangle> rectPool;
 
+    private Array<Coin> coins;
+    private Texture coinTexture;
+
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("Fmap.tmx");
+        map = new TmxMapLoader().load("The_Complete_map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
@@ -59,6 +62,10 @@ public class GameScreen implements Screen {
         platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
+
+        coinTexture = new Texture("coin.png");
+        coins = new Array<>();
+        loadCoins();
 
         rectPool = new Pool<Rectangle>() {
             @Override
@@ -79,16 +86,38 @@ public class GameScreen implements Screen {
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
     }
-
+    private void loadCoins() {
+        MapLayer coinLayer = map.getLayers().get("Coins");
+        if (coinLayer != null) {
+            for (MapObject object : coinLayer.getObjects()) {
+                if (object instanceof RectangleMapObject) {
+                    RectangleMapObject rectObject = (RectangleMapObject) object;
+                    Rectangle rect = rectObject.getRectangle();
+                    coins.add(new Coin(coinTexture, rect.x, rect.y));
+                }
+            }
+        }
+    }
     @Override
     public void show() {}
 
+    private void checkCoinCollision() {
+        Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+
+        for (Coin coin : coins) {
+            if (!coin.isCollected() && playerRect.overlaps(coin.getBounds())) {
+                coin.collect();
+                player.addCoin(); // Supposez que `Player` a une méthode `addCoin()`
+            }
+        }
+    }
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         handleInput();
         checkRoomChange();
+        checkCoinCollision();
 
         camera.update();
         mapRenderer.setView(camera);
@@ -97,6 +126,12 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        for (Coin coin : coins) {
+            if (!coin.isCollected()) {
+                batch.draw(coin.getTexture(), coin.getPosition().x, coin.getPosition().y);
+            }
+        }
+
         batch.end();
 
         // Mettre à jour la position du joueur

@@ -109,7 +109,7 @@ public class PlayerUpdater {
 
         // Apply damping to the velocity on the x-axis so we don't walk infinitely once a key was pressed
         player.getVelocity().x *= Player.DAMPING;
-        
+
     }
 
     private boolean isTouched(float startX, float endX) {
