@@ -97,7 +97,6 @@ public class PlayerUpdater {
         boolean isOnGround = false; // Flag to track if player is on the ground
 
         for (Rectangle tile : tiles) {
-            System.out.println(player.getVelocity().y);
             if (playerRect.overlaps(tile)) {
                 if (player.getVelocity().y < 0) {
                     player.setY(tile.y + tile.height);
