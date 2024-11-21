@@ -88,18 +88,7 @@ public class GameScreen implements Screen {
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
     }
-    private void loadCoins() {
-        MapLayer coinLayer = map.getLayers().get("Coins");
-        if (coinLayer != null) {
-            for (MapObject object : coinLayer.getObjects()) {
-                if (object instanceof RectangleMapObject) {
-                    RectangleMapObject rectObject = (RectangleMapObject) object;
-                    Rectangle rect = rectObject.getRectangle();
-                    coins.add(new Coin(coinTexture, rect.x, rect.y));
-                }
-            }
-        }
-    }
+
     @Override
     public void show() {}
 
@@ -279,6 +268,19 @@ public class GameScreen implements Screen {
             }
         } else {
             Gdx.app.log("GameScreen", "Destination object not found for teleporter.");
+        }
+    }
+
+    private void loadCoins() {
+        MapLayer coinLayer = map.getLayers().get("Coins");
+        if (coinLayer != null) {
+            for (MapObject object : coinLayer.getObjects()) {
+                if (object instanceof RectangleMapObject) {
+                    RectangleMapObject rectObject = (RectangleMapObject) object;
+                    Rectangle rect = rectObject.getRectangle();
+                    coins.add(new Coin(coinTexture, rect.x, rect.y));
+                }
+            }
         }
     }
 
