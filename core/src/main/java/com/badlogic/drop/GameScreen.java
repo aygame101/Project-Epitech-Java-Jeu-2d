@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("The_Complete_map.tmx");
+        map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
@@ -117,11 +117,13 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        hud.addCoin();
         for (Coin coin : coins) {
             if (!coin.isCollected()) {
                 batch.draw(coin.getTexture(), coin.getPosition().x, coin.getPosition().y);
             }
         }
+
 
         batch.end();
 
