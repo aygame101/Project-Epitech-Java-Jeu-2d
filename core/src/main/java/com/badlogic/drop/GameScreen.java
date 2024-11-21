@@ -45,7 +45,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("The_Complete_Map.tmx");
+        map = new TmxMapLoader().load("Fmap.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
