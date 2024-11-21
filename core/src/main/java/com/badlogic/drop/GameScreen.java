@@ -98,10 +98,12 @@ public class GameScreen implements Screen {
         for (Coin coin : coins) {
             if (!coin.isCollected() && playerRect.overlaps(coin.getBounds())) {
                 coin.collect();
-                player.addCoin(); // Supposez que `Player` a une méthode `addCoin()`
+                hud.addCoin();
+                Gdx.app.log("GameScreen", "Coin collected. Total coins: " + hud.getCoinCount());
             }
         }
     }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -117,7 +119,6 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
-        hud.addCoin();
         for (Coin coin : coins) {
             if (!coin.isCollected()) {
                 batch.draw(coin.getTexture(), coin.getPosition().x, coin.getPosition().y);
