@@ -29,7 +29,7 @@ public class Shop {
     public boolean acheterItem(int index, Player joueur) {
         if (index >= 0 && index < itemsDisponibles.size()) {
             ItemShop item = itemsDisponibles.get(index);
-            if (Player.getCoins() >= item.getprice()) {
+            if (Player.getCoin() >= item.getprice()) {
                 //Player.useCoins(item.getprice()); à intégrer proprement
                 Player.ajouterItem(item);
                 System.out.println("You buy : " + item.getName());

@@ -15,6 +15,7 @@ public class Player extends InputAdapter {
     private float width;
     private float height;
     private int coinCount = 0;
+    private static int coinN = 0;
     private float velocityY = 0;
     private float velocityX = 0;
     private float gravity = -2f;
@@ -107,8 +108,12 @@ public class Player extends InputAdapter {
     public void addCoin() {
         coinCount++;
     }
+    public static int getCoin() {
+        return coinN;
+    }
 
     public int getCoinCount() {
+        coinN = coinCount;
         return coinCount;
     }
 
