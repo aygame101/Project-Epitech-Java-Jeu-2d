@@ -30,10 +30,10 @@ public class PlayerUpdater {
         this.currentRoomRect = currentRoomRect;
     }
 
-
     public void updatePlayer(float deltaTime) {
         if (deltaTime == 0) return;
         if (deltaTime > 0.1f) deltaTime = 0.1f;
+
 
         player.stateTime += deltaTime;
 
@@ -80,10 +80,10 @@ public class PlayerUpdater {
         playerRect.x += player.getVelocity().x;
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
-                if (player.getVelocity().x > 0){
+                if (player.getVelocity().x > 0) {
                     player.setX(tile.x - player.getWidth());
                 }
-                if (player.getVelocity().x < 0){
+                if (player.getVelocity().x < 0) {
                     player.setX(tile.x + player.getWidth());
                 }
                 player.getVelocity().x = 0;
@@ -93,23 +93,26 @@ public class PlayerUpdater {
 
         // Check vertical collisions
         playerRect.y += player.getVelocity().y;
+
+        boolean isOnGround = false; // Flag to track if player is on the ground
+
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
                 if (player.getVelocity().y > 0) {
-                    // Collision par le haut
-                    player.setY(tile.y - tile.height);
-                }
-                if (player.getVelocity().y <= 0) {
-                    // Collision par le bas
-                    // Ne pas déplacer le joueur au-dessus de la tuile
+                    // Collision from the bottom of the tile (falling)
+                    player.setY(tile.y - player.getHeight());
+                    player.getVelocity().y = 0; // Reset vertical velocity
+                } else if (player.getVelocity().y < 0) {
+                    // Collision from the top of the tile (jumping)
                     player.setY(tile.y + tile.height);
-                    player.setOnGround(true);
+                    player.getVelocity().y = 0; // Reset vertical velocity
+                    isOnGround = true; // Set ground state to true
                 }
-                player.getVelocity().y = 0;
-                break;
             }
         }
-        rectPool.free(playerRect);
+
+// Update the player's ground state
+        player.setOnGround(isOnGround);
 
         // Unscale the velocity by the inverse delta time and set the latest position
         player.setX(player.getX() + player.getVelocity().x);
@@ -125,7 +128,7 @@ public class PlayerUpdater {
         // Check for touch inputs between startX and endX
         // startX/endX are given between 0 (left edge of the screen) and 1 (right edge of the screen)
         for (int i = 0; i < 2; i++) {
-            float x = Gdx.input.getX(i) / (float)Gdx.graphics.getWidth();
+            float x = Gdx.input.getX(i) / (float) Gdx.graphics.getWidth();
             if (Gdx.input.isTouched(i) && (x >= startX && x <= endX)) {
                 return true;
             }
@@ -150,10 +153,10 @@ public class PlayerUpdater {
         int endX = (int) Math.ceil((currentRoomRect.x + currentRoomRect.width) / platformsLayer.getTileWidth());
         int endY = (int) Math.ceil((currentRoomRect.y + currentRoomRect.height) / platformsLayer.getTileHeight());
 
-        for (int y = startY; y <= endY; y++) {
-            for (int x = startX; x <= endX; x++) {
+        for (int y = startY; y < endY; y++) {
+            for (int x = startX; x < endX; x++) {
                 TiledMapTileLayer.Cell cell = platformsLayer.getCell(x, y);
-                if (cell != null&& cell.getTile().getProperties().containsKey("Collidable")) {
+                if (cell != null && cell.getTile().getProperties().containsKey("Collidable")) {
                     Rectangle rect = rectPool.obtain();
                     rect.set(x * platformsLayer.getTileWidth(), y * platformsLayer.getTileHeight(), platformsLayer.getTileWidth(), platformsLayer.getTileHeight());
                     tiles.add(rect);
