@@ -6,8 +6,8 @@
     "activeFile": "The_Complete_Map.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
-        ".",
-        "Tiled_asset"
+        "Tiled_asset",
+        "."
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
@@ -30,11 +30,11 @@
             "expandedObjectLayers": [
                 8
             ],
-            "scale": 1.5,
+            "scale": 0.33,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 3711,
-                "y": 15087
+                "x": 3119.6969696969695,
+                "y": 14795.454545454546
             }
         },
         "Game_Map_complete.tmx": {
@@ -70,14 +70,11 @@
             "scaleInDock": 1
         },
         "The_Complete_Map.tmx": {
-            "expandedObjectLayers": [
-                13
-            ],
             "scale": 2,
-            "selectedLayer": 7,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 281.25,
-                "y": 15908.75
+                "x": 204.75,
+                "y": 15849.25
             }
         },
         "Tiled_asset/Blue.tsx": {

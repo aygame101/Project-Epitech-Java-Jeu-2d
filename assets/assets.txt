@@ -1,5 +1,6 @@
 .gitkeep
 Caract/Idle (32x32).png
+Coin.png
 Fmap.tmx
 Maps.tiled-project
 Maps.tiled-session
