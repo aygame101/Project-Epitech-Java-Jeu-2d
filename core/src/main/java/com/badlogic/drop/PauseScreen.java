@@ -25,7 +25,9 @@ public class PauseScreen implements Screen {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         Label titleLabel = new Label("PAUSED", skin, "default");
-        titleLabel.setFontScale(2); // Optionally scale the font
+        float scaleX = 2f; // Modifier cette valeur pour ajuster la largeur
+        float scaleY = 3f; // Modifier cette valeur pour ajuster la hauteur
+        titleLabel.setFontScale(scaleX, scaleY); // Optionally scale the font
 
         TextButton resumeButton = new TextButton("Resume", skin);
         resumeButton.addListener(new ClickListener() {
