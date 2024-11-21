@@ -44,7 +44,9 @@ public class OptionsScreen implements Screen {
 
         // Create the title label
         Label titleLabel = new Label("Options", skin, "default");
-        titleLabel.setFontScale(2); // Optionally scale the font
+        float scaleX = 2f; // Modifier cette valeur pour ajuster la largeur
+        float scaleY = 3f; // Modifier cette valeur pour ajuster la hauteur
+        titleLabel.setFontScale(scaleX, scaleY); // Optionally scale the font
 
         TextButton controlsButton = new TextButton("Controls", skin);
         controlsButton.addListener(new ClickListener() {

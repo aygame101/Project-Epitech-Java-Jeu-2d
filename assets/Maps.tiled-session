@@ -27,11 +27,14 @@
             "scaleInDock": 1
         },
         "Fmap.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 3,
+            "expandedObjectLayers": [
+                8
+            ],
+            "scale": 1.5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 8000,
-                "y": 8000.666666666666
+                "x": 3711,
+                "y": 15087
             }
         },
         "Game_Map_complete.tmx": {
@@ -67,11 +70,14 @@
             "scaleInDock": 1
         },
         "The_Complete_Map.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 4,
+            "expandedObjectLayers": [
+                13
+            ],
+            "scale": 2,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 108.33333333333331,
-                "y": 15904.333333333332
+                "x": 281.25,
+                "y": 15908.75
             }
         },
         "Tiled_asset/Blue.tsx": {

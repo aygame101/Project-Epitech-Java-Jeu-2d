@@ -43,9 +43,13 @@ public class GameScreen implements Screen {
 
     private final Pool<Rectangle> rectPool;
 
+    private Array<Coin> coins;
+    private Texture coinTexture;
+    private HUD hud;
+
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("The_Complete_Map.tmx");
+        map = new TmxMapLoader().load("The_Complete_map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
@@ -55,8 +59,15 @@ public class GameScreen implements Screen {
         player = new Player(100, 100, 16, 16);
         //gere les room
         roomsLayer = map.getLayers().get("Rooms");
-        //gere les plateformes
+        //Platformes + murs
         platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
+
+        playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
+        //HUD
+        hud = new HUD(batch);
+        //coinTexture = new Texture("coin.png");
+        coins = new Array<>();
+        loadCoins();
 
         rectPool = new Pool<Rectangle>() {
             @Override
@@ -81,12 +92,23 @@ public class GameScreen implements Screen {
     @Override
     public void show() {}
 
+    private void checkCoinCollision() {
+        Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+
+        for (Coin coin : coins) {
+            if (!coin.isCollected() && playerRect.overlaps(coin.getBounds())) {
+                coin.collect();
+                player.addCoin(); // Supposez que `Player` a une méthode `addCoin()`
+            }
+        }
+    }
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         handleInput();
         checkRoomChange();
+        checkCoinCollision();
 
         camera.update();
         mapRenderer.setView(camera);
@@ -95,18 +117,26 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        for (Coin coin : coins) {
+            if (!coin.isCollected()) {
+                batch.draw(coin.getTexture(), coin.getPosition().x, coin.getPosition().y);
+            }
+        }
+
         batch.end();
+
+        hud.draw();
 
         // Mettre à jour la position du joueur
         updatePlayerPosition(delta);
         playerUpdater.updatePlayer(delta);
 
-        //
-        checkCollisions(delta);
+        //Tp
+        checkTeleporterCollision();
     }
 
     private void updatePlayerPosition(float delta) {
-        player.update(delta);
+        playerUpdater.updatePlayer(delta);
     }
 
     private void handleInput() {
@@ -135,82 +165,6 @@ public class GameScreen implements Screen {
                 if (playerRect.overlaps(roomRect) && !roomRect.equals(currentRoomRect)) {
                     loadRoom(roomRect);
                     break;
-                }
-            }
-        }
-    }
-
-    private void checkCollisions(float delta) {
-        checkPlatformCollisions();
-        checkTeleporterCollision();
-        checkRoomChange();
-    }
-
-    private void checkPlatformCollisions() {
-        Array<Rectangle> tiles = new Array<>();
-
-        // Obtenir toutes les tuiles dans la salle actuelle
-        playerUpdater.getAllTilesInCurrentRoom(tiles);
-
-        Rectangle playerRect = player.getBoundingBox().toRectangle();
-        for (Rectangle tile : tiles) {
-            if (playerRect.overlaps(tile)) {
-                handleTileCollision(tile);
-            }
-        }
-    }
-
-    private void handleTileCollision(Rectangle tile) {
-        if (Math.abs(tile.width - tile.height) < 0.01) {
-            // Tuile carrée, traiter comme une collision générale
-            handleGeneralCollision(tile);
-        } else if (tile.width > tile.height) {
-            // Tuile horizontale, traiter une collision horizontale
-            handleHorizontalCollision(tile);
-        } else {
-            // Tuile verticale, traiter une collision verticale
-            handleVerticalCollision(tile);
-        }
-    }
-
-    private void handleGeneralCollision(Rectangle tile) {
-        // Traitement de base pour les collisions
-        // Peut inclure des rebonds ou des arrêts de mouvement
-    }
-
-    private void handleHorizontalCollision(Rectangle tile) {
-        // Traitement spécifique pour les collisions horizontales
-        if (player.getVelocity().x > 0) {
-            player.setX(tile.x - player.getWidth());
-        } else if (player.getVelocity().x < 0) {
-            player.setX(tile.x + tile.width);
-        }
-        player.getVelocity().x = 0;
-    }
-
-    private void handleVerticalCollision(Rectangle tile) {
-        // Traitement spécifique pour les collisions verticales
-        if (player.getVelocity().y > 0) {
-            player.setY(tile.y - player.getHeight());
-        } else if (player.getVelocity().y < 0) {
-            player.setY(tile.y + tile.height);
-            player.setOnGround(true);
-        }
-        player.getVelocity().y = 0;
-    }
-
-    private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
-        rectPool.freeAll(tiles);
-        tiles.clear();
-
-        for (int y = startY; y <= endY; y++) {
-            for (int x = startX; x <= endX; x++) {
-                TiledMapTileLayer.Cell cell = platformsLayer.getCell(x, y);
-                if (cell != null) {
-                    Rectangle rect = rectPool.obtain();
-                    rect.set(x * platformsLayer.getTileWidth(), y * platformsLayer.getTileHeight(),
-                        platformsLayer.getTileWidth(), platformsLayer.getTileHeight());
-                    tiles.add(rect);
                 }
             }
         }
@@ -317,6 +271,19 @@ public class GameScreen implements Screen {
         }
     }
 
+    private void loadCoins() {
+        MapLayer coinLayer = map.getLayers().get("Coins");
+        if (coinLayer != null) {
+            for (MapObject object : coinLayer.getObjects()) {
+                if (object instanceof RectangleMapObject) {
+                    RectangleMapObject rectObject = (RectangleMapObject) object;
+                    Rectangle rect = rectObject.getRectangle();
+                    coins.add(new Coin(coinTexture, rect.x, rect.y));
+                }
+            }
+        }
+    }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -338,5 +305,6 @@ public class GameScreen implements Screen {
         mapRenderer.dispose();
         batch.dispose();
         playerTexture.dispose();
+        hud.dispose();
     }
 }

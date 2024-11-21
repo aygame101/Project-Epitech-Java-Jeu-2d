@@ -14,8 +14,10 @@ public class Player extends InputAdapter {
     private float y;
     private float width;
     private float height;
-    private static int coins = 0;
+    private int coinCount = 0;
+    private static int coinN = 0;
     private float velocityY = 0;
+    private float velocityX = 0;
     private float gravity = -2f;
     private boolean onGround = true;
     private Vector2 velocity;
@@ -83,6 +85,14 @@ public class Player extends InputAdapter {
         this.velocityY = velocityY;
     }
 
+    public float getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(float velocityX) {
+        this.velocityX = velocityX;
+    }
+
     public boolean isOnGround() {
         return onGround;
     }
@@ -95,9 +105,18 @@ public class Player extends InputAdapter {
         return projectiles;
     }
 
-    public static int getCoins() {
-        return coins;
+    public void addCoin() {
+        coinCount++;
     }
+    public static int getCoin() {
+        return coinN;
+    }
+
+    public int getCoinCount() {
+        coinN = coinCount;
+        return coinCount;
+    }
+
 
     public static void ajouterItem(ItemShop item) {
         itemsPossedes.add(item);
@@ -105,24 +124,6 @@ public class Player extends InputAdapter {
 
     public float getGravity() {
         return gravity;
-    }
-
-    public void update(float delta) {
-        // Mettez à jour la position basée sur la vélocité et la gravité
-        velocity.y += gravity * delta;
-        x += velocity.x * delta;
-        y += velocity.y * delta;
-
-        if (y < 0) {
-            y = 0;
-            onGround = true;
-            velocity.y = 0;
-        }
-        if (velocity.x != 0) {
-            state = State.Walking;
-        } else {
-            state = State.Standing;
-        }
     }
 
     public boolean keyDown(int keycode) {
