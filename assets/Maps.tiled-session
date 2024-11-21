@@ -27,13 +27,10 @@
             "scaleInDock": 1
         },
         "Fmap.tmx": {
-            "expandedObjectLayers": [
-                8
-            ],
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 372.25,
+                "x": -248.75,
                 "y": 15704.75
             }
         },
@@ -74,7 +71,7 @@
             "selectedLayer": 4,
             "viewCenter": {
                 "x": 204.75,
-                "y": 15849.25
+                "y": 15912.25
             }
         },
         "Tiled_asset/Blue.tsx": {

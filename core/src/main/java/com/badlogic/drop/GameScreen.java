@@ -65,7 +65,7 @@ public class GameScreen implements Screen {
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
         //HUD
         hud = new HUD(batch);
-        //coinTexture = new Texture("coin.png");
+        coinTexture = new Texture("coin.png");
         coins = new Array<>();
         loadCoins();
 
@@ -92,23 +92,10 @@ public class GameScreen implements Screen {
     @Override
     public void show() {}
 
-    private void checkCoinCollision() {
-        Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-
-        for (Coin coin : coins) {
-            if (!coin.isCollected() && playerRect.overlaps(coin.getBounds())) {
-                coin.collect(); // Marque la pièce comme collectée
-                hud.addCoin(); // Incrémente le compteur de pièces dans le HUD
-                Gdx.app.log("GameScreen", "Coin collected. Total coins: " + hud.getCoinCount());
-            }
-        }
-    }
-
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         checkRoomChange();
-        checkCoinCollision();
 
         camera.update();
         mapRenderer.setView(camera);
@@ -122,7 +109,7 @@ public class GameScreen implements Screen {
 
         // Dessin des pièces non collectées
         for (Coin coin : coins) {
-            if (!coin.isCollected() && isCoinVisible(coin)) {
+            if (!coin.isCollected()) {
                 batch.draw(coin.getTexture(), coin.getPosition().x, coin.getPosition().y);
             }
         }
@@ -135,6 +122,7 @@ public class GameScreen implements Screen {
         updatePlayerPosition(delta);
         playerUpdater.updatePlayer(delta);
         checkTeleporterCollision();
+        checkCoinCollision();
     }
 
     private void updatePlayerPosition(float delta) {
@@ -274,16 +262,28 @@ public class GameScreen implements Screen {
         }
     }
 
-    private boolean isCoinVisible(Coin coin) {
-        float left = camera.position.x - (camera.viewportWidth / 2);
-        float right = camera.position.x + (camera.viewportWidth / 2);
-        float bottom = camera.position.y - (camera.viewportHeight / 2);
-        float top = camera.position.y + (camera.viewportHeight / 2);
+    private void checkCoinCollision() {
+        MapLayer coinsLayer = map.getLayers().get("Coins");
+        if (coinsLayer != null) {
+            Array<RectangleMapObject> coins = new Array<>();
+            for (MapObject mapObject : coinsLayer.getObjects()) {
+                System.out.println("Coins layer found in the map "+ coinsLayer);
+                if (mapObject instanceof RectangleMapObject) {
+                    coins.add((RectangleMapObject) mapObject);
+                }
+            }
 
-        Vector2 coinPos = coin.getPosition();
-
-        return coinPos.x > left && coinPos.x < right && coinPos.y > bottom && coinPos.y < top;
+            for (RectangleMapObject mapObject : coins) {
+                Rectangle rectangle = mapObject.getRectangle();
+                if (player.getBoundingBox().overlaps(rectangle)) {
+                    hud.addCoin(); // Incrémente le compteur de pièces dans le HUD
+                    Gdx.app.log("GameScreen", "Coin collected. Total coins: " + hud.getCoinCount());
+                }
+            }
+        }else{
+            System.out.println("No Coins layer found in the map.");}
     }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
