@@ -300,7 +300,7 @@ public class GameScreen implements Screen {
 
         return coinPos.x > left && coinPos.x < right && coinPos.y > bottom && coinPos.y < top;
     }
-            @Override
+    @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
         camera.update();
