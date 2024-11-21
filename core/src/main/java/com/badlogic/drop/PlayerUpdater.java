@@ -80,8 +80,13 @@ public class PlayerUpdater {
         playerRect.x += player.getVelocity().x;
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
+                if (player.getVelocity().x > 0){
+                    player.setX(tile.x - player.getWidth());
+                }
+                if (player.getVelocity().x < 0){
+                    player.setX(tile.x + player.getWidth());
+                }
                 player.getVelocity().x = 0;
-                break;
             }
         }
         playerRect.x = player.getX();
@@ -91,8 +96,9 @@ public class PlayerUpdater {
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
                 if (player.getVelocity().y > 0) {
-                    player.setY(tile.y - player.getHeight());
-                } else {
+                    player.setY(tile.y + tile.height);
+                }
+                if (player.getVelocity().y <= 0) {
                     player.setY(tile.y + tile.height);
                     player.setOnGround(true);
                 }
@@ -144,7 +150,7 @@ public class PlayerUpdater {
         for (int y = startY; y <= endY; y++) {
             for (int x = startX; x <= endX; x++) {
                 TiledMapTileLayer.Cell cell = platformsLayer.getCell(x, y);
-                if (cell != null) {
+                if (cell != null&& cell.getTile().getProperties().containsKey("Collidable")) {
                     Rectangle rect = rectPool.obtain();
                     rect.set(x * platformsLayer.getTileWidth(), y * platformsLayer.getTileHeight(), platformsLayer.getTileWidth(), platformsLayer.getTileHeight());
                     tiles.add(rect);

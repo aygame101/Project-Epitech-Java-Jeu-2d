@@ -126,24 +126,6 @@ public class Player extends InputAdapter {
         return gravity;
     }
 
-    public void update(float delta) {
-        // Mettez à jour la position basée sur la vélocité et la gravité
-        velocity.y += gravity * delta;
-        x += velocity.x * delta;
-        y += velocity.y * delta;
-
-        if (y < 0) {
-            y = 0;
-            onGround = true;
-            velocity.y = 0;
-        }
-        if (velocity.x != 0) {
-            state = State.Walking;
-        } else {
-            state = State.Standing;
-        }
-    }
-
     public boolean keyDown(int keycode) {
         return false;
     }

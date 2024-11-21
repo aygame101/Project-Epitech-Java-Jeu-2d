@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
 
-        coinTexture = new Texture("coin.png");
+        //coinTexture = new Texture("coin.png");
         coins = new Array<>();
         loadCoins();
 
@@ -143,7 +143,6 @@ public class GameScreen implements Screen {
     }
 
     private void updatePlayerPosition(float delta) {
-        player.update(delta);
         playerUpdater.updatePlayer(delta);
     }
 
@@ -205,22 +204,6 @@ public class GameScreen implements Screen {
             player.setX(100);
             player.setY(100);
             Gdx.app.log("GameScreen", "Start position 'Start0' not found. Player positioned at default start location.");
-        }
-    }
-
-    private void getTiles(int startX, int startY, int endX, int endY, Array<Rectangle> tiles) {
-        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("Platformes");
-        rectPool.freeAll(tiles);
-        tiles.clear();
-        for (int y = Math.min(startY, endY); y <= Math.max(startY, endY); y++) {
-            for (int x = Math.min(startX, endX); x <= Math.max(startX, endX); x++) {
-                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
-                if (cell != null && cell.getTile().getProperties().containsKey("Collidable")) {
-                    Rectangle rect = rectPool.obtain();
-                    rect.set(x, y, 1, 1);
-                    tiles.add(rect);
-                }
-            }
         }
     }
 
