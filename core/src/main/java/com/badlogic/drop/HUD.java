@@ -21,7 +21,7 @@ public class HUD implements Disposable {
     private final Label coinLabel;
 
     public HUD(SpriteBatch spriteBatch) {
-        this.coinCount = 50;
+        this.coinCount = 0;
         this.viewport = new FitViewport(1366, 768, new OrthographicCamera());
         this.stage = new Stage(viewport, spriteBatch);
 
@@ -50,7 +50,9 @@ public class HUD implements Disposable {
 
         stage.addActor(table);
     }
-
+    public int getCoinCount() {
+        return coinCount;
+    }
     public void addCoin() {
         coinCount++;
         coinLabel.setText(String.format("Coins: %d", coinCount));
