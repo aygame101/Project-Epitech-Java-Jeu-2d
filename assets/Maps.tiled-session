@@ -30,11 +30,11 @@
             "expandedObjectLayers": [
                 8
             ],
-            "scale": 0.33,
+            "scale": 0.25,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 8000,
-                "y": 8001.515151515152
+                "x": 2310,
+                "y": 15170
             }
         },
         "Game_Map_complete.tmx": {
@@ -73,8 +73,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 8000.25,
-                "y": 8000.25
+                "x": 204.75,
+                "y": 15912.25
             }
         },
         "Tiled_asset/Blue.tsx": {
