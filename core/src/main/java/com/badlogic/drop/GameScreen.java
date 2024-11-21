@@ -45,6 +45,7 @@ public class GameScreen implements Screen {
 
     private Array<Coin> coins;
     private Texture coinTexture;
+    private HUD hud;
 
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
@@ -62,7 +63,8 @@ public class GameScreen implements Screen {
         platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
-
+        //HUD
+        hud = new HUD(batch);
         //coinTexture = new Texture("coin.png");
         coins = new Array<>();
         loadCoins();
@@ -122,6 +124,8 @@ public class GameScreen implements Screen {
         }
 
         batch.end();
+
+        hud.draw();
 
         // Mettre à jour la position du joueur
         updatePlayerPosition(delta);
@@ -301,5 +305,6 @@ public class GameScreen implements Screen {
         mapRenderer.dispose();
         batch.dispose();
         playerTexture.dispose();
+        hud.dispose();
     }
 }
