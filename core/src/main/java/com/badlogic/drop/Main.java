@@ -28,26 +28,6 @@ public class Main extends Game {
         batch = new SpriteBatch();
         assetManager = new AssetManager();
         this.setScreen(new MenuScreen(this));
-       /* Skin skin = new Skin();
-        skin.addRegions(new TextureAtlas("uiskin.atlas"));
-        skin.add("default-font", new BitmapFont(Gdx.files.internal("default.fnt")));
-        skin.load(Gdx.files.internal("uiskin.json"));
-        font = new BitmapFont(); // Police de base, à personnaliser si besoin
-
-        try {
-            skin = assetManager.get("assets/uiskin.json", Skin.class);
-        } catch (Exception e) {
-            Gdx.app.error("Main", "Error loading skin", e);
-        }
-
-        // Initialise tous les écrans
-        menuScreen = new MenuScreen(this);
-        gameScreen = new GameScreen(this);
-        optionsScreen = new OptionsScreen(this);
-
-        // Charger l'écran de menu par défaut
-        setScreen(menuScreen);
-    }*/
     }
 
     @Override

@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen implements Screen {
+    private Main game;
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final OrthographicCamera camera;
@@ -36,8 +37,10 @@ public class GameScreen implements Screen {
     //les rooms
     private final MapLayer roomsLayer;
     private Rectangle currentRoomRect;
-    //les platformes et les murs
+    //les platformes
     private final TiledMapTileLayer platformsLayer;
+    //les traps
+    private final MapLayer trapLayer;
 
     private PlayerUpdater playerUpdater;
 
@@ -61,6 +64,8 @@ public class GameScreen implements Screen {
         roomsLayer = map.getLayers().get("Rooms");
         //Platformes + murs
         platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
+        //les traps
+        trapLayer = map.getLayers().get("Trap");
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
         //HUD
@@ -122,7 +127,8 @@ public class GameScreen implements Screen {
         updatePlayerPosition(delta);
         playerUpdater.updatePlayer(delta);
         checkTeleporterCollision();
-        checkCoinCollision();
+        //checkCoinCollision();
+        checkTrapsCollision();
     }
 
     private void updatePlayerPosition(float delta) {
@@ -262,7 +268,7 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void checkCoinCollision() {
+    /*private void checkCoinCollision() {
         MapLayer coinsLayer = map.getLayers().get("Coins");
         if (coinsLayer != null) {
             Array<RectangleMapObject> coins = new Array<>();
@@ -282,6 +288,26 @@ public class GameScreen implements Screen {
             }
         }else{
             System.out.println("No Coins layer found in the map.");}
+    }*/
+
+    private void checkTrapsCollision() {
+        MapLayer trapsLayer = map.getLayers().get("Trap");
+        if (trapsLayer != null) {
+            Array<RectangleMapObject> traps = new Array<RectangleMapObject>();
+            for (MapObject mapObject : trapsLayer.getObjects()) {
+                System.out.println(trapsLayer);
+                if (mapObject instanceof RectangleMapObject) {
+                    traps.add((RectangleMapObject) mapObject);
+                }
+            }
+
+            for (RectangleMapObject mapObject : traps) {
+                Rectangle rectangle = mapObject.getRectangle();
+                if (player.getBoundingBox().overlaps(rectangle)) {
+                    game.showGameOver();
+                }
+            }
+        }
     }
 
     @Override

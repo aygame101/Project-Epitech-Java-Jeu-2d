@@ -17,8 +17,8 @@ public class MenuScreen implements Screen {
     private Image backgroundImage;
 
     public MenuScreen(Main game) {
-        this.game = game;  // Ensure game is assigned to the local variable
-        skin = new Skin(Gdx.files.internal("uiskin.json")); // Ensure you have this skin file in your assets
+        this.game = game;
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         // Initialize the stage
         stage = new Stage(new ScreenViewport());
@@ -46,21 +46,21 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.startGame(); // Implement this method in your main game class
+                game.startGame();
             }
         });
 
         optionsButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                game.showOptions(); // Implement this method in your main game class
+                game.showOptions();
             }
         });
 
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                Gdx.app.exit(); // Quit the application
+                Gdx.app.exit();
             }
         });
 
