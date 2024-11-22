@@ -16,6 +16,7 @@ public class PlayerUpdater {
     private Array<Rectangle> tiles;
     private Rectangle currentRoomRect;
     private boolean debug = false;
+    private int jumpcount = 0;
 
     public PlayerUpdater(Player player, TiledMapTileLayer platformsLayer, Rectangle currentRoomRect) {
         this.player = player;
@@ -30,6 +31,20 @@ public class PlayerUpdater {
         this.currentRoomRect = currentRoomRect;
     }
 
+    public void Jump() {
+        if (jumpcount >=2 ) {
+            return;
+        }
+        else if (jumpcount >= 1 && !player.isOnGround()) {
+            player.getVelocity().y += 100;
+            player.setOnGround(false);
+        }
+        else if (jumpcount == 0) {
+            player.getVelocity().y += 100; // Force de saut
+            jumpcount++;
+        }
+    }
+
     public void updatePlayer(float deltaTime) {
         if (deltaTime == 0) return;
         if (deltaTime > 0.1f) deltaTime = 0.1f;
@@ -38,12 +53,11 @@ public class PlayerUpdater {
         player.stateTime += deltaTime;
 
         // Vérification des inputs du joueur
-        if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
-            player.getVelocity().y += 100; // Force de saut
-            player.setOnGround(false);
+        if ((Gdx.input.isKeyPressed(Keys.SPACE)) && player.isOnGround()) {
+            Jump();
         }
 
-        if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
+        if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) {
             player.getVelocity().x = -50; //vitesse max en -x
         }
 
@@ -102,6 +116,7 @@ public class PlayerUpdater {
                     player.setY(tile.y + tile.height);
                     player.getVelocity().y = 0;
                     isOnGround = true; // Joueur au sol
+                    jumpcount = 0;
                 }
                 else if (player.getVelocity().y > 0){
                     player.setY(tile.y - tile.height);
@@ -110,9 +125,7 @@ public class PlayerUpdater {
             }
         }
 
-
         player.setOnGround(isOnGround);
-
 
         player.setX(player.getX() + player.getVelocity().x);
         player.setY(player.getY() + player.getVelocity().y);
@@ -162,4 +175,6 @@ public class PlayerUpdater {
             }
         }
     }
+
+
 }
