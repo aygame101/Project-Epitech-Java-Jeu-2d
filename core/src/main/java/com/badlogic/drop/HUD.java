@@ -2,6 +2,7 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -39,14 +40,14 @@ public class HUD implements Disposable {
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, com.badlogic.gdx.graphics.Color.WHITE);
+        Label.LabelStyle coinlabelStyle = new Label.LabelStyle(font, Color.GOLD);
 
-        coinLabel = new Label(String.format("Coins: %d", coinCount), labelStyle);
+        coinLabel = new Label(String.format("Coins: %d", coinCount), coinlabelStyle);
 
         Table table = new Table();
         table.top().left();
         table.setFillParent(true);
-        table.add(coinLabel).expandY().padLeft(20).padTop(30);
+        table.add(coinLabel).expandY().padLeft(100).padTop(-600);
 
 
 
