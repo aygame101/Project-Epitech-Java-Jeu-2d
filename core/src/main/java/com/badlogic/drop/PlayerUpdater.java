@@ -61,7 +61,7 @@ public class PlayerUpdater {
             player.getVelocity().x = -50; //vitesse max en -x
         }
 
-        if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
+        if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) {
             player.getVelocity().x = 50; //vitesse max en +x
         }
 
