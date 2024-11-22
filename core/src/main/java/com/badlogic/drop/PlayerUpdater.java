@@ -16,6 +16,7 @@ public class PlayerUpdater {
     private Array<Rectangle> tiles;
     private Rectangle currentRoomRect;
     private boolean debug = false;
+    private int Jump = 0;
 
     public PlayerUpdater(Player player, TiledMapTileLayer platformsLayer, Rectangle currentRoomRect) {
         this.player = player;
@@ -38,9 +39,11 @@ public class PlayerUpdater {
         player.stateTime += deltaTime;
 
         // Vérification des inputs du joueur
-        if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
+
+        if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround() && Jump < 2) {
             player.getVelocity().y += 100; // Force de saut
             player.setOnGround(false);
+            Jump++;
         }
 
         if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
