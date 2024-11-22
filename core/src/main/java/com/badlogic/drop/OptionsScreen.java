@@ -29,6 +29,8 @@ public class OptionsScreen implements Screen {
     };
     private int currentSizeIndex = 0;
 
+
+
     public OptionsScreen(Main game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());

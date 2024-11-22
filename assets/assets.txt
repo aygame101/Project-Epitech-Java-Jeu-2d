@@ -638,6 +638,7 @@ Vrac/morning_adventures_tilemap/example_scene.png
 Vrac/morning_adventures_tilemap/layout_help.png
 Vrac/morning_adventures_tilemap/morning_adventures_tileset_16x16.png
 background.png
+background_map.png
 default.fnt
 default.png
 enemy.png
