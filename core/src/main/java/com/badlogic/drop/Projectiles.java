@@ -12,7 +12,7 @@ public class Projectiles {
         this.x = x;
         this.y = y;
         this.velocityX = velocityX;
-        this.texture = new Texture("Projectiles.png");  // Assurez-vous que vous avez une texture pour le projectile
+        this.texture = new Texture("Projectiles.png");
     }
 
     public void update(float delta) {

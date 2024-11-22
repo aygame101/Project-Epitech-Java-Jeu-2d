@@ -27,7 +27,7 @@ public class PauseScreen implements Screen {
         Label titleLabel = new Label("PAUSED", skin, "default");
         float scaleX = 2f; // Modifier cette valeur pour ajuster la largeur
         float scaleY = 3f; // Modifier cette valeur pour ajuster la hauteur
-        titleLabel.setFontScale(scaleX, scaleY); // Optionally scale the font
+        titleLabel.setFontScale(scaleX, scaleY); // Définition de la taille du titre
 
         TextButton resumeButton = new TextButton("Resume", skin);
         resumeButton.addListener(new ClickListener() {

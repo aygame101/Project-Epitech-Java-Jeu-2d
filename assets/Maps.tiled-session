@@ -30,8 +30,8 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": -248.75,
-                "y": 15704.75
+                "x": 8000,
+                "y": 8000.25
             }
         },
         "Game_Map_complete.tmx": {
@@ -70,8 +70,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 204.75,
-                "y": 15912.25
+                "x": 8000.25,
+                "y": 8000.25
             }
         },
         "Tiled_asset/Blue.tsx": {

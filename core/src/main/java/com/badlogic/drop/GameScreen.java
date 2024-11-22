@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("The_Complete_Map.tmx");
+        map = new TmxMapLoader().load("Fmap.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
@@ -68,7 +68,7 @@ public class GameScreen implements Screen {
         trapLayer = map.getLayers().get("Trap");
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
-        //HUD
+        //HUD +piece
         hud = new HUD(batch);
         coinTexture = new Texture("coin.png");
         coins = new Array<>();

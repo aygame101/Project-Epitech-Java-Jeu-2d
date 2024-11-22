@@ -21,7 +21,7 @@ public class OptionsScreen implements Screen {
     private Texture backgroundTexture;
     private Image backgroundImage;
 
-    // Add an array of window sizes
+    // Ajustement de la taille de la fenêtre
     private final int[][] windowSizes = {
         {1366 , 768},
         {1600 , 900},
@@ -36,13 +36,13 @@ public class OptionsScreen implements Screen {
 
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        // Load background texture
+        // Chargement du background
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        // Create the title label
+        // Création du titre du Menu
         Label titleLabel = new Label("Options", skin, "default");
         float scaleX = 2f; // Modifier cette valeur pour ajuster la largeur
         float scaleY = 3f; // Modifier cette valeur pour ajuster la hauteur
@@ -72,7 +72,7 @@ public class OptionsScreen implements Screen {
         volumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Example action to adjust volume
+                // Ajustement du son
                 game.setVolume(0.5f); // Example volume level
             }
         });
@@ -87,7 +87,7 @@ public class OptionsScreen implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true); // Enable table debug lines (optional)
+        table.setDebug(true); // Possibilité de debug
         stage.addActor(table);
 
         table.add(titleLabel).center().padBottom(20);

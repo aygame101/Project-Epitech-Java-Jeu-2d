@@ -23,13 +23,13 @@ public class ControlsScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        // Load background texture
+        // Chargement du background
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        // Create the title label
+        // Création du titre du menu
         Label titleLabel = new Label("Options", skin, "default");
         titleLabel.setFontScale(2); // Optionally scale the font
 
@@ -37,12 +37,12 @@ public class ControlsScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        // Controls (placeholders for now, can be expanded)
+        // Menu des commandes
         Label controlsLabel = new Label("Controls", skin);
         Label moveLabel = new Label("Move: WASD / Arrow Keys", skin);
         Label jumpLabel = new Label("Jump: Space", skin);
 
-        // Back button
+        // Boutton retour
         TextButton backButton = new TextButton("Back", skin);
         backButton.addListener(new ClickListener() {
             @Override

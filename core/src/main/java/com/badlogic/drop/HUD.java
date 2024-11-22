@@ -32,7 +32,7 @@ public class HUD implements Disposable {
             throw new RuntimeException("Font file not found: font.ttf");
         }
 
-        // Custom font if needed
+        // Modification de police si besoin
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 24;

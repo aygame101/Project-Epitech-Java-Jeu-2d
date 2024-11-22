@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
     public static AssetManager manager = new AssetManager();
-
+        //Vérification du bon chargement des assets
     public static void load() {
         manager.load("assets/uiskin.json", Skin.class);
         manager.load("assets/default.fnt", BitmapFont.class);

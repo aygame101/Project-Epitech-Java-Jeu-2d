@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="1000" height="1000" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="37">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="left-down" width="1000" height="1000" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="38">
  <tileset firstgid="1" source="Tiled_asset/Terrain (pixel_adv) (16x16).tsx"/>
  <tileset firstgid="243" source="Tiled_asset/background cochon.tsx"/>
  <tileset firstgid="1563" source="Tiled_asset/spike (pixel adv).tsx"/>
