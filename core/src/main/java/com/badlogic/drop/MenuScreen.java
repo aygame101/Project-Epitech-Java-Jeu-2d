@@ -31,7 +31,7 @@ public class MenuScreen implements Screen {
         stage.addActor(backgroundImage);
 
         // Titre du jeu + modif taille
-        Label titleLabel = new Label("Kwa-FEUR", skin, "default");
+        Label titleLabel = new Label("Adventure Die", skin, "default");
 
         float scaleX = 2f; // Modifier cette valeur pour ajuster la largeur
         float scaleY = 3f; // Modifier cette valeur pour ajuster la hauteur

@@ -125,7 +125,6 @@ public class GameScreen implements Screen {
         }
 
         batch.end();
-
         // Dessiner le HUD après tous les autres éléments
         hud.draw();
 

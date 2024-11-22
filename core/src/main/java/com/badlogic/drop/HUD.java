@@ -44,9 +44,11 @@ public class HUD implements Disposable {
         coinLabel = new Label(String.format("Coins: %d", coinCount), labelStyle);
 
         Table table = new Table();
-        table.top();
+        table.top().left();
         table.setFillParent(true);
-        table.add(coinLabel).expandX().padTop(10);
+        table.add(coinLabel).expandY().padLeft(20).padTop(30);
+
+
 
         stage.addActor(table);
     }
