@@ -7,7 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -48,6 +50,14 @@ public class GameScreen implements Screen {
     //les coins
     private Array<Coin> coins;
     private final TiledMapTileLayer coinsLayer;
+    //l'animation
+    private Animation<TextureRegion> standingAnimation;
+    private Animation<TextureRegion> jumpingAnimation;
+    private Animation<TextureRegion> walkingAnimation;
+    private float stateTime; // Temps écoulé pour l'animation
+    private TextureRegion currentFrame; // Frame actuelle de l'animation
+    private boolean isWalking = false; // Indicateur si le joueur marche
+    private boolean isJumping = false; // Indicateur si le joueur saute
 
     private PlayerUpdater playerUpdater;
 
@@ -58,13 +68,22 @@ public class GameScreen implements Screen {
     public GameScreen(Game game) {
         this.game = (Main) game;
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("Fmap.tmx");
+        map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1600, 900, camera);
         batch = new SpriteBatch();
         //gere le perso
-        playerTexture = new Texture("Player.png");
+
+        // Gere le perso et charger les textures pour les animations
+        playerTexture = new Texture("player.png");
+//        TextureRegion[] regions = TextureRegion.split(playerTexture, 5, 5)[0];
+//
+//        standingAnimation = new Animation<>(0, regions[0]);
+//        jumpingAnimation = new Animation<>(0, regions[1]);
+//        walkingAnimation = new Animation<>(0.15f, regions[2], regions[3], regions[4]);
+//        walkingAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+
         player = new Player(100, 100, 16, 16);
         //gere les room
         roomsLayer = map.getLayers().get("Rooms");
