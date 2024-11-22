@@ -147,8 +147,8 @@ public class Player extends InputAdapter {
         public BoundingBox(float x, float y, float width, float height) {
             this.x = x;
             this.y = y;
-            this.width = width;
-            this.height = height;
+            this.width = width - 2;
+            this.height = height - 2;
         }
 
         public boolean overlaps(Rectangle other) {

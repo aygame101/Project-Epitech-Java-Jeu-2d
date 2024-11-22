@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "The_Complete_Map.tmx",
+    "activeFile": "Fmap.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
-        ".",
-        "Tiled_asset"
+        "Tiled_asset",
+        "."
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
@@ -27,11 +27,11 @@
             "scaleInDock": 1
         },
         "Fmap.tmx": {
-            "scale": 0.25,
-            "selectedLayer": 3,
+            "scale": 0.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 3158,
-                "y": 15858
+                "x": 4787,
+                "y": 15703
             }
         },
         "Game_Map_complete.tmx": {
@@ -67,11 +67,8 @@
             "scaleInDock": 1
         },
         "The_Complete_Map.tmx": {
-            "expandedObjectLayers": [
-                19
-            ],
             "scale": 2,
-            "selectedLayer": 6,
+            "selectedLayer": 4,
             "viewCenter": {
                 "x": 187.75,
                 "y": 15934.75
@@ -145,14 +142,14 @@
     "project": "Maps.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "The_Complete_Map.tmx",
+        "Tiled_asset/background cochon.tsx",
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
+        "Tiled_asset/spike (pixel adv).tsx",
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
+        "Tiled_asset/tilemap cochon.tsx",
         "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
         "Fmap.tmx",
-        "Tiled_asset/tilemap cochon.tsx",
-        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
-        "Tiled_asset/spike (pixel adv).tsx",
-        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
-        "Tiled_asset/background cochon.tsx",
-        "The_Complete_Map.tmx",
         "Tiled_asset/Tiles paper adv.tsx",
         "Tiled_asset/Blue.tsx",
         "Game_Map_complete.tmx",
