@@ -106,11 +106,11 @@ public class Main extends Game {
     }
 
     private void handleInput() {
-            if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-                this.setScreen(new PauseScreen(this));
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-                this.setScreen(new GameOverScreen(this));
-            }
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            this.setScreen(new PauseScreen(this));
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            this.setScreen(new GameOverScreen(this));
+        }
     }
 }
