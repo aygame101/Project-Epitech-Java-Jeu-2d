@@ -27,11 +27,11 @@
             "scaleInDock": 1
         },
         "Fmap.tmx": {
-            "scale": 0.5,
-            "selectedLayer": 1,
+            "scale": 1.5,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 4787,
-                "y": 15703
+                "x": 5438.333333333333,
+                "y": 14896.333333333332
             }
         },
         "Game_Map_complete.tmx": {
@@ -71,7 +71,7 @@
             "selectedLayer": 4,
             "viewCenter": {
                 "x": 187.75,
-                "y": 15934.75
+                "y": 15808.75
             }
         },
         "Tiled_asset/Blue.tsx": {
@@ -123,12 +123,12 @@
     "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Tiled_asset",
     "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets",
     "map.fixedSize": true,
-    "map.height": 1000,
+    "map.height": 300,
     "map.lastUsedFormat": "tmx",
     "map.renderOrder": "2",
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
-    "map.width": 1000,
+    "map.tileHeight": 5,
+    "map.tileWidth": 5,
+    "map.width": 300,
     "openFiles": [
         "The_Complete_Map.tmx",
         "Tiled_asset/background cochon.tsx",
@@ -158,7 +158,7 @@
     "resizeMap.removeObjects": true,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 5,
+        "width": 5
     }
 }
