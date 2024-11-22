@@ -16,6 +16,7 @@ public class PlayerUpdater {
     private Array<Rectangle> tiles;
     private Rectangle currentRoomRect;
     private boolean debug = false;
+    private boolean As_Jump = false;
     private int Jump = 0;
 
     public PlayerUpdater(Player player, TiledMapTileLayer platformsLayer, Rectangle currentRoomRect) {
@@ -39,11 +40,20 @@ public class PlayerUpdater {
         player.stateTime += deltaTime;
 
         // Vérification des inputs du joueur
-
-        if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround() && Jump < 2) {
+        if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
             player.getVelocity().y += 100; // Force de saut
+            As_Jump = true;
             player.setOnGround(false);
             Jump++;
+            System.out.println("Jump: " + Jump + "" + As_Jump + player.isOnGround());
+            if (As_Jump && Jump<2) {
+                player.setOnGround(true);
+                if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
+                    player.getVelocity().y += 100; // Force de saut
+                    As_Jump = true;
+                    Jump++;
+                }
+            }
         }
 
         if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
@@ -104,7 +114,9 @@ public class PlayerUpdater {
                 if (player.getVelocity().y < 0) {
                     player.setY(tile.y + tile.height);
                     player.getVelocity().y = 0;
-                    isOnGround = true; // Jouer au sol
+                    isOnGround = true; // Joueur au sol
+                    As_Jump = false;
+                    Jump=0;
                 }
                 else if (player.getVelocity().y > 0){
                     player.setY(tile.y - tile.height);
