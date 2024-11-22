@@ -24,6 +24,9 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameScreen implements Screen {
     private Main game;
     private final TiledMap map;
@@ -40,7 +43,7 @@ public class GameScreen implements Screen {
     //les platformes
     private final TiledMapTileLayer platformsLayer;
     //les traps
-    private final MapLayer trapLayer;
+    private List<Rectangle> traps;
 
     private PlayerUpdater playerUpdater;
 
@@ -52,7 +55,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(Game game) {
         // initialisation des champs omis pour la brièveté
-        map = new TmxMapLoader().load("Fmap.tmx");
+        map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
         viewport = new FitViewport(1366, 768, camera);
@@ -65,7 +68,7 @@ public class GameScreen implements Screen {
         //Platformes + murs
         platformsLayer = (TiledMapTileLayer) map.getLayers().get("Platformes");
         //les traps
-        trapLayer = map.getLayers().get("Trap");
+        traps = new ArrayList<>();
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
         //HUD +piece
@@ -291,24 +294,24 @@ public class GameScreen implements Screen {
     }*/
 
     private void checkTrapsCollision() {
-        MapLayer trapsLayer = map.getLayers().get("Trap");
-        if (trapsLayer != null) {
-            Array<RectangleMapObject> traps = new Array<RectangleMapObject>();
-            for (MapObject mapObject : trapsLayer.getObjects()) {
-                System.out.println(trapsLayer);
-                if (mapObject instanceof RectangleMapObject) {
-                    traps.add((RectangleMapObject) mapObject);
-                }
+        for (MapObject object : map.getLayers().get("Traps").getObjects()) {
+            if (object.getName().equals("Trap")) {
+                Rectangle trapRect = new Rectangle(
+                    (float) object.getProperties().get("x"),
+                    (float) object.getProperties().get("y"),
+                    (float) object.getProperties().get("width"),
+                    (float) object.getProperties().get("height")
+                );
+                traps.add(trapRect);
             }
-
-            for (RectangleMapObject mapObject : traps) {
-                Rectangle rectangle = mapObject.getRectangle();
-                if (player.getBoundingBox().overlaps(rectangle)) {
-                    game.showGameOver();
-                }
+        }
+        for (Rectangle trap : traps) {
+            if (player.getBoundingBox().overlaps(trap)) {
+               game.showGameOver();
             }
         }
     }
+
 
     @Override
     public void resize(int width, int height) {
