@@ -44,16 +44,19 @@ public class GameScreen implements Screen {
     private final TiledMapTileLayer platformsLayer;
     //les traps
     private List<Rectangle> traps;
+    private boolean isGameOver = false;
+    //les coins
+    private Array<Coin> coins;
+    private final TiledMapTileLayer coinsLayer;
 
     private PlayerUpdater playerUpdater;
 
     private final Pool<Rectangle> rectPool;
 
-    private Array<Coin> coins;
-    private Texture coinTexture;
     private HUD hud;
 
     public GameScreen(Game game) {
+        this.game = (Main) game;
         // initialisation des champs omis pour la brièveté
         map = new TmxMapLoader().load("The_Complete_Map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
@@ -73,9 +76,8 @@ public class GameScreen implements Screen {
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
         //HUD +piece
         hud = new HUD(batch);
-        coinTexture = new Texture("coin.png");
         coins = new Array<>();
-        loadCoins();
+        coinsLayer = (TiledMapTileLayer) map.getLayers().get("Coins");
 
         rectPool = new Pool<Rectangle>() {
             @Override
@@ -130,7 +132,7 @@ public class GameScreen implements Screen {
         updatePlayerPosition(delta);
         playerUpdater.updatePlayer(delta);
         checkTeleporterCollision();
-        //checkCoinCollision();
+        checkCoinCollision();
         checkTrapsCollision();
     }
 
@@ -255,47 +257,49 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void loadCoins() {
-        MapLayer coinLayer = map.getLayers().get("Coins");
-        if (coinLayer != null) {
-            for (MapObject object : coinLayer.getObjects()) {
-                if (object instanceof RectangleMapObject) {
-                    RectangleMapObject rectObject = (RectangleMapObject) object;
-                    Rectangle rect = rectObject.getRectangle();
-                    coins.add(new Coin(coinTexture, rect.x, rect.y));
-                    Gdx.app.log("GameScreen", "Coin loaded at: " + rect.x + ", " + rect.y);
+    public void getAllCoinsInCurrentRoom(Array<Rectangle> coins) {
+        if (currentRoomRect == null) {
+            throw new IllegalStateException("currentRoomRect n'est pas initialisé!");
+        }
+
+        rectPool.freeAll(coins);
+        coins.clear();
+
+        int startX = (int) Math.floor(currentRoomRect.x / coinsLayer.getTileWidth());
+        int startY = (int) Math.floor(currentRoomRect.y / coinsLayer.getTileHeight());
+        int endX = (int) Math.ceil((currentRoomRect.x + currentRoomRect.width) / coinsLayer.getTileWidth());
+        int endY = (int) Math.ceil((currentRoomRect.y + currentRoomRect.height) / coinsLayer.getTileHeight());
+
+        for (int y = startY; y < endY; y++) {
+            for (int x = startX; x < endX; x++) {
+                TiledMapTileLayer.Cell cell = coinsLayer.getCell(x, y);
+                if (cell != null && cell.getTile().getProperties().containsKey("Coin")) {
+                    Rectangle rect = rectPool.obtain();
+                    rect.set(x * coinsLayer.getTileWidth(), y * coinsLayer.getTileHeight(), coinsLayer.getTileWidth(), coinsLayer.getTileHeight());
+                    coins.add(rect);
                 }
             }
-        } else {
-            Gdx.app.log("GameScreen", "No Coins layer found in the map.");
         }
     }
 
-    /*private void checkCoinCollision() {
-        MapLayer coinsLayer = map.getLayers().get("Coins");
-        if (coinsLayer != null) {
-            Array<RectangleMapObject> coins = new Array<>();
-            for (MapObject mapObject : coinsLayer.getObjects()) {
-                System.out.println("Coins layer found in the map "+ coinsLayer);
-                if (mapObject instanceof RectangleMapObject) {
-                    coins.add((RectangleMapObject) mapObject);
-                }
-            }
+    private void checkCoinCollision() {
+        Array<Rectangle> coins = new Array<>();
+        getAllCoinsInCurrentRoom(coins);
 
-            for (RectangleMapObject mapObject : coins) {
-                Rectangle rectangle = mapObject.getRectangle();
-                if (player.getBoundingBox().overlaps(rectangle)) {
-                    hud.addCoin(); // Incrémente le compteur de pièces dans le HUD
-                    Gdx.app.log("GameScreen", "Coin collected. Total coins: " + hud.getCoinCount());
-                }
+        for (Rectangle coin : coins) {
+            if (player.getBoundingBox().overlaps(coin)) {
+                int tileX = (int) (coin.x / coinsLayer.getTileWidth());
+                int tileY = (int) (coin.y / coinsLayer.getTileHeight());
+                coinsLayer.setCell(tileX, tileY, null); // Supprime la piece que le joueur touche
+                // Ajoute le coin au conteur
+                hud.addCoin();
             }
-        }else{
-            System.out.println("No Coins layer found in the map.");}
-    }*/
+        }
+    }
 
     private void checkTrapsCollision() {
         for (MapObject object : map.getLayers().get("Traps").getObjects()) {
-            if (object.getName().equals("Trap")) {
+            if (object.getName().equals("t")) {
                 Rectangle trapRect = new Rectangle(
                     (float) object.getProperties().get("x"),
                     (float) object.getProperties().get("y"),
@@ -306,8 +310,10 @@ public class GameScreen implements Screen {
             }
         }
         for (Rectangle trap : traps) {
-            if (player.getBoundingBox().overlaps(trap)) {
-               game.showGameOver();
+            if (!isGameOver && player.getBoundingBox().overlaps(trap)) {
+                isGameOver = true; // Mettre à jour l'indicateur
+                game.showGameOver(); // Afficher l'écran de game over
+                break; // Sortir de la boucle après la première collision
             }
         }
     }
@@ -335,6 +341,5 @@ public class GameScreen implements Screen {
         batch.dispose();
         playerTexture.dispose();
         hud.dispose();
-        coinTexture.dispose();
     }
 }

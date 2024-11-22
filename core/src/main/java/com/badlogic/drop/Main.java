@@ -72,7 +72,9 @@ public class Main extends Game {
             case OPTIONS:
                 this.setScreen(optionsScreen);
                 break;
-            // Ajouter d'autres types d'écran si nécessaire
+            case GAMEOVER:
+                this.setScreen(new GameOverScreen(this));
+                break;
         }
     }
 
@@ -100,7 +102,7 @@ public class Main extends Game {
 
     // Enum pour référencer les différents écrans du jeu
     public enum ScreenType {
-        GAME, MENU, OPTIONS
+        GAME, MENU, OPTIONS, GAMEOVER
     }
 
     private void handleInput() {
