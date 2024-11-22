@@ -20,29 +20,29 @@ public class MenuScreen implements Screen {
         this.game = game;
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        // Initialize the stage
+        // Initialisation du niveau
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage); // Set the input processor to the stage
+        Gdx.input.setInputProcessor(stage);
 
-        // Load background texture
+        // Chargement du background
         backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
 
-        // Create the title label
+        // Titre du jeu + modif taille
         Label titleLabel = new Label("Kwa-FEUR", skin, "default");
 
         float scaleX = 2f; // Modifier cette valeur pour ajuster la largeur
         float scaleY = 3f; // Modifier cette valeur pour ajuster la hauteur
         titleLabel.setFontScale(scaleX, scaleY);
 
-        // Create buttons
+        // Création des bouttons
         TextButton playButton = new TextButton("Play", skin);
         TextButton optionsButton = new TextButton("Options", skin);
         TextButton quitButton = new TextButton("Quit", skin);
 
-        // Add button listeners
+        // Ecoute de click
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -64,7 +64,7 @@ public class MenuScreen implements Screen {
             }
         });
 
-        // Create a table to organize buttons
+        // Création du menu
         Table table = new Table();
         table.setFillParent(true);
         table.add(titleLabel).center().padBottom(20);
@@ -83,7 +83,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1); // Clear the screen with black
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(delta);

@@ -31,8 +31,8 @@ public class GameOverScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
         spriteBatch.draw(gameOverTexture, Gdx.graphics.getWidth() / 2 - gameOverTexture.getWidth() / 2, Gdx.graphics.getHeight() / 2 - gameOverTexture.getHeight() / 2);
-        font.draw(spriteBatch, "Game Over", Gdx.graphics.getWidth() / 2 - 50, Gdx.graphics.getHeight() / 2 + 50);
-        font.draw(spriteBatch, "Press SPACE to Retry", Gdx.graphics.getWidth() / 2 - 70, Gdx.graphics.getHeight() / 2 - 50);
+        //font.draw(spriteBatch, "Game Over", Gdx.graphics.getWidth() / 2 - 50, Gdx.graphics.getHeight() / 2 + 50);
+       // font.draw(spriteBatch, "Press SPACE to Retry", Gdx.graphics.getWidth() / 2 - 70, Gdx.graphics.getHeight() / 2 - 50);
         spriteBatch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {

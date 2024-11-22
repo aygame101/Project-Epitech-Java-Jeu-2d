@@ -37,46 +37,46 @@ public class PlayerUpdater {
 
         player.stateTime += deltaTime;
 
-        // Check input and apply to velocity & state
+        // Vérification des inputs du joueur
         if ((Gdx.input.isKeyPressed(Keys.SPACE) || isTouched(0.5f, 1)) && player.isOnGround()) {
-            player.getVelocity().y += 100; // JUMP_VELOCITY
+            player.getVelocity().y += 100; // Force de saut
             player.setOnGround(false);
         }
 
         if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A) || isTouched(0, 0.25f)) {
-            player.getVelocity().x = -50; // MAX_VELOCITY
+            player.getVelocity().x = -50; //vitesse max en -x
         }
 
         if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D) || isTouched(0.25f, 0.5f)) {
-            player.getVelocity().x = 50; // MAX_VELOCITY
+            player.getVelocity().x = 50; //vitesse max en +x
         }
 
         if (Gdx.input.isKeyJustPressed(Keys.B)) {
             debug = !debug;
         }
 
-        // Apply gravity if we are falling
+        // Gravité
         player.getVelocity().add(0, GRAVITY);
 
-        // Clamp the velocity to the maximum, x-axis only
+
         player.getVelocity().x = MathUtils.clamp(player.getVelocity().x, -50, 50);
 
-        // If the velocity is < 1, set it to 0 and set state to Standing
+
         if (Math.abs(player.getVelocity().x) < 1) {
             player.getVelocity().x = 0;
         }
 
-        // Multiply by delta time so we know how far we go in this frame
+
         player.getVelocity().scl(deltaTime);
 
-        // Perform collision detection & response, on each axis, separately
+        // Détection des collisions pour chaque axe
         Rectangle playerRect = rectPool.obtain();
         playerRect.set(player.getX(), player.getY(), player.getWidth(), player.getHeight());
 
         // Get all tiles in the current room
         getAllTilesInCurrentRoom(tiles);
 
-        // Check horizontal collisions
+        // Vérification collisions horizontales
         playerRect.x += player.getVelocity().x;
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
@@ -91,41 +91,40 @@ public class PlayerUpdater {
         }
         playerRect.x = player.getX();
 
-        // Check vertical collisions
+        // Vérification collisions verticales
         playerRect.y += player.getVelocity().y;
 
-        boolean isOnGround = false; // Flag to track if player is on the ground
+        boolean isOnGround = false; // Savoir si le joueur est au sol
 
         for (Rectangle tile : tiles) {
             if (playerRect.overlaps(tile)) {
                 if (player.getVelocity().y < 0) {
                     player.setY(tile.y + tile.height);
-                    player.getVelocity().y = 0; // Reset vertical velocity
-                    isOnGround = true; // Set ground state to true
+                    player.getVelocity().y = 0;
+                    isOnGround = true; // Jouer au sol
                 }
                 else if (player.getVelocity().y > 0){
                     player.setY(tile.y - tile.height);
-                    player.getVelocity().y = 0; // Reset vertical velocity
+                    player.getVelocity().y = 0;
                 }
             }
         }
 
-// Update the player's ground state
+
         player.setOnGround(isOnGround);
 
-        // Unscale the velocity by the inverse delta time and set the latest position
+
         player.setX(player.getX() + player.getVelocity().x);
         player.setY(player.getY() + player.getVelocity().y);
         player.getVelocity().scl(1 / deltaTime);
 
-        // Apply damping to the velocity on the x-axis so we don't walk infinitely once a key was pressed
+
         player.getVelocity().x *= Player.DAMPING;
 
     }
 
     private boolean isTouched(float startX, float endX) {
-        // Check for touch inputs between startX and endX
-        // startX/endX are given between 0 (left edge of the screen) and 1 (right edge of the screen)
+
         for (int i = 0; i < 2; i++) {
             float x = Gdx.input.getX(i) / (float) Gdx.graphics.getWidth();
             if (Gdx.input.isTouched(i) && (x >= startX && x <= endX)) {
