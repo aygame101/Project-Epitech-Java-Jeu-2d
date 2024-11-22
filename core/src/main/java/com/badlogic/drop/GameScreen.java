@@ -61,7 +61,7 @@ public class GameScreen implements Screen {
         map = new TmxMapLoader().load("Fmap.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         camera = new OrthographicCamera();
-        viewport = new FitViewport(1366, 768, camera);
+        viewport = new FitViewport(1600, 900, camera);
         batch = new SpriteBatch();
         //gere le perso
         playerTexture = new Texture("Player.png");
