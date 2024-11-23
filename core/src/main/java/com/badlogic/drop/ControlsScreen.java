@@ -40,7 +40,8 @@ public class ControlsScreen implements Screen {
         // Menu des commandes
         Label controlsLabel = new Label("Controls", skin);
         Label moveLabel = new Label("Move: WASD / Arrow Keys", skin);
-        Label jumpLabel = new Label("Jump: Space", skin);
+        Label jumpLabel = new Label("Warp: Space", skin);
+        Label longJumpLabel = new Label("(LongJump) Start : L, Stop : K", skin);
 
         // Boutton retour
         TextButton backButton = new TextButton("Back", skin);
@@ -58,6 +59,9 @@ public class ControlsScreen implements Screen {
         table.add(moveLabel).colspan(2).center();
         table.row();
         table.add(jumpLabel).colspan(2).center();
+        table.row().pad(10, 0, 10, 0);
+        table.row();
+        table.add(longJumpLabel).colspan(2).center();
         table.row().pad(10, 0, 10, 0);
         table.add(backButton).colspan(2).center();
     }

@@ -30,11 +30,11 @@
             "expandedObjectLayers": [
                 9
             ],
-            "scale": 1.5,
-            "selectedLayer": 7,
+            "scale": 1,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 8000,
-                "y": 8000.333333333332
+                "x": 326.5,
+                "y": 15929.5
             }
         },
         "Game_Map_complete.tmx": {
@@ -89,6 +89,10 @@
             "scaleInDock": 0.5,
             "scaleInEditor": 0.015625
         },
+        "Tiled_asset/Items_set.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 3
+        },
         "Tiled_asset/Start (Idle) pixel adv.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -110,7 +114,7 @@
             "scaleInEditor": 1
         },
         "Tiled_asset/background cochon.tsx": {
-            "scaleInDock": 0.5,
+            "scaleInDock": 0.33,
             "scaleInEditor": 1
         },
         "Tiled_asset/morning_adventures_tileset_16x16.tsx": {
@@ -144,23 +148,23 @@
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
         "Tiled_asset/tilemap cochon.tsx",
         "Fmap.tmx",
-        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx"
+        "Tiled_asset/Items_set.tsx"
     ],
     "project": "Maps.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
-        "Test_anim/Player_run.tsx",
         "The_Complete_Map.tmx",
         "Tiled_asset/background cochon.tsx",
         "Tiled_asset/morning_adventures_tileset_16x16.tsx",
         "Tiled_asset/spike (pixel adv).tsx",
         "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
         "Tiled_asset/tilemap cochon.tsx",
+        "Tiled_asset/Items_set.tsx",
         "Fmap.tmx",
+        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
+        "Test_anim/Player_run.tsx",
         "Tiled_asset/Tiles paper adv.tsx",
-        "Tiled_asset/Blue.tsx",
-        "Game_Map_complete.tmx"
+        "Tiled_asset/Blue.tsx"
     ],
     "resizeMap.removeObjects": true,
     "tileset.lastUsedFilter": "Tous les Fichiers (*)",

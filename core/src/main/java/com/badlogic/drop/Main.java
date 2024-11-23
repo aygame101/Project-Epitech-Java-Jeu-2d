@@ -19,6 +19,7 @@ public class Main extends Game {
     private MenuScreen menuScreen;
     private GameScreen gameScreen;
     private OptionsScreen optionsScreen;
+    private VictoryScreen victoryScreen;
     Skin skin;
     private AssetManager assetManager;
 
@@ -89,6 +90,8 @@ public class Main extends Game {
     public void showGameOver() {
         this.setScreen(new GameOverScreen(this));
     }
+
+    public void Victory() {this.setScreen(new VictoryScreen(this));}
 
     public float getVolume() {
         return 50;

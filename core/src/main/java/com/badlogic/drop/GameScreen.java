@@ -51,9 +51,11 @@ public class GameScreen implements Screen {
     private Array<Coin> coins;
     private final TiledMapTileLayer coinsLayer;
     //les items
+    private final TiledMapTileLayer itemsLayer;
     private Array<Rectangle> resJumpItems;
     private Array<Rectangle> WarpItems;
-    private final TiledMapTileLayer itemsLayer;
+    private Array<Rectangle> KeysItems;
+    public int Nkeys = 0;
     //l'animation
     private Animation<TextureRegion> standingAnimation;
     private Animation<TextureRegion> jumpingAnimation;
@@ -106,6 +108,7 @@ public class GameScreen implements Screen {
         itemsLayer = (TiledMapTileLayer) map.getLayers().get("Items");
         resJumpItems = new Array<>();
         WarpItems = new Array<>();
+        KeysItems = new Array<>();
 
         rectPool = new Pool<Rectangle>() {
             @Override
@@ -158,6 +161,9 @@ public class GameScreen implements Screen {
         checkCoinCollision();
         checkTrapsCollision();
         checkItemsCollision();
+
+        //victoire
+        Victory();
     }
 
     private void updatePlayerPosition(float delta) {
@@ -377,10 +383,16 @@ public class GameScreen implements Screen {
                         Rectangle rect = rectPool.obtain();
                         rect.set(x * itemsLayer.getTileWidth(), y * itemsLayer.getTileHeight(), itemsLayer.getTileWidth(), itemsLayer.getTileHeight());
                         resJumpItems.add(rect);
-                    } else if (cell.getTile().getProperties().containsKey("ResWarp")) { // Remplacez "OtherProperty" par votre propriété
+                    }
+                    if (cell.getTile().getProperties().containsKey("ResWarp")) {
                         Rectangle rect = rectPool.obtain();
                         rect.set(x * itemsLayer.getTileWidth(), y * itemsLayer.getTileHeight(), itemsLayer.getTileWidth(), itemsLayer.getTileHeight());
                         WarpItems.add(rect);
+                    }
+                    if (cell.getTile().getProperties().containsKey("Keys")){
+                        Rectangle rect = rectPool.obtain();
+                        rect.set(x * itemsLayer.getTileWidth(), y * itemsLayer.getTileHeight(), itemsLayer.getTileWidth(), itemsLayer.getTileHeight());
+                        KeysItems.add(rect);
                     }
                 }
             }
@@ -388,10 +400,10 @@ public class GameScreen implements Screen {
     }
 
     private void checkItemsCollision() {
-        // Appelez la méthode pour obtenir les items
+        // Appele les items
         getAllItemsInCurrentRoom();
 
-        // Vérifiez les collisions pour les items ResJump
+        // Vérif ResJump
         for (Rectangle item : resJumpItems) {
             if (player.getBoundingBox().overlaps(item)) {
                 int tileX = (int) (item.x / itemsLayer.getTileWidth());
@@ -401,7 +413,7 @@ public class GameScreen implements Screen {
                 HUD.LJitem++;
             }
         }
-        // Vérifiez les collisions pour les items de l'autre propriété
+        // Vérif Warp
         for (Rectangle item : WarpItems) {
             if (player.getBoundingBox().overlaps(item)) {
                 int tileX = (int) (item.x / itemsLayer.getTileWidth());
@@ -411,9 +423,24 @@ public class GameScreen implements Screen {
                 HUD.WarpItems++;
             }
         }
+        //Vérif Keys
+        for (Rectangle item : KeysItems) {
+            if (player.getBoundingBox().overlaps(item)) {
+                int tileX = (int) (item.x / itemsLayer.getTileWidth());
+                int tileY = (int) (item.y / itemsLayer.getTileHeight());
+                itemsLayer.setCell(tileX, tileY, null); // Supprime l'item que le joueur touche
+                hud.addKeys();
+            }
+        }
     }
+    //fin items
 
-
+    //victoire
+    public void Victory(){
+        if (hud.getNkeys()> 10000){
+            game.Victory();
+        }
+    }
 
     @Override
     public void resize(int width, int height) {

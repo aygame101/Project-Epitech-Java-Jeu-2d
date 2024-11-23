@@ -25,7 +25,7 @@ public class PauseScreen implements Screen {
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         // Chargement du background
-        backgroundTexture = new Texture(Gdx.files.internal("background_map.png"));
+        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         stage.addActor(backgroundImage);
@@ -35,7 +35,7 @@ public class PauseScreen implements Screen {
         float scaleY = 3f; // Modifier cette valeur pour ajuster la hauteur
         titleLabel.setFontScale(scaleX, scaleY); // Définition de la taille du titre
 
-        TextButton resumeButton = new TextButton("Resume", skin);
+        TextButton resumeButton = new TextButton("Restart", skin);
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

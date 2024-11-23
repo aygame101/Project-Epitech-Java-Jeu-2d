@@ -24,10 +24,13 @@ public class HUD implements Disposable {
     //les warp
     public static int WarpItems = 0;
     private static int NWarp;
+    //les keys
+    public static int Nkeys = 0;
     //les message afficher
     private final Label coinLabel;
     private static Label longJumpLabel = null;
     private static Label warpLabel = null;
+    private static Label keysLabel = null;
 
     public HUD(SpriteBatch spriteBatch) {
         this.coinCount = 0;
@@ -53,23 +56,28 @@ public class HUD implements Disposable {
         Label.LabelStyle coinlabelStyle = new Label.LabelStyle(font, Color.GOLD);
         Label.LabelStyle NLongJumplabelStyle = new Label.LabelStyle(font, Color.BLACK);
         Label.LabelStyle NWarplabelStyle = new Label.LabelStyle(font, Color.FIREBRICK);
+        Label.LabelStyle keylabelStyle = new Label.LabelStyle(font, Color.GOLD);
 
         coinLabel = new Label(String.format("Coins: %d", coinCount), coinlabelStyle);
+        if (Nkeys == 0){
+            keysLabel = new Label(String.format(""), keylabelStyle);
+        }
         if (LJitem == 0){
             longJumpLabel = new Label(String.format(""), NLongJumplabelStyle);
         }
         if (WarpItems == 0){
             warpLabel = new Label(String.format(""), NWarplabelStyle);
         }
+
         //"Press 'space' and 'Q' or 'D' to Warp on a direction"
 
         Table table = new Table();
         table.top().left();
         table.setFillParent(true);
-        table.add(coinLabel).expandY().padLeft(75).padTop(-675);
-        table.add(longJumpLabel).expandY().padLeft(-90).padTop(-600);
-        table.add(warpLabel).expandY().padLeft(100).padTop(-600);
-
+        table.row();
+        table.add(coinLabel).expandY().padLeft(50).padTop(-700);
+        table.add(longJumpLabel).expandY().padLeft(35).padTop(-700);
+        table.add(warpLabel).expandY().padLeft(35).padTop(-700);
         stage.addActor(table);
     }
 
@@ -116,6 +124,13 @@ public class HUD implements Disposable {
     public static void ResWarp(){
         NWarp=1;
         warpLabel.setText(String.format("Press 'space' to Warp on a direction, warp left: %d", NWarp));
+    }
+    // fin warp
+
+    //keys
+    public int getNkeys(){return Nkeys;}
+    public void addKeys(){
+        Nkeys++;
     }
 
     public void draw() {
