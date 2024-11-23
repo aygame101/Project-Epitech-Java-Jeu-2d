@@ -6,8 +6,8 @@
     "activeFile": "Fmap.tmx",
     "automapping.whileDrawing": false,
     "expandedProjectPaths": [
-        "Tiled_asset",
-        "."
+        ".",
+        "Tiled_asset"
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
