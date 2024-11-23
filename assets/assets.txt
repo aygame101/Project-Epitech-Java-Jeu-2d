@@ -18,6 +18,7 @@ Tiled_asset/background cochon.tsx
 Tiled_asset/morning_adventures_tileset_16x16.tsx
 Tiled_asset/spike (pixel adv).tsx
 Tiled_asset/tilemap cochon.tsx
+Victory.png
 Vrac/16x16 RPG Item Pack/Item__00.png
 Vrac/16x16 RPG Item Pack/Item__01.png
 Vrac/16x16 RPG Item Pack/Item__02.png
