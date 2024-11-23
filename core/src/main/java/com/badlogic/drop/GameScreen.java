@@ -82,7 +82,7 @@ public class GameScreen implements Screen {
         //gere le perso
 
         // Gere le perso et charger les textures pour les animations
-        playerTexture = new Texture("player.png");
+        playerTexture = new Texture("Player.png");
 //        TextureRegion[] regions = TextureRegion.split(playerTexture, 5, 5)[0];
 //
 //        standingAnimation = new Animation<>(0, regions[0]);
