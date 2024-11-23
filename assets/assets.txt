@@ -11,12 +11,87 @@ Test_anim/Player_run.tsx
 The_Complete_Map.tmx
 Tiled_asset/Blue.tsx
 Tiled_asset/Dungeon Tile Set.png
+Tiled_asset/Items_set.tsx
 Tiled_asset/Terrain (pixel_adv) (16x16).tsx
 Tiled_asset/Tiles paper adv.tsx
 Tiled_asset/background cochon.tsx
 Tiled_asset/morning_adventures_tileset_16x16.tsx
 Tiled_asset/spike (pixel adv).tsx
 Tiled_asset/tilemap cochon.tsx
+Vrac/16x16 RPG Item Pack/Item__00.png
+Vrac/16x16 RPG Item Pack/Item__01.png
+Vrac/16x16 RPG Item Pack/Item__02.png
+Vrac/16x16 RPG Item Pack/Item__03.png
+Vrac/16x16 RPG Item Pack/Item__04.png
+Vrac/16x16 RPG Item Pack/Item__05.png
+Vrac/16x16 RPG Item Pack/Item__06.png
+Vrac/16x16 RPG Item Pack/Item__07.png
+Vrac/16x16 RPG Item Pack/Item__08.png
+Vrac/16x16 RPG Item Pack/Item__09.png
+Vrac/16x16 RPG Item Pack/Item__10.png
+Vrac/16x16 RPG Item Pack/Item__11.png
+Vrac/16x16 RPG Item Pack/Item__12.png
+Vrac/16x16 RPG Item Pack/Item__13.png
+Vrac/16x16 RPG Item Pack/Item__14.png
+Vrac/16x16 RPG Item Pack/Item__15.png
+Vrac/16x16 RPG Item Pack/Item__16.png
+Vrac/16x16 RPG Item Pack/Item__17.png
+Vrac/16x16 RPG Item Pack/Item__18.png
+Vrac/16x16 RPG Item Pack/Item__19.png
+Vrac/16x16 RPG Item Pack/Item__20.png
+Vrac/16x16 RPG Item Pack/Item__21.png
+Vrac/16x16 RPG Item Pack/Item__22.png
+Vrac/16x16 RPG Item Pack/Item__23.png
+Vrac/16x16 RPG Item Pack/Item__24.png
+Vrac/16x16 RPG Item Pack/Item__25.png
+Vrac/16x16 RPG Item Pack/Item__26.png
+Vrac/16x16 RPG Item Pack/Item__27.png
+Vrac/16x16 RPG Item Pack/Item__28.png
+Vrac/16x16 RPG Item Pack/Item__29.png
+Vrac/16x16 RPG Item Pack/Item__30.png
+Vrac/16x16 RPG Item Pack/Item__31.png
+Vrac/16x16 RPG Item Pack/Item__32.png
+Vrac/16x16 RPG Item Pack/Item__33.png
+Vrac/16x16 RPG Item Pack/Item__34.png
+Vrac/16x16 RPG Item Pack/Item__35.png
+Vrac/16x16 RPG Item Pack/Item__36.png
+Vrac/16x16 RPG Item Pack/Item__37.png
+Vrac/16x16 RPG Item Pack/Item__38.png
+Vrac/16x16 RPG Item Pack/Item__39.png
+Vrac/16x16 RPG Item Pack/Item__40.png
+Vrac/16x16 RPG Item Pack/Item__41.png
+Vrac/16x16 RPG Item Pack/Item__42.png
+Vrac/16x16 RPG Item Pack/Item__43.png
+Vrac/16x16 RPG Item Pack/Item__44.png
+Vrac/16x16 RPG Item Pack/Item__45.png
+Vrac/16x16 RPG Item Pack/Item__46.png
+Vrac/16x16 RPG Item Pack/Item__47.png
+Vrac/16x16 RPG Item Pack/Item__48.png
+Vrac/16x16 RPG Item Pack/Item__49.png
+Vrac/16x16 RPG Item Pack/Item__50.png
+Vrac/16x16 RPG Item Pack/Item__51.png
+Vrac/16x16 RPG Item Pack/Item__52.png
+Vrac/16x16 RPG Item Pack/Item__53.png
+Vrac/16x16 RPG Item Pack/Item__54.png
+Vrac/16x16 RPG Item Pack/Item__55.png
+Vrac/16x16 RPG Item Pack/Item__56.png
+Vrac/16x16 RPG Item Pack/Item__57.png
+Vrac/16x16 RPG Item Pack/Item__58.png
+Vrac/16x16 RPG Item Pack/Item__59.png
+Vrac/16x16 RPG Item Pack/Item__60.png
+Vrac/16x16 RPG Item Pack/Item__61.png
+Vrac/16x16 RPG Item Pack/Item__62.png
+Vrac/16x16 RPG Item Pack/Item__63.png
+Vrac/16x16 RPG Item Pack/Item__64.png
+Vrac/16x16 RPG Item Pack/Item__65.png
+Vrac/16x16 RPG Item Pack/Item__66.png
+Vrac/16x16 RPG Item Pack/Item__67.png
+Vrac/16x16 RPG Item Pack/Item__68.png
+Vrac/16x16 RPG Item Pack/Item__69.png
+Vrac/16x16 RPG Item Pack/Item__70.png
+Vrac/16x16 RPG Item Pack/Item__71.png
+Vrac/16x16 RPG Item Pack/Preview.png
+Vrac/16x16 RPG Item Pack/Sheet.png
 Vrac/Berie's_Adventure_Seaside_Asset_Pack_Free/Aseprite/background.aseprite
 Vrac/Berie's_Adventure_Seaside_Asset_Pack_Free/Aseprite/character_berie.aseprite
 Vrac/Berie's_Adventure_Seaside_Asset_Pack_Free/Aseprite/character_enemy.aseprite

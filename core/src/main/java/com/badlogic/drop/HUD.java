@@ -18,11 +18,15 @@ public class HUD implements Disposable {
     private final Viewport viewport;
     private final Stage stage;
     private int coinCount;
+    private static int NLongJump;
+    public static int LJitem = 0;
 
     private final Label coinLabel;
+    private static Label longJumpLabel = null;
 
     public HUD(SpriteBatch spriteBatch) {
         this.coinCount = 0;
+        this.NLongJump = 3;
         this.viewport = new FitViewport(1366, 768, new OrthographicCamera());
         this.stage = new Stage(viewport, spriteBatch);
 
@@ -41,14 +45,18 @@ public class HUD implements Disposable {
         generator.dispose();
 
         Label.LabelStyle coinlabelStyle = new Label.LabelStyle(font, Color.GOLD);
+        Label.LabelStyle NLongJumplabelStyle = new Label.LabelStyle(font, Color.BLACK);
 
         coinLabel = new Label(String.format("Coins: %d", coinCount), coinlabelStyle);
+        if (LJitem == 0){
+            longJumpLabel = new Label(String.format(""), NLongJumplabelStyle);
+        }
 
         Table table = new Table();
         table.top().left();
         table.setFillParent(true);
-        table.add(coinLabel).expandY().padLeft(100).padTop(-600);
-
+        table.add(coinLabel).expandY().padLeft(75).padTop(-600);
+        table.add(longJumpLabel).expandY().padLeft(-85).padTop(-675);
 
 
         stage.addActor(table);
@@ -60,6 +68,27 @@ public class HUD implements Disposable {
         coinCount++;
         coinLabel.setText(String.format("Coins: %d", coinCount));
         Gdx.app.log("HUD", "Coin count increased to: " + coinCount);
+    }
+
+    public static int getNLongJump() {return NLongJump;}
+    public static void addNLongJump() {
+        NLongJump--;
+        longJumpLabel.setText(String.format("(Press 'K' to deactivate) Long Jump left: %d", NLongJump));
+
+    }
+    public static void ResLongJump(){
+        NLongJump = 3;
+        if(!Player.GotLongJump()){
+            longJumpLabel.setText(String.format("Press L to activate the long jump"));
+        } else {
+            longJumpLabel.setText(String.format("(Press 'K' to deactivate) Long Jump left: %d", NLongJump));
+        }
+    }
+    public static void set_NJ_view(){
+        longJumpLabel.setText(String.format("(Press 'K' to deactivate) Long Jump left: %d", NLongJump));
+    }
+    public static void set_NoJ_view(){
+        longJumpLabel.setText(String.format("Press 'L' to activate the long jump"));
     }
 
     public void draw() {

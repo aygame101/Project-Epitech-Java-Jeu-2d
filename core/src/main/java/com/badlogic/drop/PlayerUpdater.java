@@ -16,7 +16,6 @@ public class PlayerUpdater {
     private Array<Rectangle> tiles;
     private Rectangle currentRoomRect;
     private boolean debug = false;
-    private int jumpcount = 0;
 
     public PlayerUpdater(Player player, TiledMapTileLayer platformsLayer, Rectangle currentRoomRect) {
         this.player = player;
@@ -32,17 +31,6 @@ public class PlayerUpdater {
     }
 
     public void Jump() {
-        if (jumpcount >=2 ) {
-            return;
-        }
-        else if (jumpcount >= 1 && !player.isOnGround()) {
-            player.getVelocity().y += 100;
-            player.setOnGround(false);
-        }
-        else if (jumpcount == 0) {
-            player.getVelocity().y += 100; // Force de saut
-            jumpcount++;
-        }
     }
 
     public void updatePlayer(float deltaTime) {
@@ -54,7 +42,29 @@ public class PlayerUpdater {
 
         // Vérification des inputs du joueur
         if ((Gdx.input.isKeyPressed(Keys.SPACE)) && player.isOnGround()) {
-            Jump();
+            if (!player.GotLongJump()){
+                player.getVelocity().y += 100;
+                player.setOnGround(false);
+            } else if (player.GotLongJump() && HUD.getNLongJump() > 0) {
+                player.getVelocity().y += 150;
+                player.setOnGround(false);
+                HUD.addNLongJump();
+            }
+        }
+
+        if(HUD.LJitem >0) {
+            if (Gdx.input.isKeyJustPressed(Keys.K)) {
+                if (player.GotLongJump()) {
+                    player.setLongJump(false);
+                    HUD.set_NoJ_view();
+                }
+            }
+            if (Gdx.input.isKeyJustPressed(Keys.L)) {
+                if (!player.GotLongJump()) {
+                    player.setLongJump(true);
+                    HUD.set_NJ_view();
+                }
+            }
         }
 
         if (Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) {
@@ -65,9 +75,6 @@ public class PlayerUpdater {
             player.getVelocity().x = 50; //vitesse max en +x
         }
 
-        if (Gdx.input.isKeyJustPressed(Keys.B)) {
-            debug = !debug;
-        }
 
         // Gravité
         player.getVelocity().add(0, GRAVITY);
@@ -79,7 +86,6 @@ public class PlayerUpdater {
         if (Math.abs(player.getVelocity().x) < 1) {
             player.getVelocity().x = 0;
         }
-
 
         player.getVelocity().scl(deltaTime);
 
@@ -116,7 +122,6 @@ public class PlayerUpdater {
                     player.setY(tile.y + tile.height);
                     player.getVelocity().y = 0;
                     isOnGround = true; // Joueur au sol
-                    jumpcount = 0;
                 }
                 else if (player.getVelocity().y > 0){
                     player.setY(tile.y - tile.height);
@@ -134,17 +139,6 @@ public class PlayerUpdater {
 
         player.getVelocity().x *= Player.DAMPING;
 
-    }
-
-    private boolean isTouched(float startX, float endX) {
-
-        for (int i = 0; i < 2; i++) {
-            float x = Gdx.input.getX(i) / (float) Gdx.graphics.getWidth();
-            if (Gdx.input.isTouched(i) && (x >= startX && x <= endX)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void setCurrentRoomRect(Rectangle currentRoomRect) {
@@ -175,6 +169,4 @@ public class PlayerUpdater {
             }
         }
     }
-
-
 }

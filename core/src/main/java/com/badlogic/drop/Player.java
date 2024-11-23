@@ -9,25 +9,31 @@ import java.util.ArrayList;
 
 public class Player extends InputAdapter {
     public static final float DAMPING = 0.87f; // Facteur d'amortissement
-
+    //donnée de base du joueur
     private float x;
     private float y;
     private float width;
     private float height;
-    private int coinCount = 0;
-    private static int coinN = 0;
     private float velocityY = 0;
     private float velocityX = 0;
     private float gravity = -2f;
     private boolean onGround = true;
     private Vector2 velocity;
     private Array<Projectile> projectiles;
-    private static ArrayList<ItemShop> itemsPossedes;
     public float stateTime;
+    //animation (non fonctionelle)
     private boolean facesRight = true;
     private enum State { Standing, Walking, Jumping }
     private State state = State.Standing;
+    //les piece
+    private int coinCount = 0;
+    private static int coinN = 0;
+    //Shop (inutiliser pour le moment)
+    private static ArrayList<ItemShop> itemsPossedes;
+    //Les items
+    private static boolean longJump;
 
+    //initialise le player
     public Player(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
@@ -37,6 +43,7 @@ public class Player extends InputAdapter {
         this.projectiles = new Array<>();
     }
 
+    //les constructeur
     public BoundingBox getBoundingBox() {
         return new BoundingBox(x, y, width, height);
     }
@@ -117,7 +124,16 @@ public class Player extends InputAdapter {
         return coinCount;
     }
 
+    public static boolean GotLongJump(){
+        return longJump;
+    }
 
+    public void setLongJump(boolean longJump) {
+        this.longJump = longJump;
+    }
+
+
+    //constructeur inutiliser pour le moment
     public static void ajouterItem(ItemShop item) {
         itemsPossedes.add(item);
     }
@@ -134,10 +150,8 @@ public class Player extends InputAdapter {
         return false;
     }
 
-    public void render(Batch batch) {
-        // Render the player
-    }
 
+    //gere la hitbox du perso
     public static class BoundingBox {
         float x;
         float y;
@@ -161,6 +175,7 @@ public class Player extends InputAdapter {
         }
     }
 
+    //gere les projectiles (inutiliser)
     private static class Projectile {
         private float x;
         private float y;

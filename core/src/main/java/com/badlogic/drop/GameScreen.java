@@ -50,6 +50,9 @@ public class GameScreen implements Screen {
     //les coins
     private Array<Coin> coins;
     private final TiledMapTileLayer coinsLayer;
+    //les items
+    private Array<Item> items;
+    private final TiledMapTileLayer itemsLayer;
     //l'animation
     private Animation<TextureRegion> standingAnimation;
     private Animation<TextureRegion> jumpingAnimation;
@@ -93,10 +96,15 @@ public class GameScreen implements Screen {
         traps = new ArrayList<>();
 
         playerUpdater = new PlayerUpdater(player, platformsLayer,currentRoomRect);
-        //HUD +piece
+        //HUD
         hud = new HUD(batch);
+        //Pieces
         coins = new Array<>();
         coinsLayer = (TiledMapTileLayer) map.getLayers().get("Coins");
+        //Items
+        items = new Array<>();
+        itemsLayer = (TiledMapTileLayer) map.getLayers().get("Items");
+
 
         rectPool = new Pool<Rectangle>() {
             @Override
@@ -136,12 +144,6 @@ public class GameScreen implements Screen {
         // Dessin du joueur
         batch.draw(playerTexture, player.getX(), player.getY(), player.getWidth(), player.getHeight());
 
-        // Dessin des pièces non collectées
-        for (Coin coin : coins) {
-            if (!coin.isCollected()) {
-                batch.draw(coin.getTexture(), coin.getPosition().x, coin.getPosition().y);
-            }
-        }
 
         batch.end();
         // Dessiner le HUD après tous les autres éléments
@@ -149,9 +151,12 @@ public class GameScreen implements Screen {
 
         updatePlayerPosition(delta);
         playerUpdater.updatePlayer(delta);
+
+        //collision
         checkTeleporterCollision();
         checkCoinCollision();
         checkTrapsCollision();
+        checkItemsCollision();
     }
 
     private void updatePlayerPosition(float delta) {
@@ -235,6 +240,7 @@ public class GameScreen implements Screen {
         return null;
     }
 
+    //Tp
     private void checkTeleporterCollision() {
         MapLayer teleportLayer = map.getLayers().get("Teleporters");
         if (teleportLayer != null) {
@@ -274,7 +280,9 @@ public class GameScreen implements Screen {
             Gdx.app.log("GameScreen", "Destination object not found for teleporter.");
         }
     }
+    //fin Tp
 
+    //Pieces
     public void getAllCoinsInCurrentRoom(Array<Rectangle> coins) {
         if (currentRoomRect == null) {
             throw new IllegalStateException("currentRoomRect n'est pas initialisé!");
@@ -314,7 +322,9 @@ public class GameScreen implements Screen {
             }
         }
     }
+    //fin pieces
 
+    //pieges
     private void checkTrapsCollision() {
         for (MapObject object : map.getLayers().get("Traps").getObjects()) {
             if (object.getName().equals("t")) {
@@ -330,8 +340,52 @@ public class GameScreen implements Screen {
         for (Rectangle trap : traps) {
             if (!isGameOver && player.getBoundingBox().overlaps(trap)) {
                 isGameOver = true; // Mettre à jour l'indicateur
-                game.showGameOver(); // Afficher l'écran de game over
+                HUD.LJitem = 0;
+                player.setLongJump(false);
+                game.showGameOver();// Afficher l'écran de game over
                 break; // Sortir de la boucle après la première collision
+            }
+        }
+    }
+    //fin piege
+
+    //Items
+    public void getAllItemsInCurrentRoom(Array<Rectangle> items) {
+        if (currentRoomRect == null) {
+            throw new IllegalStateException("currentRoomRect n'est pas initialisé!");
+        }
+
+        rectPool.freeAll(items);
+        items.clear();
+
+        int startX = (int) Math.floor(currentRoomRect.x / itemsLayer.getTileWidth());
+        int startY = (int) Math.floor(currentRoomRect.y / itemsLayer.getTileHeight());
+        int endX = (int) Math.ceil((currentRoomRect.x + currentRoomRect.width) / itemsLayer.getTileWidth());
+        int endY = (int) Math.ceil((currentRoomRect.y + currentRoomRect.height) / itemsLayer.getTileHeight());
+
+        for (int y = startY; y < endY; y++) {
+            for (int x = startX; x < endX; x++) {
+                TiledMapTileLayer.Cell cell = itemsLayer.getCell(x, y);
+                if (cell != null && cell.getTile().getProperties().containsKey("ResJump")) {
+                    Rectangle rect = rectPool.obtain();
+                    rect.set(x * itemsLayer.getTileWidth(), y * itemsLayer.getTileHeight(), itemsLayer.getTileWidth(), itemsLayer.getTileHeight());
+                    items.add(rect);
+                }
+            }
+        }
+    }
+
+    private void checkItemsCollision() {
+        Array<Rectangle> items = new Array<>();
+        getAllItemsInCurrentRoom(items);  // Remplacez par votre méthode pour obtenir les items
+
+        for (Rectangle item : items) {
+            if (player.getBoundingBox().overlaps(item)) {
+                int tileX = (int) (item.x / itemsLayer.getTileWidth());
+                int tileY = (int) (item.y / itemsLayer.getTileHeight());
+                itemsLayer.setCell(tileX, tileY, null); // Supprime l'item que le joueur touche
+                HUD.ResLongJump();
+                HUD.LJitem ++;
             }
         }
     }

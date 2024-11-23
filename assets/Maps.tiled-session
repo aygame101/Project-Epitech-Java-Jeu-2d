@@ -19,7 +19,7 @@
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1695,
+                "x": 1694.6666666666665,
                 "y": 159.66666666666663
             }
         },
@@ -33,8 +33,8 @@
             "scale": 1.5,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 4886.333333333333,
-                "y": 14896.333333333332
+                "x": 8000,
+                "y": 8000.333333333332
             }
         },
         "Game_Map_complete.tmx": {
@@ -77,8 +77,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 187.75,
-                "y": 15808.75
+                "x": 8000.25,
+                "y": 8000.25
             }
         },
         "Tiled_asset/Blue.tsx": {
@@ -126,9 +126,9 @@
             "scaleInEditor": 1
         }
     },
-    "frame.defaultDuration": 100,
-    "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Tiled_asset",
-    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets",
+    "frame.defaultDuration": 200,
+    "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/16x16 RPG Item Pack",
+    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/16x16 RPG Item Pack",
     "map.fixedSize": true,
     "map.height": 300,
     "map.lastUsedFormat": "tmx",
@@ -163,9 +163,10 @@
         "Game_Map_complete.tmx"
     ],
     "resizeMap.removeObjects": true,
+    "tileset.lastUsedFilter": "Tous les Fichiers (*)",
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 5,
-        "width": 5
+        "height": 16,
+        "width": 16
     }
 }
