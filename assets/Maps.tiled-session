@@ -126,7 +126,7 @@
             "scaleInEditor": 1
         }
     },
-    "frame.defaultDuration": 200,
+    "frame.defaultDuration": 300,
     "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/16x16 RPG Item Pack",
     "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/16x16 RPG Item Pack",
     "map.fixedSize": true,

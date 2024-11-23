@@ -18,15 +18,21 @@ public class HUD implements Disposable {
     private final Viewport viewport;
     private final Stage stage;
     private int coinCount;
+    //Long jump
     private static int NLongJump;
     public static int LJitem = 0;
-
+    //les warp
+    public static int WarpItems = 0;
+    private static int NWarp;
+    //les message afficher
     private final Label coinLabel;
     private static Label longJumpLabel = null;
+    private static Label warpLabel = null;
 
     public HUD(SpriteBatch spriteBatch) {
         this.coinCount = 0;
         this.NLongJump = 3;
+        this.NWarp = 1;
         this.viewport = new FitViewport(1366, 768, new OrthographicCamera());
         this.stage = new Stage(viewport, spriteBatch);
 
@@ -46,21 +52,28 @@ public class HUD implements Disposable {
 
         Label.LabelStyle coinlabelStyle = new Label.LabelStyle(font, Color.GOLD);
         Label.LabelStyle NLongJumplabelStyle = new Label.LabelStyle(font, Color.BLACK);
+        Label.LabelStyle NWarplabelStyle = new Label.LabelStyle(font, Color.FIREBRICK);
 
         coinLabel = new Label(String.format("Coins: %d", coinCount), coinlabelStyle);
         if (LJitem == 0){
             longJumpLabel = new Label(String.format(""), NLongJumplabelStyle);
         }
+        if (WarpItems == 0){
+            warpLabel = new Label(String.format(""), NWarplabelStyle);
+        }
+        //"Press 'space' and 'Q' or 'D' to Warp on a direction"
 
         Table table = new Table();
         table.top().left();
         table.setFillParent(true);
-        table.add(coinLabel).expandY().padLeft(75).padTop(-600);
-        table.add(longJumpLabel).expandY().padLeft(-85).padTop(-675);
-
+        table.add(coinLabel).expandY().padLeft(75).padTop(-675);
+        table.add(longJumpLabel).expandY().padLeft(-90).padTop(-600);
+        table.add(warpLabel).expandY().padLeft(100).padTop(-600);
 
         stage.addActor(table);
     }
+
+    //coins
     public int getCoinCount() {
         return coinCount;
     }
@@ -69,7 +82,9 @@ public class HUD implements Disposable {
         coinLabel.setText(String.format("Coins: %d", coinCount));
         Gdx.app.log("HUD", "Coin count increased to: " + coinCount);
     }
+    //fin coins
 
+    //Long jump
     public static int getNLongJump() {return NLongJump;}
     public static void addNLongJump() {
         NLongJump--;
@@ -89,6 +104,18 @@ public class HUD implements Disposable {
     }
     public static void set_NoJ_view(){
         longJumpLabel.setText(String.format("Press 'L' to activate the long jump"));
+    }
+    //fin Long Jump
+
+    //Warp
+    public static int getNWarp() {return NWarp;}
+    public static void addNWarp() {
+        NWarp--;
+        warpLabel.setText(String.format("Press 'space' to Warp on a direction, warp left: %d", NWarp));
+    }
+    public static void ResWarp(){
+        NWarp=1;
+        warpLabel.setText(String.format("Press 'space' to Warp on a direction, warp left: %d", NWarp));
     }
 
     public void draw() {

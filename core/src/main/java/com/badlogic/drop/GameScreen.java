@@ -51,7 +51,8 @@ public class GameScreen implements Screen {
     private Array<Coin> coins;
     private final TiledMapTileLayer coinsLayer;
     //les items
-    private Array<Item> items;
+    private Array<Rectangle> resJumpItems;
+    private Array<Rectangle> WarpItems;
     private final TiledMapTileLayer itemsLayer;
     //l'animation
     private Animation<TextureRegion> standingAnimation;
@@ -102,9 +103,9 @@ public class GameScreen implements Screen {
         coins = new Array<>();
         coinsLayer = (TiledMapTileLayer) map.getLayers().get("Coins");
         //Items
-        items = new Array<>();
         itemsLayer = (TiledMapTileLayer) map.getLayers().get("Items");
-
+        resJumpItems = new Array<>();
+        WarpItems = new Array<>();
 
         rectPool = new Pool<Rectangle>() {
             @Override
@@ -341,6 +342,7 @@ public class GameScreen implements Screen {
             if (!isGameOver && player.getBoundingBox().overlaps(trap)) {
                 isGameOver = true; // Mettre à jour l'indicateur
                 HUD.LJitem = 0;
+                HUD.WarpItems = 0;
                 player.setLongJump(false);
                 game.showGameOver();// Afficher l'écran de game over
                 break; // Sortir de la boucle après la première collision
@@ -350,13 +352,16 @@ public class GameScreen implements Screen {
     //fin piege
 
     //Items
-    public void getAllItemsInCurrentRoom(Array<Rectangle> items) {
+    public void getAllItemsInCurrentRoom() {
         if (currentRoomRect == null) {
             throw new IllegalStateException("currentRoomRect n'est pas initialisé!");
         }
 
-        rectPool.freeAll(items);
-        items.clear();
+        // Libérez les anciennes listes
+        rectPool.freeAll(resJumpItems);
+        rectPool.freeAll(WarpItems);
+        resJumpItems.clear();
+        WarpItems.clear();
 
         int startX = (int) Math.floor(currentRoomRect.x / itemsLayer.getTileWidth());
         int startY = (int) Math.floor(currentRoomRect.y / itemsLayer.getTileHeight());
@@ -366,29 +371,48 @@ public class GameScreen implements Screen {
         for (int y = startY; y < endY; y++) {
             for (int x = startX; x < endX; x++) {
                 TiledMapTileLayer.Cell cell = itemsLayer.getCell(x, y);
-                if (cell != null && cell.getTile().getProperties().containsKey("ResJump")) {
-                    Rectangle rect = rectPool.obtain();
-                    rect.set(x * itemsLayer.getTileWidth(), y * itemsLayer.getTileHeight(), itemsLayer.getTileWidth(), itemsLayer.getTileHeight());
-                    items.add(rect);
+                if (cell != null) {
+                    // Vérifiez les propriétés et ajoutez à la liste appropriée
+                    if (cell.getTile().getProperties().containsKey("ResJump")) {
+                        Rectangle rect = rectPool.obtain();
+                        rect.set(x * itemsLayer.getTileWidth(), y * itemsLayer.getTileHeight(), itemsLayer.getTileWidth(), itemsLayer.getTileHeight());
+                        resJumpItems.add(rect);
+                    } else if (cell.getTile().getProperties().containsKey("ResWarp")) { // Remplacez "OtherProperty" par votre propriété
+                        Rectangle rect = rectPool.obtain();
+                        rect.set(x * itemsLayer.getTileWidth(), y * itemsLayer.getTileHeight(), itemsLayer.getTileWidth(), itemsLayer.getTileHeight());
+                        WarpItems.add(rect);
+                    }
                 }
             }
         }
     }
 
     private void checkItemsCollision() {
-        Array<Rectangle> items = new Array<>();
-        getAllItemsInCurrentRoom(items);  // Remplacez par votre méthode pour obtenir les items
+        // Appelez la méthode pour obtenir les items
+        getAllItemsInCurrentRoom();
 
-        for (Rectangle item : items) {
+        // Vérifiez les collisions pour les items ResJump
+        for (Rectangle item : resJumpItems) {
             if (player.getBoundingBox().overlaps(item)) {
                 int tileX = (int) (item.x / itemsLayer.getTileWidth());
                 int tileY = (int) (item.y / itemsLayer.getTileHeight());
                 itemsLayer.setCell(tileX, tileY, null); // Supprime l'item que le joueur touche
                 HUD.ResLongJump();
-                HUD.LJitem ++;
+                HUD.LJitem++;
+            }
+        }
+        // Vérifiez les collisions pour les items de l'autre propriété
+        for (Rectangle item : WarpItems) {
+            if (player.getBoundingBox().overlaps(item)) {
+                int tileX = (int) (item.x / itemsLayer.getTileWidth());
+                int tileY = (int) (item.y / itemsLayer.getTileHeight());
+                itemsLayer.setCell(tileX, tileY, null); // Supprime l'item que le joueur touche
+                HUD.ResWarp();
+                HUD.WarpItems++;
             }
         }
     }
+
 
 
     @Override

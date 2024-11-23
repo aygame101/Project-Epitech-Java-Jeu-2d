@@ -41,7 +41,7 @@ public class PlayerUpdater {
         player.stateTime += deltaTime;
 
         // Vérification des inputs du joueur
-        if ((Gdx.input.isKeyPressed(Keys.SPACE)) && player.isOnGround()) {
+        if ((Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) && player.isOnGround()) {
             if (!player.GotLongJump()){
                 player.getVelocity().y += 100;
                 player.setOnGround(false);
@@ -73,6 +73,21 @@ public class PlayerUpdater {
 
         if (Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) {
             player.getVelocity().x = 50; //vitesse max en +x
+        }
+
+        if (HUD.WarpItems>0) {
+            if ((Gdx.input.isKeyPressed(Keys.RIGHT) || Gdx.input.isKeyPressed(Keys.D)) && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+                if (HUD.getNWarp() > 0) {
+                    player.setX(player.getX() + 75);
+                    HUD.addNWarp();
+                }
+            }
+            if ((Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.isKeyPressed(Keys.A)) && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+                if (HUD.getNWarp() > 0) {
+                    player.setX(player.getX() - 75);
+                    HUD.addNWarp();
+                }
+            }
         }
 
 
