@@ -1,0 +1,176 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Fmap.tmx",
+    "automapping.whileDrawing": false,
+    "expandedProjectPaths": [
+        ".",
+        "Tiled_asset"
+    ],
+    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1694.6666666666665,
+                "y": 159.66666666666663
+            }
+        },
+        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx#tileSet-hd": {
+            "scaleInDock": 1
+        },
+        "Fmap.tmx": {
+            "expandedObjectLayers": [
+                9
+            ],
+            "scale": 1,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": 326.5,
+                "y": 15929.5
+            }
+        },
+        "Game_Map_complete.tmx": {
+            "expandedGroupLayers": [
+                4
+            ],
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 0.125,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 876,
+                "y": 12596
+            }
+        },
+        "Game_Map_complete.tmx#Terrain (pixel_adv) (16x16)": {
+            "scaleInDock": 1
+        },
+        "Test_Base_map.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.33,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 498.4848484848484,
+                "y": 519.6969696969696
+            }
+        },
+        "Test_Base_map.tmx#Dungeon Tile Set": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Test_anim/Player_run.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 5.5
+        },
+        "The_Complete_Map.tmx": {
+            "scale": 2,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 8000.25,
+                "y": 8000.25
+            }
+        },
+        "Tiled_asset/Blue.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Game_Map_complete.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 0.015625
+        },
+        "Tiled_asset/Items_set.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 3
+        },
+        "Tiled_asset/Start (Idle) pixel adv.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Start (Idle) px adv.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Start (Idle).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/Tiles paper adv.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/background cochon.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/spike (pixel adv).tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tiled_asset/tilemap cochon.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "frame.defaultDuration": 300,
+    "last.externalTilesetPath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/16x16 RPG Item Pack",
+    "last.imagePath": "C:/Users/malmo/OneDrive/Bureau/Epitech/Année_1_Pré-MSc/Codes/Projets/EpiGame_Git/assets/Vrac/16x16 RPG Item Pack",
+    "map.fixedSize": true,
+    "map.height": 300,
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": "2",
+    "map.tileHeight": 5,
+    "map.tileWidth": 5,
+    "map.width": 300,
+    "openFiles": [
+        "The_Complete_Map.tmx",
+        "Tiled_asset/background cochon.tsx",
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
+        "Tiled_asset/spike (pixel adv).tsx",
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
+        "Tiled_asset/tilemap cochon.tsx",
+        "Fmap.tmx",
+        "Tiled_asset/Items_set.tsx"
+    ],
+    "project": "Maps.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "The_Complete_Map.tmx",
+        "Tiled_asset/background cochon.tsx",
+        "Tiled_asset/morning_adventures_tileset_16x16.tsx",
+        "Tiled_asset/spike (pixel adv).tsx",
+        "Tiled_asset/Terrain (pixel_adv) (16x16).tsx",
+        "Tiled_asset/tilemap cochon.tsx",
+        "Tiled_asset/Items_set.tsx",
+        "Fmap.tmx",
+        "C:/Users/malmo/OneDrive/Bureau/Test jeux libgdx/tests/gdx-tests-android/assets/data/maps/tiled/super-koalio/level1.tmx",
+        "Test_anim/Player_run.tsx",
+        "Tiled_asset/Tiles paper adv.tsx",
+        "Tiled_asset/Blue.tsx"
+    ],
+    "resizeMap.removeObjects": true,
+    "tileset.lastUsedFilter": "Tous les Fichiers (*)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
