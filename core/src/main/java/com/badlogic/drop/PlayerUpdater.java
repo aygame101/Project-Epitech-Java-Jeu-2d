@@ -1,6 +1,7 @@
 package com.badlogic.drop;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
@@ -53,13 +54,13 @@ public class PlayerUpdater {
         }
 
         if(HUD.LJitem >0) {
-            if (Gdx.input.isKeyJustPressed(Keys.K)) {
+            if (Gdx.input.isKeyJustPressed(Keys.K) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (player.GotLongJump()) {
                     player.setLongJump(false);
                     HUD.set_NoJ_view();
                 }
             }
-            if (Gdx.input.isKeyJustPressed(Keys.L)) {
+            if (Gdx.input.isKeyJustPressed(Keys.L) || Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 if (!player.GotLongJump()) {
                     player.setLongJump(true);
                     HUD.set_NJ_view();

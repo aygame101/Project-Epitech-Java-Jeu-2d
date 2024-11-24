@@ -437,7 +437,7 @@ public class GameScreen implements Screen {
 
     //victoire
     public void Victory(){
-        if (hud.getNkeys()> 10000){
+        if (hud.getNkeys()> 20000){
             game.Victory();
         }
     }

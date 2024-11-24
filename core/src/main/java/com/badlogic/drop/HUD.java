@@ -96,22 +96,22 @@ public class HUD implements Disposable {
     public static int getNLongJump() {return NLongJump;}
     public static void addNLongJump() {
         NLongJump--;
-        longJumpLabel.setText(String.format("(Press 'K' to deactivate) Long Jump left: %d", NLongJump));
+        longJumpLabel.setText(String.format("(Press 'K' or 'Left click' to deactivate) Long Jump left: %d", NLongJump));
 
     }
     public static void ResLongJump(){
         NLongJump = 3;
         if(!Player.GotLongJump()){
-            longJumpLabel.setText(String.format("Press L to activate the long jump"));
+            longJumpLabel.setText(String.format("Press 'L' or 'Right click' to activate the long jump"));
         } else {
-            longJumpLabel.setText(String.format("(Press 'K' to deactivate) Long Jump left: %d", NLongJump));
+            longJumpLabel.setText(String.format("(Press 'K' or 'Left click' to deactivate) Long Jump left: %d", NLongJump));
         }
     }
     public static void set_NJ_view(){
-        longJumpLabel.setText(String.format("(Press 'K' to deactivate) Long Jump left: %d", NLongJump));
+        longJumpLabel.setText(String.format("(Press 'K' or 'Left click' to deactivate) Long Jump left: %d", NLongJump));
     }
     public static void set_NoJ_view(){
-        longJumpLabel.setText(String.format("Press 'L' to activate the long jump"));
+        longJumpLabel.setText(String.format("Press 'L' or 'Right click' to activate the long jump"));
     }
     //fin Long Jump
 
